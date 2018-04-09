@@ -1,29 +1,35 @@
 package ru.sberbank.socialnetwork.users.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-import ru.sberbank.socialnetwork.users.dao.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 import ru.sberbank.socialnetwork.users.entities.User;
-import ru.sberbank.socialnetwork.users.services.UserRegitrationService;
+import ru.sberbank.socialnetwork.users.services.UserService;
 
 import java.util.List;
 
 @RestController
 public class IndexController {
 
-    @GetMapping("/")
+    private final UserService userService;
+
+    @Autowired
+    public IndexController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping
     public String index() {
         return "Hello!";
     }
 
-//    @GetMapping("/users")
-//    public List<User> getUsers(UserRepository userRepository) {
-//        return userRepository.findAll();
-//    }
-//
-//    @GetMapping("/{email}")
-//    public User getUser(UserRegitrationService userRegitrationService, @PathVariable String email) {
-//        return userRegitrationService.createUser(email);
-//    }
+    @GetMapping("/user")
+    public User findUser(@RequestParam("email") String email) {
+        User foundUser = userService.findUser(email);
+        return foundUser;
+    }
+
+    @PostMapping("/create")
+    public User createUser(@RequestParam("email") String email) {
+        return userService.createUser(email);
+    }
 }
