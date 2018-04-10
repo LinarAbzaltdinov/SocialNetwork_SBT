@@ -1,0 +1,10 @@
+.footer {
+    background: whitesmoke;
+    border-top: 1px solid #e2e2e2;
+}
+.footer li {
+    border-left: 1px solid black;
+}
+.footer li:first-child {
+    border: none;
+}
