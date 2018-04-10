@@ -1,4 +1,4 @@
-FROM postgres:9.4
+FROM postgres:9.5
 ENV POSTGRES_USER scott
 ENV POSTGRES_PASSWORD tiger
 ENV POSTGRES_DB users

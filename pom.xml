@@ -12,6 +12,7 @@
     <modules>
         <module>webui</module>
         <module>users</module>
+        <module>chat</module>
     </modules>
 
 </project>

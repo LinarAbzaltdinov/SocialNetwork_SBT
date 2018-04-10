@@ -13,3 +13,9 @@ services:
       context: ./chat/
     ports:
       - "5434:5432"
+  db_messages:
+    container_name: mongo_messages
+    build:
+      context: ./message/
+    ports:
+      - "27018:27017"
