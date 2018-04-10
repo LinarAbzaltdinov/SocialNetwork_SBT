@@ -3,10 +3,7 @@ version: "3"
 services:
   db_users:
     container_name: postgres_users
-    image: postgres:9.4
-    environment:
-      POSTGRES_USER: "scott"
-      POSTGRES_PASS: "tiger"
-      POSTGRES_DB: "users"
+    build:
+      context: ./users/
     ports:
-      - "5432:5432"
+      - "5433:5432"
