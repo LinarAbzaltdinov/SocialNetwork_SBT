@@ -7,3 +7,9 @@ services:
       context: ./users/
     ports:
       - "5433:5432"
+  db_chats:
+    container_name: postgres_chats
+    build:
+      context: ./chat/
+    ports:
+      - "5434:5432"
