@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:with="lang=${#locale.language}" th:lang="${lang}">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Social Network</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-7">
+            <div class="vertical-align: middle;">
+                <h2 style="">
+                    Создавай группы.<br/>
+                    Общайся.<br/>
+                    Будь активным.
+                </h2>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="singin-signup">
+                <div class="signin-signup-box">
+                    <img src="/images/logo/logo.png" class="form-logo" height="50px"/>
+                    <div class="signin-signup-toggle">
+                        <div class="btn-group " data-toggle="buttons">
+                            <label class="btn btn-primary active"><input type="radio" name="sign_type" id="signin_radio"
+                                                                         checked="true"/>Войти</label>
+                            <label class="btn btn-primary"><input type="radio" name="sign_type" id="signup_radio"/>Зарегистрироваться</label>
+                        </div>
+                    </div>
+                    <form action="/signin" method="post" class="form-signin-signup" id="form_signin_signup">
+                        <div class="form-group" id="username_div" hidden="">
+                            <label for="username">Никнейм</label>
+                            <input type="email" class="form-control" id="username"
+                                   placeholder="Введите имя пользователя (ник)"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="Введите email" required=""/>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Пароль</label>
+                            <input type="password" class="form-control" id="password" placeholder="Пароль" required=""/>
+                        </div>
+                        <div class="form-group" id="repeat_password_div" hidden="true">
+                            <label for="repeat_password">Повторите пароль</label>
+                            <input type="password" class="form-control" id="repeat_password"
+                                   placeholder="Повторите пароль"/>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block" id="submit-form">Войти</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="fragments :: footer"></footer>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+        crossorigin="anonymous"></script>
+<script>
+    $("input[name=sign_type]").change(function () {
+        if ($("#signin_radio").is(':checked')) {
+            $("#username_div").hide();
+            $("#repeat_password_div").hide();
+            $('#submit-form').html('Войти');
+            $("#form_signin_signup").attr('action', '/signin');
+        } else {
+            $("#username_div").show();
+            $("#repeat_password_div").show();
+            $('#submit-form').html('Зарегистрироваться');
+            $("#form_signin_signup").attr('action', '/signup');
+        }
+    })
+
+    $(function () { //shorthand document.ready function
+        $('#form_signin_signup').on('submit', function () { //use on if jQuery 1.7+
+            let form = $("#form_signin_signup");
+            let data = form.serializeArray()
+            console.log(data); //use the console for debugging, F12 in Chrome, not alerts
+        });
+    });
+</script>
+</body>
+</html>
