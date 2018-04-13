@@ -31,26 +31,37 @@
                             <label class="btn btn-primary"><input type="radio" name="sign_type" id="signup_radio"/>Зарегистрироваться</label>
                         </div>
                     </div>
-                    <form action="/signin" method="post" class="form-signin-signup" id="form_signin_signup">
-                        <div class="form-group" id="username_div" hidden="">
-                            <label for="username">Никнейм</label>
-                            <input type="email" class="form-control" id="username"
-                                   placeholder="Введите имя пользователя (ник)"/>
-                        </div>
+                    <form th:action="@{/signin}" method="post" class="form-signin-signup" id="form_signin">
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="Введите email" required=""/>
+                            <input type="email" class="form-control" name="email" placeholder="Введите email" required=""/>
                         </div>
                         <div class="form-group">
                             <label for="password">Пароль</label>
-                            <input type="password" class="form-control" id="password" placeholder="Пароль" required=""/>
+                            <input type="password" class="form-control" name="password" placeholder="Пароль" required=""/>
                         </div>
-                        <div class="form-group" id="repeat_password_div" hidden="true">
-                            <label for="repeat_password">Повторите пароль</label>
-                            <input type="password" class="form-control" id="repeat_password"
-                                   placeholder="Повторите пароль"/>
+                        <button type="submit" class="btn btn-primary btn-block">Войти</button>
+                    </form>
+                    <form th:action="@{/signup}" method="post" class="form-signin-signup" id="form_signup" hidden="">
+                        <div class="form-group">
+                            <label for="username">Никнейм</label>
+                            <input type="text" class="form-control" name="username" id="username"
+                                   placeholder="Введите имя пользователя (ник)" required=""/>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block" id="submit-form">Войти</button>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Введите email" required=""/>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Пароль</label>
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Пароль" required=""/>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm_password">Повторите пароль</label>
+                            <input type="password" class="form-control" id="confirm_password"
+                                   placeholder="Повторите пароль" required=""/>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block" id="submit-form">Зарегистрироваться</button>
                     </form>
                 </div>
             </div>
@@ -67,28 +78,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
         integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
         crossorigin="anonymous"></script>
-<script>
-    $("input[name=sign_type]").change(function () {
-        if ($("#signin_radio").is(':checked')) {
-            $("#username_div").hide();
-            $("#repeat_password_div").hide();
-            $('#submit-form').html('Войти');
-            $("#form_signin_signup").attr('action', '/signin');
-        } else {
-            $("#username_div").show();
-            $("#repeat_password_div").show();
-            $('#submit-form').html('Зарегистрироваться');
-            $("#form_signin_signup").attr('action', '/signup');
-        }
-    })
-
-    $(function () { //shorthand document.ready function
-        $('#form_signin_signup').on('submit', function () { //use on if jQuery 1.7+
-            let form = $("#form_signin_signup");
-            let data = form.serializeArray()
-            console.log(data); //use the console for debugging, F12 in Chrome, not alerts
-        });
-    });
-</script>
+<script src="/js/login.js"></script>
 </body>
 </html>
