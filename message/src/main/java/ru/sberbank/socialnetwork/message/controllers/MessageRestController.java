@@ -20,8 +20,8 @@ public class MessageRestController {
     }
 
     @PostMapping("/msg")
-    public String createMessage(@RequestParam String messageContent) {
-        Message createdMessage = messageService.createMessage(messageContent);
+    public String createMessage(@RequestParam String messageContent, @RequestParam String userId) {
+        Message createdMessage = messageService.createMessage(messageContent, userId);
         return createdMessage.getId()+"";
     }
 }

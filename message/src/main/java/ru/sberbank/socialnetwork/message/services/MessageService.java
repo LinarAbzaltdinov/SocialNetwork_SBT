@@ -10,8 +10,8 @@ public class MessageService {
     @Autowired
     private MessageRepository messageRepository;
 
-    public Message createMessage(String messageContent) {
-        Message newMessage = new Message(messageContent);
+    public Message createMessage(String messageContent, String userId) {
+        Message newMessage = new Message(messageContent, userId);
         Message persistedMessage = messageRepository.save(newMessage);
         return persistedMessage;
     }
