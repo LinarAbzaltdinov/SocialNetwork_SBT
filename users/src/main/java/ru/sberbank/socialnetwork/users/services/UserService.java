@@ -15,4 +15,6 @@ public interface UserService {
     User editUser(User oldUser);
 
     User findUserByUuid(String uuid);
+
+    User findUserByEmail(String email);
 }

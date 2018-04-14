@@ -7,6 +7,8 @@ import ru.sberbank.socialnetwork.users.services.UserService;
 
 import java.util.List;
 
+import static ru.sberbank.socialnetwork.users.utils.PasswordStorage.*;
+
 @RestController
 public class UserRestController {
 
@@ -19,8 +21,9 @@ public class UserRestController {
 
     @PostMapping("/users")
     public String addUser(@RequestParam String email,
-                          @RequestParam String password) {
-        User addUser = new User(email, password);
+                          @RequestParam String password) throws CannotPerformOperationException {
+        String hashPass = createHash(password);
+        User addUser = new User(email, hashPass);
         User createdUser = userService.addUser(addUser);
         return createdUser.getUuid();
     }
@@ -45,4 +48,12 @@ public class UserRestController {
         User foundedUser = userService.findUserByUuid(uuid);
         return userService.editUser(foundedUser);
     }*/
+
+    @PostMapping("/login")
+    public boolean login(@RequestParam String email,
+                         @RequestParam String password)
+            throws InvalidHashException, CannotPerformOperationException {
+        String hash = userService.findUserByEmail(email).getPassword();
+        return verifyPassword(password, hash);
+    }
 }

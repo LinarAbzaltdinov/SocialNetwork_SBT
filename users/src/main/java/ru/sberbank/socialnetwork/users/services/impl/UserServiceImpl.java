@@ -58,4 +58,11 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public User findUserByEmail(String email) {
+        User foundUser = userRepository.findByEmail(email);
+        return foundUser;
+    }
 }
