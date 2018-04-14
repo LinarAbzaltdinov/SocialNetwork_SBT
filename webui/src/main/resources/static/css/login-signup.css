@@ -1,5 +1,4 @@
 .signin-signup {
-    padding-top: 40px;
     padding-bottom: 40px;
 }
 .signin-signup-box {
@@ -47,34 +46,4 @@ img.form-logo {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-}
-
-.footer {
-    background-color: #f8f8f8;
-    border-top: 1px solid #e7e7e7;
-}
-.footer li {
-    border-left: 1px solid black;
-}
-.footer li:first-child {
-    border: none;
-}
-
-.navbar-login
-{
-    width: 305px;
-    padding: 10px;
-    padding-bottom: 0px;
-}
-
-.navbar-login-session
-{
-    padding: 10px;
-    padding-bottom: 0px;
-    padding-top: 0px;
-}
-
-.icon-size
-{
-    font-size: 87px;
 }

@@ -3,14 +3,13 @@
       th:with="lang=${#locale.language}" th:lang="${lang}">
 <head>
     <meta charset="UTF-8"/>
-    <div th:fragment="css">
+    <div th:fragment="css" th:remove="tag">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha256-3dkvEK0WLHRJ7/Csr0BZjAWxERc5WH7bdeUya2aXxdU= sha512-+L4yy6FRcDGbXJ9mPG8MT/3UCDzwR9gPeyFNMCtInsol++5m3bk2bXWKdZjvybmohrAsn3Ua5x8gfLnbE1YkOg==" crossorigin="anonymous"/>
-        <link rel="stylesheet" href="/css/style.css"/>
+        <link th:href="@{css/main.css}" rel="stylesheet"/>
     </div>
 </head>
 <body>
-<div class="navbar navbar-default" role="navigation" th:fragment="navbar">
+<div class="navbar navbar-default navbar-fixed-top" role="navigation" th:fragment="navbar">
     <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand center" href="/"><img src="/images/logo/logo.png" height="25px"/></a>
@@ -39,7 +38,7 @@
                                         <p class="text-left"><strong>Линар Абзалтдинов</strong></p>
                                         <p class="text-left small">abzaltdinov@gmail.com</p>
                                         <p class="text-left">
-                                            <a href="/profile" class="btn btn-primary btn-block btn-sm">Посмотреть профиль</a>
+                                            <a th:href="@{/user}" class="btn btn-primary btn-block btn-sm">Посмотреть профиль</a>
                                         </p>
                                     </div>
                                 </div>
@@ -51,7 +50,7 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <p>
-                                            <a href="#" class="btn btn-danger btn-block">Выйти</a>
+                                            <a th:href="@{/login(logout)}" class="btn btn-danger btn-block">Выйти</a>
                                         </p>
                                     </div>
                                 </div>
@@ -82,7 +81,7 @@
         © 2018 Copyright
     </div>
 </footer>
-<div th:fragment="js">
+<div th:fragment="js" th:remove="tag">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </div>
