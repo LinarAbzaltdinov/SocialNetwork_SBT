@@ -12,5 +12,5 @@ public interface ChatRepository extends Repository<Chat, Long> {
 
     Chat findById(Long id);
 
-    Collection<Chat> findByUsersContaining(String uuid);
+    Collection<Chat> findByUsers(String uuid);
 }

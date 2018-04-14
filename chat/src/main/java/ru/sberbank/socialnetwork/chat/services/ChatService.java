@@ -22,7 +22,7 @@ public class ChatService {
     }
 
     public Collection<Chat> getUserChats(String uuid) {
-        return chatRepository.findByUsersContaining(uuid);
+        return chatRepository.findByUsers(uuid);
     }
 
     public Collection<String> getChatUsers(Long id) {

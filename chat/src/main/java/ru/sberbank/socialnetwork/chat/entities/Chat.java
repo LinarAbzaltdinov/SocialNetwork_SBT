@@ -3,11 +3,13 @@ package ru.sberbank.socialnetwork.chat.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 @Entity
 @Table(name = "CHAT")
+@NoArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -28,18 +30,19 @@ public class Chat {
 
     @ElementCollection
     @CollectionTable(name = "CHAT_MESSAGES", joinColumns = @JoinColumn(name = "CHAT_ID"))
-    @Column(name = "MESSAGE")
+    @Column(name = "MESSAGE_ID")
+    @OrderBy("message_id")
     private SortedSet<String> messages;
 
     @ElementCollection
     @CollectionTable(name = "CHAT_USERS", joinColumns = @JoinColumn(name = "CHAT_ID"))
-    @Column(name = "USER")
-    private SortedSet<String> users;
+    @Column(name = "USER_ID")
+    private Set<String> users;
 
     public Chat(String creatorId, String chatName) {
         this.creatorId = creatorId;
         this.chatName = chatName;
-        users = new TreeSet<String>();
+        users = new HashSet<String>();
         users.add(creatorId);
     }
 }
