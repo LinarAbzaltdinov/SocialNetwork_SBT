@@ -23,8 +23,7 @@ public class UserRestController {
     public String addUser(@RequestParam String email,
                           @RequestParam String password) throws CannotPerformOperationException {
         String hashPass = createHash(password);
-        User addUser = new User(email, hashPass);
-        User createdUser = userService.addUser(addUser);
+        User createdUser = userService.addUser(email, hashPass);
         return createdUser.getUuid();
     }
 
