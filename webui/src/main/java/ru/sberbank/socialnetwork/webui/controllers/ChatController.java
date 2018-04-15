@@ -9,4 +9,9 @@ public class ChatController {
     public String showGroups() {
         return "groups";
     }
+
+    @GetMapping("/chats")
+    public String showChats() {
+        return "chats";
+    }
 }

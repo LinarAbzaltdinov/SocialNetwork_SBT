@@ -17,6 +17,10 @@ body {
     color: #fff;
 }
 
+.nav-sidebar .active a:hover {
+    background-color: #428bca;
+}
+
 .navbar-login
 {
     width: 305px;
@@ -34,4 +38,8 @@ body {
 .icon-size
 {
     font-size: 87px;
+}
+
+.fa.fa-times {
+    color: #DD0000;
 }
