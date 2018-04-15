@@ -1,8 +1,9 @@
-.signin-signup {
-    padding-bottom: 40px;
+body {
+    padding-top: 0;
 }
 .signin-signup-box {
-    background: #f8f8f8;
+    height: 450px;
+    background: #fafafa;
 }
 img.form-logo {
     display: block;
@@ -46,4 +47,19 @@ img.form-logo {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+.center-text {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 50px;
+    font-family: Lato;
+    font-weight: bold;
+    color: black;
+}
+.pink {
+    color: #ed205f;
 }

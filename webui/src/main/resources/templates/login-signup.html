@@ -9,62 +9,57 @@
     <link rel="stylesheet" th:href="@{/css/login-signup.css}"/>
 </head>
 <body>
-<div class="container">
-    <div class="row row-eq-height signin-signup">
-        <div class="col-md-7" style="background: lightblue; min-height: ">
-            <div class="container">
-                <h2 style="">
-                    Создавай группы.<br/>
-                    Общайся.<br/>
-                    Будь активным.
-                </h2>
-            </div>
-        </div>
-        <div class="col-md-5">
-            <div class="signin-signup-box">
-                <img src="/images/logo/logo.png" class="form-logo" height="50px"/>
-                <div class="signin-signup-toggle">
-                    <div class="btn-group " data-toggle="buttons">
-                        <label class="btn btn-primary active"><input type="radio" name="sign_type" id="signin_radio"
-                                                                     checked="true"/>Войти</label>
-                        <label class="btn btn-primary"><input type="radio" name="sign_type" id="signup_radio"/>Зарегистрироваться</label>
-                    </div>
-                </div>
-                <form th:action="@{/login}" method="post" class="form-signin-signup" id="form_signin">
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" name="email" placeholder="Введите email"
-                               required=""/>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Пароль</label>
-                        <input type="password" class="form-control" name="password" placeholder="Пароль"
-                               required=""/>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Войти</button>
-                </form>
-                <form th:action="@{/signup}" method="post" class="form-signin-signup" id="form_signup" hidden="">
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="Введите email"
-                               required=""/>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Пароль</label>
-                        <input type="password" class="form-control" name="password" id="password"
-                               placeholder="Пароль" required=""/>
-                    </div>
-                    <div class="form-group">
-                        <label for="confirm_password">Повторите пароль</label>
-                        <input type="password" class="form-control" id="confirm_password"
-                               placeholder="Повторите пароль" required=""/>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block" id="submit-form">Зарегистрироваться
-                    </button>
-                </form>
-            </div>
+<div class="row">
+    <div class="col-md-7" style="border-right: 1px solid #428bca; height: 450px;">
+        <div class="center-text">
+            <div>Don't be slack.</div>
+            <div class="pink">Be active!</div>
         </div>
     </div>
+    <div class="col-md-5" style="padding-left: 0;">
+        <div class="signin-signup-box">
+        <img src="/images/logo/logo.png" class="form-logo" height="50px"/>
+        <div class="signin-signup-toggle">
+            <div class="btn-group " data-toggle="buttons">
+                <label class="btn btn-primary active"><input type="radio" name="sign_type" id="signin_radio"
+                                                             checked="true"/>Войти</label>
+                <label class="btn btn-primary"><input type="radio" name="sign_type" id="signup_radio"/>Зарегистрироваться</label>
+            </div>
+        </div>
+        <form th:action="@{/login}" method="post" class="form-signin-signup" id="form_signin">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" name="email" placeholder="Введите email"
+                       required=""/>
+            </div>
+            <div class="form-group">
+                <label for="password">Пароль</label>
+                <input type="password" class="form-control" name="password" placeholder="Пароль"
+                       required=""/>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Войти</button>
+        </form>
+        <form th:action="@{/signup}" method="post" class="form-signin-signup" id="form_signup" hidden="">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="Введите email"
+                       required=""/>
+            </div>
+            <div class="form-group">
+                <label for="password">Пароль</label>
+                <input type="password" class="form-control" name="password" id="password"
+                       placeholder="Пароль" required=""/>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Повторите пароль</label>
+                <input type="password" class="form-control" id="confirm_password"
+                       placeholder="Повторите пароль" required=""/>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" id="submit-form">Зарегистрироваться
+            </button>
+        </form>
+    </div>
+</div>
 </div>
 <footer th:replace="fragments :: footer"></footer>
 <div th:replace="fragments :: js"></div>
