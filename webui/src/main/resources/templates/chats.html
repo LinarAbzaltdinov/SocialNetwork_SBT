@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:with="lang=${#locale.language}" th:lang="${lang}">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title> Чаты </title>
+    <div th:replace="fragments :: css"></div>
+    <link th:href="@{css/chat.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:replace="fragments :: navbar"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <nav class="nav-sidebar">
+                <ul class="nav">
+                    <li value="1" class="active"><a href="#">general</a></li>
+                    <li value="2"><a href="#">homework</a></li>
+                    <li value="3"><a href="#">project</a></li>
+                    <li class="nav-divider"></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="col-md-8">
+            <div class="panel-body">
+                <ul class="chat">
+                    <li class="left clearfix">
+                            <span class="chat-img pull-left">
+                                <img src="/images/avatar.jpg" alt="User Avatar" class="img-circle" height="50px"/>
+                            </span>
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                <strong class="primary-font">Jack Sparrow</strong>
+                                <small class="pull-right text-muted">
+                                    <span class="glyphicon glyphicon-time"></span>12 mins ago
+                                </small>
+                            </div>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                dolor, quis ullamcorper ligula sodales.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="right clearfix"><span class="chat-img pull-right">
+                            <img src="/images/avatar.jpg" alt="User Avatar" class="img-circle" height="50px"/>
+                        </span>
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>13 mins ago
+                                </small>
+                                <strong class="pull-right primary-font">Bhaumik Patel</strong>
+                            </div>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                dolor, quis ullamcorper ligula sodales.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="left clearfix"><span class="chat-img pull-left">
+                            <img src="/images/avatar.jpg" alt="User Avatar" class="img-circle" height="50px"/>
+                        </span>
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                <strong class="primary-font">Jack Sparrow</strong>
+                                <small class="pull-right text-muted">
+                                    <span class="glyphicon glyphicon-time"></span>14 mins ago
+                                </small>
+                            </div>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                dolor, quis ullamcorper ligula sodales.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="right clearfix"><span class="chat-img pull-right">
+                            <img src="/images/avatar.jpg" alt="User Avatar" class="img-circle" height="50px"/>
+                        </span>
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>15 mins ago
+                                </small>
+                                <strong class="pull-right primary-font">Bhaumik Patel</strong>
+                            </div>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                dolor, quis ullamcorper ligula sodales.
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="panel-footer">
+                <div class="input-group">
+                    <input id="btn-input" type="text" class="form-control input-sm"
+                           placeholder="Type your message here..."/>
+                    <span class="input-group-btn">
+                            <button class="btn btn-warning btn-sm" id="btn-chat">
+                                Send</button>
+                        </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments :: js"></div>
+</body>
+</html>

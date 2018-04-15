@@ -1,12 +1,9 @@
-html body div {
-    height:100%;
-}
-.singin-signup {
-    padding-top: 40px;
-    padding-bottom: 40px;
+body {
+    padding-top: 0;
 }
 .signin-signup-box {
-    background: #f8f8f8;
+    height: 450px;
+    background: #fafafa;
 }
 img.form-logo {
     display: block;
@@ -51,22 +48,18 @@ img.form-logo {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
-
-.footer {
-    background-color: #f8f8f8;
-    border-top: 1px solid #e7e7e7;
+.center-text {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 50px;
+    font-family: Lato;
+    font-weight: bold;
+    color: black;
 }
-.footer li {
-    border-left: 1px solid black;
-}
-.footer li:first-child {
-    border: none;
-}
-
-.background {
-    background: transparent;
-    background-image: url("/images/background/background-white.jpg");
-    background-position: top;
-    background-repeat: no-repeat;
-    background-size: cover;
+.pink {
+    color: #ed205f;
 }
