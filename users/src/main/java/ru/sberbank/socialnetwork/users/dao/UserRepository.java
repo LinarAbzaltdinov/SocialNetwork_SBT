@@ -7,6 +7,10 @@ import ru.sberbank.socialnetwork.users.entities.User;
 import java.util.List;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, String> {
+    List<User> findAll();
+
+    User findByUuid(String uuid);
+
     User findByEmail(String email);
 }
