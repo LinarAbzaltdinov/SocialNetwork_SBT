@@ -1,0 +1,15 @@
+server:
+  port: 8001
+
+spring:
+  application:
+    name: webui-service
+  thymeleaf:
+    prefix: classpath:/templates/
+  resources:
+    static-locations: classpath:/static/
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

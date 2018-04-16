@@ -10,6 +10,7 @@ import java.util.List;
 import static ru.sberbank.socialnetwork.users.utils.PasswordStorage.*;
 
 @RestController
+@RequestMapping("/users")
 public class UserRestController {
 
     private final UserService userService;
@@ -19,26 +20,24 @@ public class UserRestController {
         this.userService = userService;
     }
 
-    @PostMapping("/users")
+    @PostMapping("/create")
     public String addUser(@RequestParam String email,
                           @RequestParam String password) throws CannotPerformOperationException {
-        String hashPass = createHash(password);
-        User addUser = new User(email, hashPass);
-        User createdUser = userService.addUser(addUser);
+        User createdUser = userService.addUser(email, password);
         return createdUser.getUuid();
     }
 
-    @DeleteMapping("/users/{uuid}")
+    @DeleteMapping("/{uuid}")
     public boolean deleteUser(@PathVariable String uuid) {
         return userService.deleteUser(uuid);
     }
 
-    @GetMapping("/users")
+    @GetMapping("/all")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    @GetMapping(value = "/users/{uuid}", produces = "application/json")
+    @GetMapping(value = "/{uuid}", produces = "application/json")
     public User getUser(@PathVariable String uuid) {
         return userService.findUserByUuid(uuid);
     }

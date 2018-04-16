@@ -1,0 +1,18 @@
+server:
+  port: 8002
+
+spring:
+  application:
+    name: users-service
+  datasource:
+    username: scott
+    password: tiger
+    url: jdbc:postgresql://localhost:5433/users
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

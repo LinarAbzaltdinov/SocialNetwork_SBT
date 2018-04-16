@@ -1,6 +1,7 @@
 package ru.sberbank.socialnetwork.users.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.sberbank.socialnetwork.users.dao.UserRepository;
@@ -14,16 +15,20 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository,
+                           PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
     @Override
-    public User addUser(User newUser) {
-        //User newUser = new User(email, password);
+    public User addUser(String email, String password) {
+        String encodedPassword = passwordEncoder.encode(password);
+        User newUser = new User(email, encodedPassword);
         return userRepository.saveAndFlush(newUser);
     }
 

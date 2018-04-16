@@ -55,6 +55,7 @@
                 <input type="password" class="form-control" id="confirm_password"
                        placeholder="Повторите пароль" required=""/>
             </div>
+            <p th:if="${error}" th:text="${error}">No error</p>
             <button type="submit" class="btn btn-primary btn-block" id="submit-form">Зарегистрироваться
             </button>
         </form>
