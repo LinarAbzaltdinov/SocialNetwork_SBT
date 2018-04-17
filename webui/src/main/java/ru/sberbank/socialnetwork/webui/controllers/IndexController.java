@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class IndexController {
-    @GetMapping(value = {"/signin", "/signup"})
+    @GetMapping(value = {"/login", "/signup"})
     public String showLoginAndRegistrationForm(Model model) {
-        return "singin-signup";
+        return "login-signup";
     }
 
-    @PostMapping("/signin")
+    @PostMapping("/login")
     public String signIn(Model model) {
         return "fragments";
     }
