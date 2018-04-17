@@ -42,11 +42,11 @@ public class UserRestController {
         return userService.findUserByUuid(uuid);
     }
 
-    /*@PutMapping(value = "/users/{uuid}")
-    public User editUser(@PathVariable("uuid") String uuid) {
-        User foundedUser = userService.findUserByUuid(uuid);
+    @PutMapping(value = "/update")
+    public User editUser(@RequestParam User updatedUser) {
+        User foundedUser = userService.editUser(updatedUser);
         return userService.editUser(foundedUser);
-    }*/
+    }
 
     @PostMapping("/login")
     public boolean login(@RequestParam String email,

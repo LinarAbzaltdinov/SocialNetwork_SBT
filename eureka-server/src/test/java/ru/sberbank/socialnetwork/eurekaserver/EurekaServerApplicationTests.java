@@ -1,4 +1,4 @@
-package ru.sberbank.socialnetwork.webui;
+package ru.sberbank.socialnetwork.eurekaserver;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,15 +7,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class WebuiApplicationTests {
+public class EurekaServerApplicationTests {
 
-	@Test
-	public void contextLoads() {
-	}
-
-	@Test
-	public void createUserTest() {
-
-	}
+    @Test
+    public void contextLoads() {
+    }
 
 }

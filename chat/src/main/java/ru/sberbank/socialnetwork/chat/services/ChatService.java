@@ -1,19 +1,27 @@
 package ru.sberbank.socialnetwork.chat.services;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.sberbank.socialnetwork.chat.client.MessageServiceClient;
 import ru.sberbank.socialnetwork.chat.dao.ChatRepository;
 import ru.sberbank.socialnetwork.chat.entities.Chat;
 
+import java.io.IOException;
 import java.util.Collection;
 
 @Service
 public class ChatService {
+    private final ObjectMapper mapper = new ObjectMapper();
     private final ChatRepository chatRepository;
+    private final MessageServiceClient messageServiceClient;
 
     @Autowired
-    public ChatService(ChatRepository chatRepository) {
+    public ChatService(ChatRepository chatRepository,
+                       MessageServiceClient messageServiceClient) {
         this.chatRepository = chatRepository;
+        this.messageServiceClient = messageServiceClient;
     }
 
     public Chat createChat(String creatorId, String chatName) {
@@ -43,7 +51,8 @@ public class ChatService {
     }
 
     public Chat getChat(Long id) {
-        return chatRepository.findById(id);
+        Chat chat = chatRepository.findById(id);
+        return chat;
     }
 
     public Chat sendMessage(Long id, String messageId) {
