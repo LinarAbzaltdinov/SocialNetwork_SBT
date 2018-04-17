@@ -14,6 +14,7 @@
         <module>users</module>
         <module>chat</module>
         <module>message</module>
+        <module>eureka-server</module>
     </modules>
 
 </project>
