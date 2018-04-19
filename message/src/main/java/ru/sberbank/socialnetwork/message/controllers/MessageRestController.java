@@ -17,15 +17,9 @@ public class MessageRestController {
     private MessageService messageService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<MessageDTO> showMessage(@PathVariable String id) {
+    public MessageDTO showMessage(@PathVariable String id) {
         MessageDTO foundMessage = messageService.getMessage(id);
-        ResponseEntity<MessageDTO> messageResponeEntity;
-        if (foundMessage == null) {
-            messageResponeEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            messageResponeEntity = new ResponseEntity<>(foundMessage, HttpStatus.OK);
-        }
-        return messageResponeEntity;
+        return foundMessage;
     }
 
     @PostMapping("/new")
