@@ -29,7 +29,14 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public MessageDTO getMessage(String id) {
         Message foundMessage = messageRepository.findOne(id);
-        return modelMapper.map(foundMessage, MessageDTO.class);
+        return foundMessage == null
+               ? null
+               : modelMapper.map(foundMessage, MessageDTO.class);
+    }
+
+    @Override
+    public void removeMessage(String id) {
+        messageRepository.delete(id);
     }
 
     @Override
@@ -41,11 +48,21 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    public void removeMessagesOfUser(String userId) {
+        messageRepository.deleteAllByUserId(userId);
+    }
+
+    @Override
     public List<MessageDTO> getMessagesOfChat(String chatId) {
         List<Message> chatMessages =
                 messageRepository.findByChatIdOrderByCreatedDateDesc(chatId);
         return chatMessages.stream()
                 .map(messageEntity -> modelMapper.map(messageEntity, MessageDTO.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void removeMessagesOfChat(String chatId) {
+        messageRepository.deleteAllByChatId(chatId);
     }
 }

@@ -28,10 +28,30 @@ public class MessageRestController {
         return messageResponeEntity;
     }
 
+    @PostMapping("/new")
+    public String createMessage(@RequestParam String messageContent,
+                                @RequestParam String userId,
+                                @RequestParam String chatId) {
+        MessageDTO createdMessage = messageService.createMessage(userId, chatId, messageContent);
+        return createdMessage.getId();
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteMessage(@PathVariable String id) {
+        messageService.removeMessage(id);
+    }
+
     @GetMapping("/of/chat/{chatId}")
     public List<MessageDTO> showMessagesOfChat(@PathVariable String chatId) {
         List<MessageDTO> chatMessages = messageService.getMessagesOfChat(chatId);
         return chatMessages;
+    }
+
+    @DeleteMapping("/of/chat/{chatId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteMessagesOfChat(@PathVariable String chatId) {
+        messageService.removeMessagesOfChat(chatId);
     }
 
     @GetMapping("/of/user/{userId}")
@@ -40,11 +60,9 @@ public class MessageRestController {
         return userMessages;
     }
 
-    @PostMapping("/new")
-    public String createMessage(@RequestParam String messageContent,
-                                @RequestParam String userId,
-                                @RequestParam String chatId) {
-        MessageDTO createdMessage = messageService.createMessage(userId, chatId, messageContent);
-        return createdMessage.getId();
+    @DeleteMapping("/of/user/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteMessagesOfUser(@PathVariable String userId) {
+        messageService.removeMessagesOfChat(userId);
     }
 }

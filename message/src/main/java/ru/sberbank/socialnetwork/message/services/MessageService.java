@@ -12,8 +12,14 @@ public interface MessageService {
 
     MessageDTO getMessage(String id);
 
+    void removeMessage(String id);
+
     List<MessageDTO> getMessagesOfUser(String userId);
 
+    void removeMessagesOfUser(String userId);
+
     List<MessageDTO> getMessagesOfChat(String chatId);
+
+    void removeMessagesOfChat(String chatId);
 
 }
