@@ -17,7 +17,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ru.sberbank.socialnetwork.message.AppConfig;
 import ru.sberbank.socialnetwork.message.dto.MessageDTO;
+import ru.sberbank.socialnetwork.message.exceptions.ResourceNotFoundException;
 import ru.sberbank.socialnetwork.message.services.MessageServiceImpl;
+
+import java.time.LocalDateTime;
+import java.util.Random;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
@@ -46,9 +50,9 @@ public class MessageApplicationControllerUnitTests {
     }
 
     @Test
-    public void getMessage_MessageNotFound_ShouldReturnHttpStatusCode404() throws Exception {
+    public void showMessageIfMessageNotFoundShouldReturnHttpStatusCode404() throws Exception {
         String messageId = "1";
-        when(messageService.getMessage(messageId)).thenReturn(null);
+        when(messageService.getMessage(messageId)).thenThrow(new ResourceNotFoundException());
 
         mockMvc.perform(get("/messages/{id}", messageId))
                 .andExpect(status().isNotFound());
@@ -58,12 +62,12 @@ public class MessageApplicationControllerUnitTests {
     }
 
     @Test
-    public void getMessage_MessageFound_ShouldReturnFoundMessage() throws Exception {
+    public void showMessageIfMessageFoundShouldReturnFoundMessage() throws Exception {
         String messageId = "1";
         String messageContent = "Hi";
         String chatId = "2";
         String userId = "u1";
-        String createdDate = "2018-01-01 12:12";
+        String createdDate = LocalDateTime.now().toString();
 
         MessageDTO messageDTO = new MessageDTO();
         messageDTO.setChatId(chatId);
@@ -84,6 +88,34 @@ public class MessageApplicationControllerUnitTests {
                 .andExpect(jsonPath("$.createdDate", is(createdDate)));
 
         verify(messageService, times(1)).getMessage(messageId);
+        verifyNoMoreInteractions(messageService);
+    }
+
+    @Test
+    public void createMessageShouldReturnMessageId() throws Exception {
+        String messageContent = "Hi";
+        String chatId = "2";
+        String userId = "u1";
+        String randomMessageId = Long.toString(new Random().nextLong());
+
+        MessageDTO messageDTO = new MessageDTO();
+        messageDTO.setId(randomMessageId);
+        messageDTO.setCreatedDate(LocalDateTime.now().toString());
+        messageDTO.setUserId(userId);
+        messageDTO.setContent(messageContent);
+        messageDTO.setChatId(chatId);
+
+        when(messageService.createMessage(userId, chatId, messageContent)).thenReturn(messageDTO);
+
+        mockMvc.perform(
+                post("/messages/new")
+                        .param("userId", userId)
+                        .param("chatId", chatId)
+                        .param("messageContent", messageContent))
+                .andExpect(status().isOk())
+                .andExpect(content().string(randomMessageId));
+
+        verify(messageService, times(1)).createMessage(userId, chatId, messageContent);
         verifyNoMoreInteractions(messageService);
     }
 }
