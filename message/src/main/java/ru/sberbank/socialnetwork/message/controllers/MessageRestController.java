@@ -32,7 +32,7 @@ public class MessageRestController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteMessage(@PathVariable String id) {
+    public void removeMessage(@PathVariable String id) {
         messageService.removeMessage(id);
     }
 
@@ -44,7 +44,7 @@ public class MessageRestController {
 
     @DeleteMapping("/of/chat/{chatId}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteMessagesOfChat(@PathVariable String chatId) {
+    public void removeMessagesOfChat(@PathVariable String chatId) {
         messageService.removeMessagesOfChat(chatId);
     }
 
@@ -56,7 +56,7 @@ public class MessageRestController {
 
     @DeleteMapping("/of/user/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteMessagesOfUser(@PathVariable String userId) {
-        messageService.removeMessagesOfChat(userId);
+    public void removeMessagesOfUser(@PathVariable String userId) {
+        messageService.removeMessagesOfUser(userId);
     }
 }
