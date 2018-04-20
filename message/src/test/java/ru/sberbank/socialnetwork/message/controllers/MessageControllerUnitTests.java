@@ -65,7 +65,7 @@ public class MessageControllerUnitTests {
 
     @Test
     public void showMessage_IfMessageNotFound_ShouldReturnHttpStatusCode404() throws Exception {
-        String messageId = "1";
+        String messageId = Long.toString(new Random().nextLong());
         when(messageService.getMessage(messageId)).thenThrow(new ResourceNotFoundException());
 
         mockMvc.perform(get("/messages/{id}", messageId))
@@ -116,7 +116,7 @@ public class MessageControllerUnitTests {
 
     @Test
     public void removeMessage_ShouldReturnHttpStatusCode200() throws Exception {
-        String messageId = "1";
+        String messageId = Long.toString(new Random().nextLong());
 
         doNothing().when(messageService).removeMessage(messageId);
 
@@ -129,13 +129,17 @@ public class MessageControllerUnitTests {
 
     @Test
     public void showMessagesOfChat_IfChatExists_ShouldReturnListOfMessages() throws Exception {
-        String chatId = "1";
-        //String anotherChatId = "2";
-        List<MessageDTO> messagesOfChat = new ArrayList<>();
-        messagesOfChat.add(
-                new MessageDTO("1", "Message1", "1", chatId, LocalDateTime.now().toString()));
-        messagesOfChat.add(
-                new MessageDTO("2", "Message2", "2", chatId, LocalDateTime.now().toString()));
+        String chatId = Long.toString(new Random().nextLong());
+        int messagesAmount = new Random().nextInt(90) + 10;
+        List<MessageDTO> messagesOfChat = new ArrayList<>(messagesAmount);
+        for (Integer i = 0; i < messagesAmount; ++i) {
+            messagesOfChat.add(new MessageDTO(
+                    i.toString(),
+                    "Message"+i,
+                    i.toString(),
+                    chatId,
+                    LocalDateTime.now().toString()));
+        }
         //new MessageDTO("2", "Message3", "1", anotherChatId, LocalDateTime.now().toString())
 
         when(messageService.getMessagesOfChat(chatId)).thenReturn(messagesOfChat);
@@ -152,12 +156,17 @@ public class MessageControllerUnitTests {
 
     @Test
     public void showMessagesOfUser_IfChatIsNotExists_ShouldReturnEmptyList() throws Exception {
-        String userId = "1";
-        List<MessageDTO> messagesOfUser = new ArrayList<>();
-        messagesOfUser.add(
-                new MessageDTO("1", "Message1", userId, "1", LocalDateTime.now().toString()));
-        messagesOfUser.add(
-                new MessageDTO("2", "Message2", userId, "2", LocalDateTime.now().toString()));
+        String userId = Long.toString(new Random().nextLong());
+        int messagesAmount = new Random().nextInt(90) + 10;
+        List<MessageDTO> messagesOfUser = new ArrayList<>(messagesAmount);
+        for (Integer i = 0; i < messagesAmount; ++i) {
+            messagesOfUser.add(new MessageDTO(
+                    i.toString(),
+                    "Message"+i,
+                    userId,
+                    i.toString(),
+                    LocalDateTime.now().toString()));
+        }
 
         when(messageService.getMessagesOfUser(userId)).thenReturn(messagesOfUser);
 
@@ -173,12 +182,7 @@ public class MessageControllerUnitTests {
 
     @Test
     public void removeMessagesOfChat_ShouldReturnHttpStatusCode200() throws Exception {
-        String chatId = "1";
-        List<MessageDTO> messagesOfChat = new ArrayList<>();
-        messagesOfChat.add(
-                new MessageDTO("1", "Message1", "1", chatId, LocalDateTime.now().toString()));
-        messagesOfChat.add(
-                new MessageDTO("2", "Message2", "2", chatId, LocalDateTime.now().toString()));
+        String chatId = Long.toString(new Random().nextLong());
 
         doNothing().when(messageService).removeMessagesOfChat(chatId);
 
@@ -191,12 +195,7 @@ public class MessageControllerUnitTests {
 
     @Test
     public void removeMessagesOfUser_ShouldReturnHttpStatusCode200() throws Exception {
-        String userId = "1";
-        List<MessageDTO> messagesOfUser = new ArrayList<>();
-        messagesOfUser.add(
-                new MessageDTO("1", "Message1", userId, "1", LocalDateTime.now().toString()));
-        messagesOfUser.add(
-                new MessageDTO("2", "Message2", userId, "2", LocalDateTime.now().toString()));
+        String userId = Long.toString(new Random().nextLong());
 
         doNothing().when(messageService).removeMessagesOfUser(userId);
 
