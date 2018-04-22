@@ -13,11 +13,8 @@ public interface UserServiceClient {
     @GetMapping(value = "/all", consumes = "application/json")
     List<UserInfo> getAllUsers();
 
-    @GetMapping(value = "/{id}", consumes = "application/json")
-    UserInfo getUser(@PathVariable("id") String id);
-
-    @GetMapping(value = "/byToken/{token}", consumes = "application/json")
-    UserInfo getUserByToken(@PathVariable("authToken") String authToken);
+    @GetMapping(value = "/one", consumes = "application/json")
+    UserInfo getUser(@RequestHeader("Authorization") String authToken);
 
     @PostMapping(value = "/create")
     String addUser(@RequestParam("email") String email, @RequestParam("password") String password);

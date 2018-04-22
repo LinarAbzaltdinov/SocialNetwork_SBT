@@ -4,19 +4,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sberbank.socialnetwork.webui.client.AuthServiceClient;
 import ru.sberbank.socialnetwork.webui.client.UserServiceClient;
-import ru.sberbank.socialnetwork.webui.models.UserDetails;
-import ru.sberbank.socialnetwork.webui.models.UserInfo;
+import ru.sberbank.socialnetwork.webui.models.Credentials;
 
 @Service
 public class UserAuthService {
-
-    @Autowired
-    private AuthServiceClient authServiceClient;
+//
+//    @Autowired
+//    private AuthServiceClient authServiceClient;
 
     @Autowired
     private UserServiceClient userServiceClient;
 
-    public String login(UserDetails userDetails) {
+    public String login(Credentials credentials) {
         return null;
+    }
+
+    public boolean isValidToken(String authToken) {
+        return true;
     }
 }

@@ -6,7 +6,11 @@ import lombok.Data;
 public class UserInfo {
     private String id;
     private String email;
-    private String firstName;
-    private String lastName;
+    private String firstName = "";
+    private String lastName = "";
     //another?
+
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
 }

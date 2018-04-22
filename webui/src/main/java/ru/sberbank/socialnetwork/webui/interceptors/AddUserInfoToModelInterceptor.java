@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class AddUserInfoToModelInterceptor implements HandlerInterceptor {
-    @Autowired
-    private UserServiceClient userServiceClient;
+    //@Autowired
+    //private UserServiceClient userServiceClient;
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
@@ -24,7 +24,7 @@ public class AddUserInfoToModelInterceptor implements HandlerInterceptor {
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                            Object o, ModelAndView modelAndView) throws Exception {
         String authToken = httpServletRequest.getHeader("Authorization");
-        UserInfo user = userServiceClient.getUserByToken(authToken);
+        UserInfo user = new UserInfo();//userServiceClient.getUser(authToken);
         modelAndView.addObject("user", user);
     }
 
