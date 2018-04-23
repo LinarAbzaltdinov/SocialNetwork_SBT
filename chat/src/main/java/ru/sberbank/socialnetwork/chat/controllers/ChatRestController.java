@@ -2,10 +2,16 @@ package ru.sberbank.socialnetwork.chat.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.sberbank.socialnetwork.chat.dto.ChatDto;
+import ru.sberbank.socialnetwork.chat.dto.MessageDto;
 import ru.sberbank.socialnetwork.chat.entities.Chat;
 import ru.sberbank.socialnetwork.chat.services.ChatService;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class ChatRestController {
@@ -17,44 +23,74 @@ public class ChatRestController {
         this.chatService = chatService;
     }
 
-    @GetMapping("/chat/{id}")
-    public Chat getChat(@PathVariable Long id) {
-        return chatService.getChat(id);
+
+    @PostMapping("/group/{groupId}/chat/create")
+    public Long createChat(@RequestParam String creatorId,
+                           @RequestParam String chatName,
+                           @PathVariable Long groupId) {
+        return chatService.createChat(creatorId, chatName, groupId).getId();
     }
 
-    @PostMapping("/chat/new")
-    public Chat createChat(@RequestParam String creatorId,
-                           @RequestParam String chatName) {
-        return chatService.createChat(creatorId, chatName);
+    @GetMapping("/group/{groupId}/chat")
+    public Collection<Chat> getGroupChats(@PathVariable Long groupId) {
+        return chatService.getGroupChats(groupId);
     }
 
-    @GetMapping("/chat/user/{uuid}")
-    public Collection<Chat> getUserChats(@PathVariable String uuid) {
-        return chatService.getUserChats(uuid);
+    @GetMapping("/group/{groupId}/chat/user/{uuid}")
+    public Collection<ChatDto> getUserChats(@PathVariable Long groupId,
+                                         @PathVariable String uuid) {
+        return chatService.getUserChats(groupId, uuid)
+                .stream()
+                .map(ChatDto::new)
+                .collect(Collectors.toList());
     }
 
-    @PostMapping("/chat/{id}/add_user/{uuid}")
-    public Chat addUser(@PathVariable Long id,
+
+
+    @GetMapping("/chat/{chatId}")
+    public ChatDto getChat(@PathVariable Long chatId) {
+        return new ChatDto(chatService.getChat(chatId));
+    }
+
+
+    @PostMapping("/chat/{chatId}/rename")
+    public ChatDto setChatName(@PathVariable Long chatId,
+                            @RequestParam String chatName) {
+        return new ChatDto(chatService.setChatName(chatId, chatName));
+    }
+
+    @PostMapping("/chat/{chatId}/user/{uuid}/add")
+    public ChatDto addUser(@PathVariable Long chatId,
                         @PathVariable String uuid) {
-        return chatService.addUser(id, uuid);
+        return new ChatDto(chatService.addUser(chatId, uuid));
     }
 
-    @PostMapping("/chat/{id}/rm_user/{uuid}")
-    public Chat removeUser(@PathVariable Long id,
+    @PostMapping("/chat/{chatId}/user/{uuid}/remove")
+    public ChatDto removeUser(@PathVariable Long chatId,
                            @PathVariable String uuid) {
-        return chatService.removeUser(id, uuid);
+        return new ChatDto(chatService.removeUser(chatId, uuid));
     }
 
-    @PostMapping("/chat/{id}/send_msg")
-    public Chat sendMessage(@PathVariable Long id,
-                            @RequestParam String messageContent) {
+    @GetMapping("/chat/{chatId}/user")
+    public Collection<String> getChatUserUuids(@PathVariable Long chatId) {
+        return chatService.getChatUserUuids(chatId);
+    }
+
+
+
+
+    @PostMapping("/chat/{chatId}/message/send")
+    public MessageDto sendMessage(@PathVariable Long chatId,
+                                  @RequestParam String uuid,
+                                  @RequestParam String messageContent,
+                                  @RequestParam Date date) {
         // send message
-        String messageId = "";
-        return chatService.sendMessage(id, messageId);
+        return null;// new MessageDto();
     }
 
-    @GetMapping("/chat/{id}/users")
-    public Collection<String> getChatUsers(@PathVariable Long id) {
-        return chatService.getChatUsers(id);
+    @GetMapping("/chat/{chatId}/message/get")
+    public List<MessageDto> getMessages(@PathVariable Long chatId) {
+        // get message;
+        return new ArrayList<>();
     }
 }
