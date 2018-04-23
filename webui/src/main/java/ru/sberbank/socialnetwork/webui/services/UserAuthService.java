@@ -16,7 +16,7 @@ public class UserAuthService {
     private UserServiceClient userServiceClient;
 
     public String login(Credentials credentials) {
-        return null;
+        return "123123";
     }
 
     public boolean isValidToken(String authToken) {

@@ -18,7 +18,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(addUserInfoToModelInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/login", "/signup", "/", "/index");
+                .excludePathPatterns("/login", "/signup");
     }
 
 }

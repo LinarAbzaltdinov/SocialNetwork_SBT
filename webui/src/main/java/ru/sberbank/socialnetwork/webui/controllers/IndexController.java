@@ -1,6 +1,7 @@
 package ru.sberbank.socialnetwork.webui.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import ru.sberbank.socialnetwork.webui.models.UserInfo;
 import ru.sberbank.socialnetwork.webui.services.UserAuthService;
 import ru.sberbank.socialnetwork.webui.services.UserInfoService;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -59,8 +61,7 @@ public class IndexController {
             model.addAttribute("error", ERROR_WRONG_CREDENTIALS);
             return "login-signup";
         }
-        String authToken = authService.login(credentials);
-        response.addHeader("Authorization", authToken);
+        addAuthTokenToResponse(credentials, response);
         return "redirect:/groups";
     }
 
@@ -72,8 +73,27 @@ public class IndexController {
             model.addAttribute("error", ERROR_EMAIL_REGISTERED);
             return "login-signup";
         }
-        String authToken = authService.login(credentials);
-        response.addHeader("Authorization", authToken);
+        addAuthTokenToResponse(credentials, response);
         return "redirect:/user";
+    }
+
+    @GetMapping("/logout")
+    public String logout (HttpServletRequest request, HttpServletResponse response) {
+        clearCookies(request.getCookies(), response);
+        return "redirect:/login?logout";
+    }
+
+    private void clearCookies(Cookie[] cookies, HttpServletResponse response) {
+        for (Cookie cookie : cookies) {
+            cookie.setMaxAge(0);
+            cookie.setValue(null);
+            cookie.setPath("/");
+            response.addCookie(cookie);
+        }
+    }
+
+    private void addAuthTokenToResponse(Credentials credentials, HttpServletResponse response) {
+        String authToken = authService.login(credentials);
+        response.addCookie(new Cookie(HttpHeaders.AUTHORIZATION, authToken));
     }
 }

@@ -4,11 +4,10 @@ import lombok.Data;
 
 @Data
 public class UserInfo {
-    private String id;
     private String email;
     private String firstName = "";
     private String lastName = "";
-    //another?
+    private String birthDate = "";
 
     public String getFullName() {
         return firstName + " " + lastName;
