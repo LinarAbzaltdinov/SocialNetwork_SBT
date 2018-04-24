@@ -38,7 +38,6 @@ public class GroupRestController {
                 .stream()
                 .map(GroupDto::new)
                 .collect(Collectors.toList());
-
     }
 
     @GetMapping("/group/{groupId}")

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:with="lang=${#locale.language}" th:lang="${lang}">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Профиль пользователя</title>
+    <div th:replace="fragments :: css"></div>
+</head>
+<body>
+<div th:replace="fragments :: navbar"></div>
+
+<div class="container">
+    <ul class="nav nav-tabs" >
+        <li class="active"><a href="#profile" data-toggle="tab">Профиль пользователя</a></li>
+        <li ><a href="#password" data-toggle="tab">Пароль</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="profile">
+            <div class="row">
+                <div class="col-md-10 ">
+                    <form th:action="@{/user/updateInfo}" method="post" th:object="${user}" class="form-horizontal">
+                        <fieldset>
+                            <div class="form-group"></div>
+
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="Email">Email</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-envelope-o"></i>
+                                        </div>
+                                        <input id="Email" name="Email" type="text" placeholder="Email"
+                                               class="form-control input-md" readonly="readonly" th:value="*{email}"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="FirstName">Имя</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-user">
+                                            </i>
+                                        </div>
+                                        <input id="FirstName" name="FirstName" type="text" placeholder="Имя"
+                                               class="form-control input-md" th:value="*{firstName}"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="LastName">Фамилия</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-user">
+                                            </i>
+                                        </div>
+                                        <input id="LastName" name="LastName" type="text" placeholder="Фамилия"
+                                               class="form-control input-md" th:value="*{lastName}"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- File Button -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="Photo">Загрузить фото</label>
+                                <div class="col-md-4">
+                                    <input id="Photo" name="Photo" class="input-file" type="file"/>
+                                </div>
+                            </div>
+
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="BirthDate">Дата рождения</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-birthday-cake"></i>
+                                        </div>
+                                        <input id="BirthDate" name="BirthDate" type="date" placeholder="Дата рождения"
+                                               class="form-control input-md" th:value="*{birthDate}"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Multiple Radios (inline) -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Пол</label>
+                                <div class="col-md-4">
+                                    <label class="radio-inline" for="Gender-0">
+                                        <input type="radio" name="Gender" id="Gender-0" value="1" checked="checked"/>
+                                        Мужской
+                                    </label>
+                                    <label class="radio-inline" for="Gender-1">
+                                        <input type="radio" name="Gender" id="Gender-1" value="2"/>
+                                        Женский
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"></label>
+                                <div class="col-md-4">
+                                    <input type="submit" class="btn btn-success" value="Сохранить изменения"/>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="col-md-2 hidden-xs">
+                    <img th:src="@{/images/avatar.jpg}" class="img-responsive img-thumbnail "/>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="password">
+            <div class="row">
+                <div class="col-md-10 ">
+                    <form th:action="@{/user/updatePassword}" method="post" class="form-horizontal">
+                        <fieldset>
+                            <div class="form-group"></div>
+
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Новый пароль</label>
+                                <div class="col-md-4">
+                                    <input id="newPassword" name="newPassword" type="password"
+                                           placeholder="Новый пароль"
+                                           class="form-control input-md"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"></label>
+                                <div class="col-md-4">
+                                    <input type="submit" class="btn btn-success" value="Сохранить изменения"/>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments :: js"></div>
+</body>
+</html>

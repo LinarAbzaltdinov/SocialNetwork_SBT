@@ -46,7 +46,7 @@ public class GroupService {
     }
 
     public Collection<Group> getUserGroups(String uuid) {
-        return groupRepository.findByUsersUuid(uuid);
+        return groupUserRepository.findUserGroups(uuid);
     }
 
     public Group getGroupById(Long groupId) {

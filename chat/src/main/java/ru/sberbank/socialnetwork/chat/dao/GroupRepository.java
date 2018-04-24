@@ -13,9 +13,6 @@ public interface GroupRepository extends Repository<Group, Long> {
 
     Group findById(Long id);
 
-    @Query("select g from Group g where g.users.uuid = :#{#uuid}")
-    Collection<Group> findByUsersUuid(@Param("uuid")String uuid);
-
     Collection<Group> findByGroupNameStartingWith(String prefix);
 
     Collection<Group> findByInvitedUserUuids(String uuid);
