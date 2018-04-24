@@ -14,13 +14,15 @@ import java.util.List;
 @FeignClient("chat-service")
 public interface ChatServiceClient {
     @PostMapping(value = "/group/create")
+    @ResponseBody
     Group createGroup(@RequestParam("groupName") String groupName,
                      @RequestParam("description") String description,
                      @RequestParam("isOpened") boolean isOpened,
                      @RequestParam("creatorId") String creatorId);
 
-    @GetMapping(value = "/group/user/{userId}", consumes = "application/json")
-    String getUserGroups(@PathVariable("userId") String userId);
+    @GetMapping(value = "/group/user/{uuid}", consumes = "application/json")
+    @ResponseBody
+    List<Group> getUserGroups(@PathVariable("uuid") String uuid);
 
     @GetMapping(value = "/group/{groupId}")
     Group getGroupById(@PathVariable("groupId") Long groupId);

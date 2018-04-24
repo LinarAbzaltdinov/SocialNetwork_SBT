@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sberbank.socialnetwork.webui.client.ChatServiceClient;
 import ru.sberbank.socialnetwork.webui.models.Group;
+import ru.sberbank.socialnetwork.webui.models.UserInfo;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,19 +14,22 @@ import java.util.List;
 public class GroupService {
 
     private final ChatServiceClient chatServiceClient;
+    private final UserInfoService userInfoService;
 
     @Autowired
-    public GroupService(ChatServiceClient chatServiceClient) {
+    public GroupService(ChatServiceClient chatServiceClient, UserInfoService userInfoService) {
         this.chatServiceClient = chatServiceClient;
+        this.userInfoService = userInfoService;
     }
 
-    public String getGroups(String userId) {
-        String userGroups = chatServiceClient.getUserGroups(userId);
+    public List<Group> getGroups(String userId) {
+        List<Group> userGroups = chatServiceClient.getUserGroups(userId);
         return userGroups;
     }
 
-    public static Group createGroup(String authToken, Group group) {
-        return new Group();
+    public Group createGroup(String userId, Group newGroup) {
+        return chatServiceClient.createGroup(newGroup.getGroupName(),
+                newGroup.getDescription(),true, userId);
     }
 
     public List<Group> getAllGroups(String id) {

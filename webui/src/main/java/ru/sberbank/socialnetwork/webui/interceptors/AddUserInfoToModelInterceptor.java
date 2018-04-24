@@ -25,12 +25,12 @@ public class AddUserInfoToModelInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                            Object o, ModelAndView modelAndView) throws Exception {
-        Object emailAttribute = httpServletRequest.getSession().getAttribute("email");
-        if (modelAndView == null || emailAttribute == null) {
+        Object userIdAttribute = httpServletRequest.getSession().getAttribute("userId");
+        if (modelAndView == null || userIdAttribute == null) {
             return;
         }
-        String email = emailAttribute.toString();
-        UserInfo user = userInfoService.getUserByEmail(email);
+        String userId = userIdAttribute.toString();
+        UserInfo user = userInfoService.getUser(userId);
         modelAndView.addObject("user", user);
     }
 

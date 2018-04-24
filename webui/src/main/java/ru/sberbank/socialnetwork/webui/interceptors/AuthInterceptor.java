@@ -20,8 +20,8 @@ public class AuthInterceptor  implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                              Object o) throws Exception {
         HttpSession session = httpServletRequest.getSession();
-        Object email = session.getAttribute("email");
-        return email != null;
+        Object userId = session.getAttribute("userId");
+        return userId != null;
     }
 
     @Override

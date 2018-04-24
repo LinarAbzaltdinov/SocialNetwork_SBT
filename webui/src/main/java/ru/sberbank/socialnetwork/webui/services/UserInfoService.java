@@ -48,4 +48,10 @@ public class UserInfoService {
 
     }
 
+    public UserInfo getUser(String userId) {
+        ResponseEntity<UserInfo> foundUser = userServiceClient.getUser(userId);
+        return foundUser.getStatusCode().is2xxSuccessful()
+               ? foundUser.getBody()
+               : null;
+    }
 }

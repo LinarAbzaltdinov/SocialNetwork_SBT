@@ -26,7 +26,7 @@ public class GroupRestController {
     }
 
     @PostMapping("/group/create")
-    public GroupDto createChat(@RequestParam String groupName,
+    public GroupDto createGroup(@RequestParam String groupName,
                                @RequestParam String description,
                                @RequestParam boolean isOpened,
                                @RequestParam String creatorId) {

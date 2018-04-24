@@ -15,6 +15,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/groups")
 public class GroupController {
+
+    private static final String SESSION_ATTR_USER = "userId";
     private final GroupService groupService;
     private final UserInfoService userInfoService;
 
@@ -25,25 +27,25 @@ public class GroupController {
     }
 
     @GetMapping("")
-    public String showAllGroups(Model model, @SessionAttribute("email") String userEmail) {
-        UserInfo user = userInfoService.getUserByEmail(userEmail);
-        String userGroups = groupService.getGroups(user.getUuid());
+    public String showAllGroups(Model model, @SessionAttribute(SESSION_ATTR_USER) String userId) {
+        List<Group> userGroups = groupService.getGroups(userId);
         model.addAttribute("myGroups", userGroups);
-        List<Group> allGroups = groupService.getAllGroups(user.getUuid());
-        model.addAttribute("allGroups", userGroups);
+        List<Group> allGroups = groupService.getAllGroups(userId);
+        model.addAttribute("allGroups", allGroups);
         return "groups";
     }
 
     @GetMapping("/new")
-    public String newGroup(Model model, @CookieValue(HttpHeaders.AUTHORIZATION) String authToken) {
-        model.addAttribute("group", new Group());
+    public String newGroup(Model model, @SessionAttribute(SESSION_ATTR_USER) String userId) {
+        Group newGroup = new Group();
+        model.addAttribute("group", newGroup);
         return "newPage";
     }
 
     @PostMapping("/new")
     public String createGroup(Model model, @ModelAttribute("group") Group group,
-                              @CookieValue(HttpHeaders.AUTHORIZATION) String authToken) {
-        Group createdGroup = GroupService.createGroup(authToken, group);
+                              @SessionAttribute(SESSION_ATTR_USER) String userId) {
+        Group createdGroup = groupService.createGroup(userId, group);
         return "redirect:/groups/" + createdGroup.getId();
     }
 

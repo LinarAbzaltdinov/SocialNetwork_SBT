@@ -33,16 +33,17 @@ public class GroupService {
     public Group createGroup(String groupName, String description, boolean isOpened, String creatorId) {
 
         Group group = new Group(groupName, description, isOpened, creatorId);
+        Group persistedGroup = groupRepository.save(group);
+
         Chat chat = new Chat(creatorId,  MAIN_CHAT_NAME, group);
-        GroupUser user = new GroupUser(creatorId, UserAccessMode.ADMINISTRATOR, group);
-
-        group.getUsers().add(user);
-        group.getChats().add(chat);
-
-        groupUserRepository.save(user);
         chatRepository.save(chat);
 
-        return groupRepository.save(group);
+        GroupUser user = new GroupUser(creatorId, UserAccessMode.ADMINISTRATOR, group);
+        group.getUsers().add(user);
+        group.getChats().add(chat);
+        groupUserRepository.save(user);
+
+        return persistedGroup;
     }
 
     public Collection<Group> getUserGroups(String uuid) {
