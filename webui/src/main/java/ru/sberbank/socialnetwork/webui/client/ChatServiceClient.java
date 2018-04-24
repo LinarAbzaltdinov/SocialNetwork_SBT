@@ -49,8 +49,7 @@ public interface ChatServiceClient {
                   @RequestParam Integer mode);
 
     @PostMapping("/group/{groupId}/user/{uuid}/remove")
-    Group removeUserFromGroup(@PathVariable Long groupId,
-                     @PathVariable String uuid);
+    Group removeUserFromGroup(@PathVariable Long groupId, @PathVariable String uuid);
 
     @PostMapping("/group/{groupId}/change")
     Group changeGroupParameters(@PathVariable Long groupId,
@@ -60,27 +59,24 @@ public interface ChatServiceClient {
 
     @PostMapping("/group/{groupId}/chat/create")
     Long createChat(@RequestParam String creatorId,
-                           @RequestParam String chatName,
-                           @PathVariable Long groupId);
+                    @RequestParam String chatName,
+                    @PathVariable Long groupId);
 
     @GetMapping("/group/{groupId}/chat")
     Collection<Chat> getGroupChats(@PathVariable Long groupId);
 
     @GetMapping("/group/{groupId}/chat/user/{uuid}")
-    Collection<Chat> getUserChats(@PathVariable Long groupId,
-                                            @PathVariable String uuid);
+    Collection<Chat> getUserChats(@PathVariable Long groupId, @PathVariable String uuid);
 
     @GetMapping("/chat/{chatId}")
     Chat getChat(@PathVariable Long chatId);
 
 
     @PostMapping("/chat/{chatId}/rename")
-    Chat setChatName(@PathVariable Long chatId,
-                               @RequestParam String chatName);
+    Chat setChatName(@PathVariable Long chatId, @RequestParam String chatName);
 
     @PostMapping("/chat/{chatId}/user/{uuid}/add")
-    Chat addUser(@PathVariable Long chatId,
-                           @PathVariable String uuid);
+    Chat addUser(@PathVariable Long chatId, @PathVariable String uuid);
 
     @PostMapping("/chat/{chatId}/user/{uuid}/remove")
     Chat removeUserFromChat(@PathVariable Long chatId, @PathVariable String uuid);
