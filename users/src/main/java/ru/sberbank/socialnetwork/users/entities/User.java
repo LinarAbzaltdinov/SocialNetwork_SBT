@@ -43,10 +43,10 @@ public class User implements Serializable {
     private String password;
 
     @Column(name = "firstName")
-    private String firstName;
+    private String firstName = "";
 
     @Column(name = "lastName")
-    private String lastName;
+    private String lastName = "";
 
     @Column(name = "photoId")
     private String photoId;

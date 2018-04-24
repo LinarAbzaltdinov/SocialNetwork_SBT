@@ -50,12 +50,13 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User editUser(User oldUser) {
-        User model = oldUser;
-        if (model.getUuid() == null) {
-            model.setUuid(UUID.randomUUID().toString());
+    public User editUser(User updatedUser) {
+        User oldUser = findUserByEmail(updatedUser.getEmail());
+        if (oldUser == null) {
+            return null;
         }
-        return userRepository.saveAndFlush(model);
+        updatedUser.setUuid(oldUser.getUuid());
+        return userRepository.saveAndFlush(updatedUser);
     }
 
     @Transactional(readOnly = true)
@@ -73,7 +74,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean login(String email, String password) {
-        String foundUserPassword = userRepository.findByEmail(email).getPassword();
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            return false;
+        }
+        String foundUserPassword = user.getPassword();
         boolean result = passwordEncoder.matches(password, foundUserPassword);
         return result;
     }

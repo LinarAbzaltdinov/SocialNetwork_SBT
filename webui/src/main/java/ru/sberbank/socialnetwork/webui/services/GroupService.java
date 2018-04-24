@@ -13,7 +13,7 @@ public class GroupService {
     @Autowired
     ChatServiceClient chatServiceClient;
 
-    public static List<Group> getGroups(String authToken) {
+    public static List<Group> getGroups(String userEmail) {
         List<Group> groups = new ArrayList<>();
         Group group = new Group();
         group.setAmount(5);

@@ -15,7 +15,7 @@ function sendMessage() {
     if (!messageText) {
         return false;
     }
-    chatId = 1;
+    chatId = 1; //>>>>>>>БРАТЬ ЧАТ АЙДИ ОТКУДА-ТО<<<<<<<<<<<<
     $.ajax({
         url: '/chat/' + chatId + '/sendMessage',
         method: 'post',

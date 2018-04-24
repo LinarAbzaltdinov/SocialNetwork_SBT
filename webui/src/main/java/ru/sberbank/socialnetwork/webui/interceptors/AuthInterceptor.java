@@ -6,12 +6,12 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.sberbank.socialnetwork.webui.models.UserInfo;
 import ru.sberbank.socialnetwork.webui.services.UserInfoService;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
+import javax.servlet.http.HttpSession;
 
-public class AddUserInfoToModelInterceptor implements HandlerInterceptor {
+public class AuthInterceptor  implements HandlerInterceptor {
+    public static final String AUTH_COOKIE = "Authorization";
 
     @Autowired
     private UserInfoService userInfoService;
@@ -19,19 +19,14 @@ public class AddUserInfoToModelInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                              Object o) throws Exception {
-        return true;
+        HttpSession session = httpServletRequest.getSession();
+        Object email = session.getAttribute("email");
+        return email != null;
     }
 
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                            Object o, ModelAndView modelAndView) throws Exception {
-        Object emailAttribute = httpServletRequest.getSession().getAttribute("email");
-        if (modelAndView == null || emailAttribute == null) {
-            return;
-        }
-        String email = emailAttribute.toString();
-        UserInfo user = userInfoService.getUserByEmail(email);
-        modelAndView.addObject("user", user);
     }
 
     @Override

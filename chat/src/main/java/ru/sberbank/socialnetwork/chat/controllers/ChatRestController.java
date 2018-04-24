@@ -45,8 +45,6 @@ public class ChatRestController {
                 .collect(Collectors.toList());
     }
 
-
-
     @GetMapping("/chat/{chatId}")
     public ChatDto getChat(@PathVariable Long chatId) {
         return new ChatDto(chatService.getChat(chatId));
@@ -75,9 +73,6 @@ public class ChatRestController {
     public Collection<String> getChatUserUuids(@PathVariable Long chatId) {
         return chatService.getChatUserUuids(chatId);
     }
-
-
-
 
     @PostMapping("/chat/{chatId}/message/send")
     public MessageDto sendMessage(@PathVariable Long chatId,

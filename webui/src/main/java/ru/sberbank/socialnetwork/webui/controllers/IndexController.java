@@ -9,30 +9,27 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.sberbank.socialnetwork.webui.models.Credentials;
 import ru.sberbank.socialnetwork.webui.models.UserInfo;
-import ru.sberbank.socialnetwork.webui.services.UserAuthService;
 import ru.sberbank.socialnetwork.webui.services.UserInfoService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Controller
 public class IndexController {
 
-    public static final String ERROR_EMAIL_REGISTERED = "Данный email уже зарегистрирован";
+    public static final String ERROR_EMAIL_EXIST = "Данный email уже зарегистрирован";
     public static final String ERROR_WRONG_CREDENTIALS = "Введен неправильный email или пароль";
-
-    @Autowired
-    UserAuthService authService;
 
     @Autowired
     UserInfoService userService;
 
     @GetMapping(value = {"/", "/index"})
-    public String index(Model model, HttpServletRequest request) {
-        String authToken = request.getHeader("Authorization");
-        if (authToken == null || !authService.isValidToken(authToken)) {
+    public String index(HttpSession httpSession) {
+        Object sessionUserId = httpSession.getAttribute("email");
+        if (sessionUserId == null) {
             return "redirect:/login";
         } else {
             return "redirect:/groups";
@@ -41,59 +38,47 @@ public class IndexController {
 
     @GetMapping(value = "/login")
     public String showLoginForm(Model model) {
-        model.addAttribute("formAction", "login");
         model.addAttribute("user", new Credentials());
         return "login-signup";
     }
 
     @GetMapping(value = "/signup")
     public String showRegistrationForm(Model model) {
-        model.addAttribute("formAction", "signup");
         model.addAttribute("user", new Credentials());
         return "login-signup";
     }
 
     @PostMapping("/login")
     public String login(Model model, @ModelAttribute("user") Credentials credentials,
-                        HttpServletResponse response) throws IOException {
+                        HttpSession httpSession) throws IOException {
         boolean isCredentialsAccepted = userService.verify(credentials);
         if (!isCredentialsAccepted) {
             model.addAttribute("error", ERROR_WRONG_CREDENTIALS);
             return "login-signup";
         }
-        addAuthTokenToResponse(credentials, response);
+        addUserIdToSession(credentials, httpSession);
         return "redirect:/groups";
     }
 
     @PostMapping("/signup")
     public String signUp(Model model, @ModelAttribute("user") Credentials credentials,
-                         HttpServletResponse response) throws IOException {
-        UserInfo userInfo = userService.createUser(credentials);
-        if (userInfo == null) {
-            model.addAttribute("error", ERROR_EMAIL_REGISTERED);
+                         HttpSession httpSession) throws IOException {
+        boolean isUserCreated = userService.createUser(credentials);
+        if (!isUserCreated) {
+            model.addAttribute("error", ERROR_EMAIL_EXIST);
             return "login-signup";
         }
-        addAuthTokenToResponse(credentials, response);
+        addUserIdToSession(credentials, httpSession);
         return "redirect:/user";
     }
 
     @GetMapping("/logout")
-    public String logout (HttpServletRequest request, HttpServletResponse response) {
-        clearCookies(request.getCookies(), response);
+    public String logout(HttpSession httpSession) {
+        httpSession.invalidate();
         return "redirect:/login?logout";
     }
 
-    private void clearCookies(Cookie[] cookies, HttpServletResponse response) {
-        for (Cookie cookie : cookies) {
-            cookie.setMaxAge(0);
-            cookie.setValue(null);
-            cookie.setPath("/");
-            response.addCookie(cookie);
-        }
-    }
-
-    private void addAuthTokenToResponse(Credentials credentials, HttpServletResponse response) {
-        String authToken = authService.login(credentials);
-        response.addCookie(new Cookie(HttpHeaders.AUTHORIZATION, authToken));
+    private void addUserIdToSession(Credentials credentials, HttpSession httpSession) {
+        httpSession.setAttribute("email", credentials.getEmail());
     }
 }

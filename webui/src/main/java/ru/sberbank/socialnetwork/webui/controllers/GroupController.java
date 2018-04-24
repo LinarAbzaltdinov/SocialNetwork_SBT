@@ -13,17 +13,17 @@ import java.util.List;
 @RequestMapping("/groups")
 public class GroupController {
     @GetMapping("")
-    public String showAllGroups(Model model, @CookieValue(HttpHeaders.AUTHORIZATION) String authToken) {
-        List<Group> userGroups = GroupService.getGroups(authToken);
-        model.addAttribute("myGroups", userGroups);
-        model.addAttribute("allGroups", userGroups);
+    public String showAllGroups(Model model, @SessionAttribute("email") String userEmail) {
+//        List<Group> userGroups = GroupService.getGroups(authToken);
+//        model.addAttribute("myGroups", userGroups);
+//        model.addAttribute("allGroups", userGroups);
         return "groups";
     }
 
     @GetMapping("/new")
     public String newGroup(Model model, @CookieValue(HttpHeaders.AUTHORIZATION) String authToken) {
         model.addAttribute("group", new Group());
-        return "groupPage";
+        return "newPage";
     }
 
     @PostMapping("/new")
