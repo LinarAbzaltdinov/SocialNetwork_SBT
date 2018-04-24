@@ -29,4 +29,8 @@ public class UserInfoService {
     public void update(UserInfo user) {
         this.user = user;
     }
+
+    public void updatePassword(String newPassword) {
+
+    }
 }

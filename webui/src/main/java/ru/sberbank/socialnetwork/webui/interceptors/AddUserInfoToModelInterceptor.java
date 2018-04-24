@@ -30,12 +30,15 @@ public class AddUserInfoToModelInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                            Object o, ModelAndView modelAndView) throws Exception {
+        if (modelAndView == null) {
+            return;
+        }
         Cookie[] cookies = httpServletRequest.getCookies();
         Cookie authCookie = Arrays.stream(cookies)
                 .filter(c -> c.getName().equals(AUTH_COOKIE))
                 .findFirst()
                 .orElse(null);
-        if (authCookie == null) {
+        if (authCookie == null || authCookie.getValue() == null) {
             return;
         }
         String authToken = authCookie.getValue();

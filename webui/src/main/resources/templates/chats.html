@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title> Чаты </title>
     <div th:replace="fragments :: css"></div>
-    <link th:href="@{css/chat.css}" rel="stylesheet"/>
+    <link th:href="@{/css/chat.css}" rel="stylesheet"/>
 </head>
 <body>
 <div th:replace="fragments :: navbar"></div>
@@ -15,9 +15,7 @@
         <div class="col-md-2">
             <nav class="nav-sidebar">
                 <ul class="nav">
-                    <li value="1" class="active"><a href="#">general</a></li>
-                    <li value="2"><a href="#">homework</a></li>
-                    <li value="3"><a href="#">project</a></li>
+                    <li th:each="chat : ${chats}" th:value="${chat.id}"><a href="#" th:text="${chat.name}">Name</a></li>
                     <li class="nav-divider"></li>
                 </ul>
             </nav>
@@ -92,8 +90,8 @@
             </div>
             <div class="panel-footer">
                 <div class="input-group">
-                    <input id="btn-input" type="text" class="form-control input-sm"
-                           placeholder="Type your message here..."/>
+                    <input id="message-input" type="text" class="form-control input-sm"
+                           placeholder="Введите сообщение здесь..."/>
                     <span class="input-group-btn">
                             <button class="btn btn-warning btn-sm" id="btn-chat">
                                 Send</button>
@@ -104,5 +102,6 @@
     </div>
 </div>
 <div th:replace="fragments :: js"></div>
+<script th:src="@{/js/chat.js}"></script>
 </body>
 </html>
