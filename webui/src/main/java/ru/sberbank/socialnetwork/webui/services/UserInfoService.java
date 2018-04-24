@@ -10,8 +10,14 @@ import ru.sberbank.socialnetwork.webui.models.UserInfo;
 
 @Service
 public class UserInfoService {
+
+    private final UserServiceClient userServiceClient;
+
     @Autowired
-    UserServiceClient userServiceClient;
+    public UserInfoService(UserServiceClient userServiceClient) {
+        this.userServiceClient = userServiceClient;
+    }
+
 
     public boolean verify(Credentials credentials) {
         boolean isCredentialsValid = userServiceClient.login(credentials.getEmail(), credentials.getPassword());

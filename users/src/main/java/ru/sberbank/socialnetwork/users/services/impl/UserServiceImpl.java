@@ -51,12 +51,12 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public User editUser(User updatedUser) {
-        User oldUser = findUserByEmail(updatedUser.getEmail());
-        if (oldUser == null) {
+        User foundUser = findUserByEmail(updatedUser.getEmail());
+        if (foundUser == null) {
             return null;
         }
-        updatedUser.setUuid(oldUser.getUuid());
-        return userRepository.saveAndFlush(updatedUser);
+        foundUser.update(updatedUser);
+        return userRepository.saveAndFlush(foundUser);
     }
 
     @Transactional(readOnly = true)

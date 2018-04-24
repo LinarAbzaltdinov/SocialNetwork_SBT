@@ -6,12 +6,16 @@ import org.springframework.data.repository.query.Param;
 import ru.sberbank.socialnetwork.chat.entities.Group;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface GroupRepository extends Repository<Group, Long> {
 
     Group save(Group entity);
 
     Group findById(Long id);
+
+    @Query("select g from Group g left join g.users u where u.uuid = :uuid")
+    List<Group> findByUsersUuid(@Param("uuid") String uuid);
 
     Collection<Group> findByGroupNameStartingWith(String prefix);
 

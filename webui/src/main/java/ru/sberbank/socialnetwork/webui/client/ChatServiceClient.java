@@ -13,83 +13,83 @@ import java.util.List;
 
 @FeignClient("chat-service")
 public interface ChatServiceClient {
-    @PostMapping("/group/create")
-    Group createChat(@RequestParam String groupName,
-                     @RequestParam String description,
-                     @RequestParam boolean isOpened,
-                     @RequestParam String creatorId);
+    @PostMapping(value = "/group/create")
+    Group createGroup(@RequestParam("groupName") String groupName,
+                     @RequestParam("description") String description,
+                     @RequestParam("isOpened") boolean isOpened,
+                     @RequestParam("creatorId") String creatorId);
 
-    @GetMapping("/group/user/{uuid}")
-    Collection<Group> getUserGroups(@PathVariable String uuid);
+    @GetMapping(value = "/group/user/{userId}", consumes = "application/json")
+    String getUserGroups(@PathVariable("userId") String userId);
 
-    @GetMapping("/group/{groupId}")
-    Group getGroupById(@PathVariable Long groupId);
+    @GetMapping(value = "/group/{groupId}")
+    Group getGroupById(@PathVariable("groupId") Long groupId);
+//
+//    @GetMapping("/group/prefix/{prefix}")
+//    Collection<Group> getGroupsByPrefix(@PathVariable String prefix);
+//
+//    @GetMapping("/group/{groupId}/users")
+//    Collection<UserInfo> getGroupUsers(@PathVariable Long groupId);
+//
+//    @GetMapping("/group/user/{uuid}/invites")
+//    Collection<Group> getUserGroupInvites(@PathVariable String uuid);
+//
+//    @PostMapping("/group/{groupId}/user/{uuid}/invite")
+//    Group inviteUser(@PathVariable Long groupId, @PathVariable String uuid);
+//
+//    @PostMapping("/group/{groupId}/user/{uuid}/invite/accept")
+//    Group acceptInvite(@PathVariable Long groupId, @PathVariable String uuid);
+//
+//    @PostMapping("/group/{groupId}/user/{uuid}/invite/deny")
+//    Group denyInvite(@PathVariable Long groupId, @PathVariable String uuid);
 
-    @GetMapping("/group/prefix/{prefix}")
-    Collection<Group> getGroupsByPrefix(@PathVariable String prefix);
+    @PostMapping(value = "/group/{groupId}/user/{uuid}/add")
+    Group addUser(@PathVariable("groupId") Long groupId,
+                  @PathVariable("uuid") String uuid,
+                  @RequestParam("mode") Integer mode);
 
-    @GetMapping("/group/{groupId}/users")
-    Collection<UserInfo> getGroupUsers(@PathVariable Long groupId);
+    @PostMapping(value = "/group/{groupId}/user/{uuid}/remove")
+    Group removeUserFromGroup(@PathVariable("groupId") Long groupId,
+                              @PathVariable("uuid") String uuid);
 
-    @GetMapping("/group/user/{uuid}/invites")
-    Collection<Group> getUserGroupInvites(@PathVariable String uuid);
+//    @PostMapping("/group/{groupId}/change")
+//    Group changeGroupParameters(@PathVariable Long groupId,
+//                                @RequestParam String groupName,
+//                                @RequestParam String description,
+//                                @RequestParam boolean isOpened);
 
-    @PostMapping("/group/{groupId}/user/{uuid}/invite")
-    Group inviteUser(@PathVariable Long groupId, @PathVariable String uuid);
+    @PostMapping(value = "/group/{groupId}/chat/create")
+    Long createChat(@RequestParam("creatorId") String creatorId,
+                    @RequestParam("chatName") String chatName,
+                    @PathVariable("groupId") Long groupId);
 
-    @PostMapping("/group/{groupId}/user/{uuid}/invite/accept")
-    Group acceptInvite(@PathVariable Long groupId, @PathVariable String uuid);
+    @GetMapping(value = "/group/{groupId}/chat")
+    Collection<Chat> getGroupChats(@PathVariable("groupId") Long groupId);
 
-    @PostMapping("/group/{groupId}/user/{uuid}/invite/deny")
-    Group denyInvite(@PathVariable Long groupId, @PathVariable String uuid);
+//    @GetMapping("/group/{groupId}/chat/user/{uuid}")
+//    Collection<Chat> getUserChats(@PathVariable Long groupId, @PathVariable String uuid);
+//
+//    @GetMapping("/chat/{chatId}")
+//    Chat getChat(@PathVariable Long chatId);
+//
+//    @PostMapping("/chat/{chatId}/rename")
+//    Chat setChatName(@PathVariable Long chatId, @RequestParam String chatName);
+//
+//    @PostMapping("/chat/{chatId}/user/{uuid}/add")
+//    Chat addUser(@PathVariable Long chatId, @PathVariable String uuid);
+//
+//    @PostMapping("/chat/{chatId}/user/{uuid}/remove")
+//    Chat removeUserFromChat(@PathVariable Long chatId, @PathVariable String uuid);
+//
+//    @GetMapping("/chat/{chatId}/user")
+//    Collection<String> getChatUserUuids(@PathVariable Long chatId);
 
-    @PostMapping("/group/{groupId}/user/{uuid}/add")
-    Group addUser(@PathVariable Long groupId,
-                  @PathVariable String uuid,
-                  @RequestParam Integer mode);
+    @PostMapping(value = "/chat/{chatId}/message/send")
+    Message sendMessage(@PathVariable("chatId") Long chatId,
+                        @RequestParam("uuid") String uuid,
+                        @RequestParam("messageContent") String messageContent,
+                        @RequestParam("date") LocalDateTime date);
 
-    @PostMapping("/group/{groupId}/user/{uuid}/remove")
-    Group removeUserFromGroup(@PathVariable Long groupId, @PathVariable String uuid);
-
-    @PostMapping("/group/{groupId}/change")
-    Group changeGroupParameters(@PathVariable Long groupId,
-                                @RequestParam String groupName,
-                                @RequestParam String description,
-                                @RequestParam boolean isOpened);
-
-    @PostMapping("/group/{groupId}/chat/create")
-    Long createChat(@RequestParam String creatorId,
-                    @RequestParam String chatName,
-                    @PathVariable Long groupId);
-
-    @GetMapping("/group/{groupId}/chat")
-    Collection<Chat> getGroupChats(@PathVariable Long groupId);
-
-    @GetMapping("/group/{groupId}/chat/user/{uuid}")
-    Collection<Chat> getUserChats(@PathVariable Long groupId, @PathVariable String uuid);
-
-    @GetMapping("/chat/{chatId}")
-    Chat getChat(@PathVariable Long chatId);
-
-
-    @PostMapping("/chat/{chatId}/rename")
-    Chat setChatName(@PathVariable Long chatId, @RequestParam String chatName);
-
-    @PostMapping("/chat/{chatId}/user/{uuid}/add")
-    Chat addUser(@PathVariable Long chatId, @PathVariable String uuid);
-
-    @PostMapping("/chat/{chatId}/user/{uuid}/remove")
-    Chat removeUserFromChat(@PathVariable Long chatId, @PathVariable String uuid);
-
-    @GetMapping("/chat/{chatId}/user")
-    Collection<String> getChatUserUuids(@PathVariable Long chatId);
-
-    @PostMapping("/chat/{chatId}/message/send")
-    Message sendMessage(@PathVariable Long chatId,
-                        @RequestParam String uuid,
-                        @RequestParam String messageContent,
-                        @RequestParam LocalDateTime date);
-
-    @GetMapping("/chat/{chatId}/message/get")
-    List<Message> getMessages(@PathVariable Long chatId);
+    @GetMapping(value = "/chat/{chatId}/message/get")
+    List<Message> getMessagesOfChat(@PathVariable("chatId") Long chatId);
 }

@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class UserInfo {
-    private String id;
+    private String uuid;
     private String email;
     private String firstName = "";
     private String lastName = "";
