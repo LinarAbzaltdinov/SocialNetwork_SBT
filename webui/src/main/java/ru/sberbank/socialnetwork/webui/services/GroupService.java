@@ -3,6 +3,7 @@ package ru.sberbank.socialnetwork.webui.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sberbank.socialnetwork.webui.client.ChatServiceClient;
+import ru.sberbank.socialnetwork.webui.models.Chat;
 import ru.sberbank.socialnetwork.webui.models.Group;
 import ru.sberbank.socialnetwork.webui.models.UserInfo;
 
@@ -34,5 +35,18 @@ public class GroupService {
 
     public List<Group> getAllGroups(String id) {
         return new ArrayList<>();
+    }
+
+    public List<Chat> chatOfGroups(String groupId) {
+        return chatServiceClient.getGroupChats(groupId);
+    }
+
+    public boolean isUserCreatorOfGroup(String userId, String groupId) {
+//        Group group = chatServiceClient.
+//        if (group == null) {
+//            return false;
+//        }
+//        group.
+        return true;
     }
 }

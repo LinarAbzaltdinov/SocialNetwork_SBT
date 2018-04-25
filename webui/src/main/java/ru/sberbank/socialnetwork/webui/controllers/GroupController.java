@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.sberbank.socialnetwork.webui.models.Chat;
 import ru.sberbank.socialnetwork.webui.models.Group;
 import ru.sberbank.socialnetwork.webui.models.UserInfo;
 import ru.sberbank.socialnetwork.webui.services.GroupService;
@@ -49,8 +50,11 @@ public class GroupController {
         return "redirect:/groups/" + createdGroup.getId();
     }
 
-    @GetMapping("/{id}")
-    public String showGroup(Model model, @CookieValue(HttpHeaders.AUTHORIZATION) String authToken) {
+    @GetMapping("/{groupId}")
+    public String showGroup(Model model, @PathVariable("groupId") String groupId,
+                            @SessionAttribute(SESSION_ATTR_USER) String userId) {
+        List<Chat> chats = groupService.chatOfGroups(groupId);
+        model.addAttribute("chats", chats);
         return "chats";
     }
 }

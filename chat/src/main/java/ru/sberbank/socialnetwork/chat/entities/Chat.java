@@ -12,7 +12,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 public class Chat {
 
     @Id
@@ -26,7 +25,7 @@ public class Chat {
     @Column(name = "CREATOR_ID", nullable = false)
     private String creatorId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="GROUP_ID", nullable=false)
     private Group group;
 
@@ -43,5 +42,14 @@ public class Chat {
         userUuids = new HashSet<String>();
         userUuids.add(creatorId);
         this.group = group;
+    }
+
+    @Override
+    public String toString() {
+        return "Chat{" +
+                "id=" + id +
+                ", chatName='" + chatName + '\'' +
+                ", creatorId='" + creatorId + '\'' +
+                '}';
     }
 }

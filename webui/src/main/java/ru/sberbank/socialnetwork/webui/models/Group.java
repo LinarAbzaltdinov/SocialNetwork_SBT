@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Group {
-    private Long id;
+    private String id;
     private String groupName;
     private String description;
     private boolean isOpened;

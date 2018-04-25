@@ -12,7 +12,7 @@ public interface GroupRepository extends Repository<Group, Long> {
 
     Group save(Group entity);
 
-    Group findById(Long id);
+    Group findFirstById(Long id);
 
     @Query("select g from Group g left join g.users u where u.uuid = :uuid")
     List<Group> findByUsersUuid(@Param("uuid") String uuid);

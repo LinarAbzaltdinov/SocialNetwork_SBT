@@ -11,91 +11,87 @@
 <body>
 <div th:replace="fragments :: navbar"></div>
 <div class="container">
+    <legend th:text="${group.groupName}">Group Name</legend>
     <div class="row">
         <div class="col-md-2">
             <nav class="nav-sidebar">
                 <ul class="nav">
-                    <li th:each="chat : ${chats}" th:value="${chat.id}"><a href="#" th:text="${chat.name}">Name</a></li>
+                    <li class="active"><a href="#description">Информация о группе</a></li>
+                    <li><a href="#description">Информация о группе2</a></li>
                     <li class="nav-divider"></li>
+                    <li th:each="chat : ${chats}" th:value="${chat.id}"><a th:href="'#chat' + ${chat.id}"
+                                                                           th:text="${chat.chatName}">Name</a></li>
+                    <li class="nav-divider"></li>
+                    <li><a th:href="${#httpServletRequest.requestURI + '/new'}">Создать чат</a></li>
                 </ul>
             </nav>
         </div>
         <div class="col-md-8">
-            <div class="panel-body">
-                <ul class="chat">
-                    <li class="left clearfix">
-                            <span class="chat-img pull-left">
-                                <img src="/images/avatar.jpg" alt="User Avatar" class="img-circle" height="50px"/>
-                            </span>
-                        <div class="chat-body clearfix">
-                            <div class="header">
-                                <strong class="primary-font">Jack Sparrow</strong>
-                                <small class="pull-right text-muted">
-                                    <span class="glyphicon glyphicon-time"></span>12 mins ago
-                                </small>
-                            </div>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                dolor, quis ullamcorper ligula sodales.
-                            </p>
-                        </div>
-                    </li>
-                    <li class="right clearfix"><span class="chat-img pull-right">
-                            <img src="/images/avatar.jpg" alt="User Avatar" class="img-circle" height="50px"/>
-                        </span>
-                        <div class="chat-body clearfix">
-                            <div class="header">
-                                <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>13 mins ago
-                                </small>
-                                <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                            </div>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                dolor, quis ullamcorper ligula sodales.
-                            </p>
-                        </div>
-                    </li>
-                    <li class="left clearfix"><span class="chat-img pull-left">
-                            <img src="/images/avatar.jpg" alt="User Avatar" class="img-circle" height="50px"/>
-                        </span>
-                        <div class="chat-body clearfix">
-                            <div class="header">
-                                <strong class="primary-font">Jack Sparrow</strong>
-                                <small class="pull-right text-muted">
-                                    <span class="glyphicon glyphicon-time"></span>14 mins ago
-                                </small>
-                            </div>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                dolor, quis ullamcorper ligula sodales.
-                            </p>
-                        </div>
-                    </li>
-                    <li class="right clearfix"><span class="chat-img pull-right">
-                            <img src="/images/avatar.jpg" alt="User Avatar" class="img-circle" height="50px"/>
-                        </span>
-                        <div class="chat-body clearfix">
-                            <div class="header">
-                                <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>15 mins ago
-                                </small>
-                                <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                            </div>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                dolor, quis ullamcorper ligula sodales.
-                            </p>
-                        </div>
-                    </li>
-                </ul>
+            <div class="tab-pane fade in active" id="#description">
+                <h2 th:text="${group.groupName}"></h2>
+                <h4 th:text="${group.description}"></h4>
             </div>
-            <div class="panel-footer">
-                <div class="input-group">
-                    <input id="message-input" type="text" class="form-control input-sm"
-                           placeholder="Введите сообщение здесь..."/>
-                    <span class="input-group-btn">
+            <div th:each="chat : ${chats}" class="tab-pane fade" th:id="'#chat' + ${chat.id}">
+                <div class="panel-body">
+                    <ul class="chat">
+                    </ul>
+                </div>
+                <div class="panel-footer">
+                    <div class="input-group">
+                        <input th:id="'message-input-' + ${chat.id}" type="text" class="form-control input-sm"
+                               placeholder="Введите сообщение здесь..."/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-warning btn-sm" th:id="'btn-chat-' + ${chat.id}">
+                                Отправить</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="'#chat-1">
+                <div class="panel-body">
+                    <ul class="chat">
+                        <li class="left clearfix"><span class="chat-img pull-left">
+                            <img src="/images/avatar.jpg" alt="User Avatar" class="img-circle" height="50px"/>
+                        </span>
+                            <div class="chat-body clearfix">
+                                <div class="header">
+                                    <strong class="primary-font">Jack Sparrow</strong>
+                                    <small class="pull-right text-muted">
+                                        <span class="glyphicon glyphicon-time"></span>14 mins ago
+                                    </small>
+                                </div>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                    dolor, quis ullamcorper ligula sodales.
+                                </p>
+                            </div>
+                        </li>
+                        <li class="right clearfix"><span class="chat-img pull-right">
+                            <img src="/images/avatar.jpg" alt="User Avatar" class="img-circle" height="50px"/>
+                        </span>
+                            <div class="chat-body clearfix">
+                                <div class="header">
+                                    <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>15 mins ago
+                                    </small>
+                                    <strong class="pull-right primary-font">Bhaumik Patel</strong>
+                                </div>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                    dolor, quis ullamcorper ligula sodales.
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-footer">
+                    <div class="input-group">
+                        <input id="message-input" type="text" class="form-control input-sm"
+                               placeholder="Введите сообщение здесь..."/>
+                        <span class="input-group-btn">
                             <button class="btn btn-warning btn-sm" id="btn-chat">
                                 Send</button>
                         </span>
+                    </div>
                 </div>
             </div>
         </div>

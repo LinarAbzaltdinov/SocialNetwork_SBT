@@ -35,7 +35,7 @@ public class GroupService {
         Group group = new Group(groupName, description, isOpened, creatorId);
         Group persistedGroup = groupRepository.save(group);
 
-        Chat chat = new Chat(creatorId,  MAIN_CHAT_NAME, group);
+        Chat chat = new Chat(creatorId, MAIN_CHAT_NAME, group);
         chatRepository.save(chat);
 
         GroupUser user = new GroupUser(creatorId, UserAccessMode.ADMINISTRATOR, group);
@@ -51,7 +51,7 @@ public class GroupService {
     }
 
     public Group getGroupById(Long groupId) {
-        return groupRepository.findById(groupId);
+        return groupRepository.findFirstById(groupId);
     }
 
     public Collection<Group> getGroupsByPrefix(String prefix) {
@@ -59,7 +59,7 @@ public class GroupService {
     }
 
     public Collection<GroupUser> getGroupUsers(Long groupId) {
-        Group group = groupRepository.findById(groupId);
+        Group group = groupRepository.findFirstById(groupId);
         return group.getUsers();
     }
 
@@ -68,7 +68,7 @@ public class GroupService {
     }
 
     public Group inviteUser(Long groupId, String uuid) {
-        Group group = groupRepository.findById(groupId);
+        Group group = groupRepository.findFirstById(groupId);
         GroupUser user = groupUserRepository.findByGroupAndUuid(group, uuid);
         if (user != null) {
             return group;
@@ -78,37 +78,37 @@ public class GroupService {
     }
 
     public Group acceptInvite(Long groupId, String uuid) {
-        Group group = groupRepository.findById(groupId);
+        Group group = groupRepository.findFirstById(groupId);
 
-        if(!group.getInvitedUserUuids().remove(uuid)) {
+        if (!group.getInvitedUserUuids().remove(uuid)) {
             return group;
         }
         return addUser(groupId, uuid, UserAccessMode.ORDINARY_USER);
     }
 
     public Group denyInvite(Long groupId, String uuid) {
-        Group group = groupRepository.findById(groupId);
-        if(!group.getInvitedUserUuids().remove(uuid)) {
+        Group group = groupRepository.findFirstById(groupId);
+        if (!group.getInvitedUserUuids().remove(uuid)) {
             return group;
         }
         return groupRepository.save(group);
     }
 
     public Group addUser(Long groupId, String uuid, UserAccessMode mode) {
-        Group group = groupRepository.findById(groupId);
+        Group group = groupRepository.findFirstById(groupId);
         GroupUser user = new GroupUser(uuid, mode, group);
         group.getUsers().add(user);
         return groupRepository.save(group);
     }
 
     public Group removeUser(Long groupId, String uuid) {
-        Group group = groupRepository.findById(groupId);
+        Group group = groupRepository.findFirstById(groupId);
         group.getUsers().removeIf(user -> user.getUuid().equals(uuid));
         return groupRepository.save(group);
     }
 
     public Group changeGroupParameters(Long groupId, String groupName, String description, boolean isOpened) {
-        Group group = groupRepository.findById(groupId);
+        Group group = groupRepository.findFirstById(groupId);
         group.setGroupName(groupName);
         group.setDescription(description);
         group.setOpened(isOpened);

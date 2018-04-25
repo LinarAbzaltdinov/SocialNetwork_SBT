@@ -22,7 +22,7 @@ public class ChatService {
     }
 
     public Chat createChat(String creatorId, String chatName, Long groupId) {
-        Group group = groupRepository.findById(groupId);
+        Group group = groupRepository.findFirstById(groupId);
         Chat chat = new Chat(creatorId, chatName, group);
         return chatRepository.save(chat);
     }
@@ -39,12 +39,12 @@ public class ChatService {
 
 
     public Collection<Chat> getGroupChats(Long groupId) {
-        Group group = groupRepository.findById(groupId);
+        Group group = groupRepository.findFirstById(groupId);
         return chatRepository.findByGroup(group);
     }
 
     public Collection<Chat> getUserChats(Long groupId, String uuid) {
-        Group group = groupRepository.findById(groupId);
+        Group group = groupRepository.findFirstById(groupId);
         return chatRepository.findByUserUuidsAndGroup(uuid, group);
     }
 

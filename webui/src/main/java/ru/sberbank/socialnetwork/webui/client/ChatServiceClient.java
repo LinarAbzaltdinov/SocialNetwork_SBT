@@ -25,7 +25,7 @@ public interface ChatServiceClient {
     List<Group> getUserGroups(@PathVariable("uuid") String uuid);
 
     @GetMapping(value = "/group/{groupId}")
-    Group getGroupById(@PathVariable("groupId") Long groupId);
+    Group getGroupById(@PathVariable("groupId") String groupId);
 //
 //    @GetMapping("/group/prefix/{prefix}")
 //    Collection<Group> getGroupsByPrefix(@PathVariable String prefix);
@@ -66,7 +66,7 @@ public interface ChatServiceClient {
                     @PathVariable("groupId") Long groupId);
 
     @GetMapping(value = "/group/{groupId}/chat")
-    Collection<Chat> getGroupChats(@PathVariable("groupId") Long groupId);
+    List<Chat> getGroupChats(@PathVariable("groupId") String groupId);
 
 //    @GetMapping("/group/{groupId}/chat/user/{uuid}")
 //    Collection<Chat> getUserChats(@PathVariable Long groupId, @PathVariable String uuid);
