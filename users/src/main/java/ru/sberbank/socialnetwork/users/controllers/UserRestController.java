@@ -40,8 +40,13 @@ public class UserRestController {
         return userService.findUserByUuid(uuid);
     }
 
+    @PostMapping(value = "/getByEmail", produces = "application/json")
+    public User getUserByEmail(@RequestParam("email") String email) {
+        return userService.findUserByEmail(email);
+    }
+
     @PutMapping(value = "/update")
-    public User editUser(@RequestParam User updatedUser) {
+    public User editUser(@RequestBody User updatedUser) {
         User foundedUser = userService.editUser(updatedUser);
         return userService.editUser(foundedUser);
     }
