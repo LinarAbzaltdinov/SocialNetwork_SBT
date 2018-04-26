@@ -16,18 +16,17 @@
                 <ul class="nav">
                     <li>Избранное</li>
                     <li class="active"><a href="#">Group1 <span class="badge badge-info">4</span></a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Products</a></li>
-                    <li><a href="#">FAQ</a></li>
                     <li class="nav-divider"></li>
+                    <li><a th:href="@{/groups/new}">Создать группу</a></li>
                 </ul>
             </nav>
         </div>
         <div class="col-sm-8">
-            <ul class="nav nav-tabs text-center">
-                <li class="active"><a href="#myGroups" data-toggle="tab">Мои группы</a></li>
-                <li><a href="#allGroups" data-toggle="tab">Все группы</a></li>
-                <li><a href="#invitations" data-toggle="tab">Приглашения</a></li>
+            <ul class="nav nav-tabs text-center" id="groupTabs">
+                <li class="active" id="myGroupsItem"><a href="#myGroups" data-toggle="tab">Состою в группах</a></li>
+                <li id="allGroupsItem"><a href="#allGroups" data-toggle="tab">Все группы</a></li>
+                <!--<li id="createdByMeItem"><a href="#createdByMe" data-toggle="tab">Созданные мной группы</a></li>-->
+                <!--<li id="invitationsItem"><a href="#invitations" data-toggle="tab">Приглашения</a></li>-->
             </ul>
             <div class="tab-content">
                 <div class="tab-pane fade in active" id="myGroups">
@@ -40,27 +39,17 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr id="group1">
-                            <td><a href="#">Сбертех</a></td>
-                            <td>5000</td>
-                            <td><a href="#"><i class="fa fa-times"></i></a></td>
-                        </tr>
-                        <tr id="group2">
-                            <td><a href="#">JUG.RU</a></td>
-                            <td>10000</td>
-                            <td><a href="#"><i class="fa fa-times"></i></a></td>
-                        </tr>
-                        <tr th:id="'group'+${groups.id}" th:each="grp : ${groups}">
-                            <td><a th:href="@{/group/${grp.id}" th:text="${grp.name}">Name</a></td>
-                            <td th:text="${grp.amount}">Amount</td>
-                            <td><a th:href="'javascript:removeUserFromGroup(' + ${session.userId} + ', ' + ${grp.id} + ')'"><i class="fa fa-times"></i></a></td>
+                        <tr th:id="'group'+${grp.id}" th:each="grp : ${myGroups}">
+                            <td><a th:href="@{/groups/{id}(id=${grp.id})}" th:text="${grp.groupName}">Name</a></td>
+                            <td th:text="${grp.numberOfUsers}">Amount</td>
+                            <td><a th:href="'javascript:removeUserFromGroup(' + ${grp.id} + ');'"><i
+                                    class="fa fa-times"></i></a></td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="tab-pane fade" id="allGroups">
                     <table class="table table-hover">
-                        <caption>Will be added by jquery</caption>
                         <thead>
                         <tr>
                             <th scope="col">Название</th>
@@ -69,39 +58,12 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Сбертех</td>
-                            <td>5000</td>
-                            <td><a href="#"><i class="fa fa-plus"></i></a></td>
-                        </tr>
-                        <tr>
-                            <td>JUG.RU</td>
-                            <td>10000</td>
-                            <td><a href="#"><i class="fa fa-plus"></i></a></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="tab-pane fade" id="invitations">
-                    <table class="table table-hover">
-                        <caption>Will be added by jquery</caption>
-                        <thead>
-                        <tr>
-                            <th scope="col">Название</th>
-                            <th scope="col">Участников</th>
-                            <th scope="col">Вступить</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Сбертех</td>
-                            <td>5000</td>
-                            <td><a href="#"><i class="fa fa-plus"></i></a></td>
-                        </tr>
-                        <tr>
-                            <td>JUG.RU</td>
-                            <td>10000</td>
-                            <td><a href="#"><i class="fa fa-plus"></i></a></td>
+                        <tr th:id="'allgroup'+${group.id}" th:each="group : ${allGroups}">
+                            <td><a th:href="@{/groups/{id}(id=${group.id})}" onclick="return false;" th:text="${group.groupName}">Name</a>
+                            </td>
+                            <td th:text="${group.numberOfUsers}">Amount</td>
+                            <td><a th:href="'javascript:addUserToGroup(' + ${group.id} + ');'"><i
+                                    class="fa fa-plus"></i></a></td>
                         </tr>
                         </tbody>
                     </table>
@@ -110,6 +72,7 @@
         </div>
     </div>
 </div>
-    <div th:replace="fragments :: js"></div>
+<div th:replace="fragments :: js"></div>
+<script th:src="@{/js/group.js}"></script>
 </body>
 </html>

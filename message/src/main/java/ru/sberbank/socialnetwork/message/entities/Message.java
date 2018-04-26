@@ -4,12 +4,14 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Document(collection = "message")
 @RequiredArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class Message {
     @Id
     private String id;
@@ -20,5 +22,8 @@ public class Message {
     @NonNull
     private String userId;
 
-    private Date created = new Date();
+    @NonNull
+    private String chatId;
+
+    private LocalDateTime createdDate = LocalDateTime.now();
 }

@@ -7,9 +7,8 @@ import ru.sberbank.socialnetwork.users.services.UserService;
 
 import java.util.List;
 
-import static ru.sberbank.socialnetwork.users.utils.PasswordStorage.*;
-
 @RestController
+@RequestMapping("/users")
 public class UserRestController {
 
     private final UserService userService;
@@ -19,40 +18,42 @@ public class UserRestController {
         this.userService = userService;
     }
 
-    @PostMapping("/users")
+    @PostMapping("/create")
     public String addUser(@RequestParam String email,
-                          @RequestParam String password) throws CannotPerformOperationException {
-        String hashPass = createHash(password);
-        User createdUser = userService.addUser(email, hashPass);
+                          @RequestParam String password) {
+        User createdUser = userService.addUser(email, password);
         return createdUser.getUuid();
     }
 
-    @DeleteMapping("/users/{uuid}")
+    @DeleteMapping("/{uuid}")
     public boolean deleteUser(@PathVariable String uuid) {
         return userService.deleteUser(uuid);
     }
 
-    @GetMapping("/users")
+    @GetMapping("/all")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    @GetMapping(value = "/users/{uuid}", produces = "application/json")
+    @GetMapping(value = "/{uuid}", produces = "application/json")
     public User getUser(@PathVariable String uuid) {
         return userService.findUserByUuid(uuid);
     }
 
-    /*@PutMapping(value = "/users/{uuid}")
-    public User editUser(@PathVariable("uuid") String uuid) {
-        User foundedUser = userService.findUserByUuid(uuid);
+    @PostMapping(value = "/getByEmail", produces = "application/json")
+    public User getUserByEmail(@RequestParam("email") String email) {
+        return userService.findUserByEmail(email);
+    }
+
+    @PutMapping(value = "/update")
+    public User editUser(@RequestBody User updatedUser) {
+        User foundedUser = userService.editUser(updatedUser);
         return userService.editUser(foundedUser);
-    }*/
+    }
 
     @PostMapping("/login")
     public boolean login(@RequestParam String email,
-                         @RequestParam String password)
-            throws InvalidHashException, CannotPerformOperationException {
-        String hash = userService.findUserByEmail(email).getPassword();
-        return verifyPassword(password, hash);
+                         @RequestParam String password) {
+        return userService.login(email, password);
     }
 }

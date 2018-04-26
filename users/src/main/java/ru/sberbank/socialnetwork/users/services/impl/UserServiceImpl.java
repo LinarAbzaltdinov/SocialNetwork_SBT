@@ -1,6 +1,7 @@
 package ru.sberbank.socialnetwork.users.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.sberbank.socialnetwork.users.dao.UserRepository;
@@ -14,16 +15,20 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository,
+                           PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
     @Override
     public User addUser(String email, String password) {
-        User newUser = new User(email, password);
+        String encodedPassword = passwordEncoder.encode(password);
+        User newUser = new User(email, encodedPassword);
         return userRepository.saveAndFlush(newUser);
     }
 
@@ -45,12 +50,13 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User editUser(User oldUser) {
-        User model = oldUser;
-        if (model.getUuid() == null) {
-            model.setUuid(UUID.randomUUID().toString());
+    public User editUser(User updatedUser) {
+        User foundUser = findUserByEmail(updatedUser.getEmail());
+        if (foundUser == null) {
+            return null;
         }
-        return userRepository.saveAndFlush(model);
+        foundUser.update(updatedUser);
+        return userRepository.saveAndFlush(foundUser);
     }
 
     @Transactional(readOnly = true)
@@ -64,5 +70,16 @@ public class UserServiceImpl implements UserService {
     public User findUserByEmail(String email) {
         User foundUser = userRepository.findByEmail(email);
         return foundUser;
+    }
+
+    @Override
+    public boolean login(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            return false;
+        }
+        String foundUserPassword = user.getPassword();
+        boolean result = passwordEncoder.matches(password, foundUserPassword);
+        return result;
     }
 }
