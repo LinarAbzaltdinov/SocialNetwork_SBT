@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface MessageService {
 
-    MessageDTO createMessage(MessageDTO message);
+    void createMessage(MessageDTO message);
 
     MessageDTO getMessage(String id);
 

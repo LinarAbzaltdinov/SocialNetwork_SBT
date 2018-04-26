@@ -20,10 +20,9 @@ public class MessageServiceImpl implements MessageService {
     private ModelMapper modelMapper;
 
     @Override
-    public MessageDTO createMessage(MessageDTO messageDTO) {
+    public void createMessage(MessageDTO messageDTO) {
         Message newMessage = new Message(messageDTO);
         Message persistedMessage = messageRepository.save(newMessage);
-        return modelMapper.map(persistedMessage, MessageDTO.class);
     }
 
     @Override

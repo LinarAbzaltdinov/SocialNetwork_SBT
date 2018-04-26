@@ -1,5 +1,6 @@
 package ru.sberbank.socialnetwork.message.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +31,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 public class MessageControllerUnitTests {
 
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
+    private ObjectMapper mapper;
 
     @Mock
     private MessageServiceImpl messageService;
@@ -45,6 +47,7 @@ public class MessageControllerUnitTests {
                 .standaloneSetup(messageRestController)
                 .setControllerAdvice(new ResourceNotFoundExceptionHandler())
                 .build();
+        mapper = new ObjectMapper();
     }
 
     MessageDTO getRandomMessageDTO() {
@@ -88,22 +91,21 @@ public class MessageControllerUnitTests {
         verifyNoMoreInteractions(messageService);
     }
 
-//    @Test
-//    public void createMessage_ShouldReturnSuccess() throws Exception {
-//        MessageDTO messageDTO = getRandomMessageDTO();
-//
-//        when(messageService.createMessage(messageDTO))
-//                .thenReturn(messageDTO);
-//
-//        mockMvc.perform(
-//                post("/messages/new")
-//                        .(messageDTO)
-//                .andExpect(status().is2xxSuccessful());
-//
-//        verify(messageService, times(1))
-//                .createMessage(messageDTO);
-//        verifyNoMoreInteractions(messageService);
-//    }
+    @Test
+    public void createMessage_ShouldReturnSuccess() throws Exception {
+        MessageDTO messageDTO = getRandomMessageDTO();
+
+        doNothing().when(messageService).createMessage(messageDTO);
+
+        mockMvc.perform(
+                post("/messages/new")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(mapper.writeValueAsBytes(messageDTO)))
+                .andExpect(status().is2xxSuccessful());
+
+        verify(messageService, times(1)).createMessage(messageDTO);
+        verifyNoMoreInteractions(messageService);
+    }
 
     @Test
     public void removeMessage_ShouldReturnHttpStatusCode200() throws Exception {
@@ -125,12 +127,11 @@ public class MessageControllerUnitTests {
         List<MessageDTO> messagesOfChat = new ArrayList<>(messagesAmount);
         for (Integer i = 0; i < messagesAmount; ++i) {
             messagesOfChat.add(new MessageDTO(
-                    "Message"+i,
+                    "Message" + i,
                     i.toString(),
                     chatId,
                     LocalDateTime.now().toString()));
         }
-        //new MessageDTO("2", "Message3", "1", anotherChatId, LocalDateTime.now().toString())
 
         when(messageService.getMessagesOfChat(chatId)).thenReturn(messagesOfChat);
 
@@ -151,7 +152,7 @@ public class MessageControllerUnitTests {
         List<MessageDTO> messagesOfUser = new ArrayList<>(messagesAmount);
         for (Integer i = 0; i < messagesAmount; ++i) {
             messagesOfUser.add(new MessageDTO(
-                    "Message"+i,
+                    "Message" + i,
                     userId,
                     i.toString(),
                     LocalDateTime.now().toString()));
