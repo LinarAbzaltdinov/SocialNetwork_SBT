@@ -26,11 +26,11 @@
             </nav>
         </div>
         <div class="col-md-8">
-            <div class="tab-pane fade in active" id="description">
+            <div class="tab-pane" id="description">
                 <h2 th:text="${group.groupName}"></h2>
                 <h4 th:text="${group.description}"></h4>
             </div>
-            <div th:each="chat : ${chats}" class="tab-pane fade" th:id="'chat' + ${chat.id}">
+            <div th:each="chat : ${chats}" class="tab-pane" th:id="'chat' + ${chat.id}" hidden="hidden">
                 <div class="panel-body">
                     <ul class="chat">
                     </ul>
@@ -46,53 +46,6 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="'chat-1">
-                <div class="panel-body">
-                    <ul class="chat">
-                        <li class="left clearfix"><span class="chat-img pull-left">
-                            <img src="/images/avatar.jpg" alt="User Avatar" class="img-circle" height="50px"/>
-                        </span>
-                            <div class="chat-body clearfix">
-                                <div class="header">
-                                    <strong class="primary-font">Jack Sparrow</strong>
-                                    <small class="pull-right text-muted">
-                                        <span class="glyphicon glyphicon-time"></span>14 mins ago
-                                    </small>
-                                </div>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                    dolor, quis ullamcorper ligula sodales.
-                                </p>
-                            </div>
-                        </li>
-                        <li class="right clearfix"><span class="chat-img pull-right">
-                            <img src="/images/avatar.jpg" alt="User Avatar" class="img-circle" height="50px"/>
-                        </span>
-                            <div class="chat-body clearfix">
-                                <div class="header">
-                                    <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>15 mins ago
-                                    </small>
-                                    <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                                </div>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                    dolor, quis ullamcorper ligula sodales.
-                                </p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="panel-footer">
-                    <div class="input-group">
-                        <input id="message-input" type="text" class="form-control input-sm"
-                               placeholder="Введите сообщение здесь..."/>
-                        <span class="input-group-btn">
-                            <button class="btn btn-warning btn-sm" id="btn-chat">
-                                Send</button>
-                        </span>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -102,6 +55,7 @@
     /*]]>*/
 </script>
 <div th:replace="fragments :: js"></div>
+<script src="http://www.mattkruse.com/javascript/date/date.js"></script>
 <script th:src="@{/js/chat.js}"></script>
 </body>
 </html>

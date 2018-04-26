@@ -2,8 +2,8 @@ $('nav.nav-sidebar li a').click(function (e) {
     $('nav.nav-sidebar ul').find('li.active').removeClass('active');
     $(this).parent().addClass('active');
     selectedChat = $($(this).attr("href"));
-    selectedChat.parent().find('.in.active').removeClass('in active');
-    selectedChat.addClass('in active');
+    selectedChat.parent().children().hide();//find('.in.active').removeClass('in active');
+    selectedChat.show();//addClass('in active');
     if (selectedChat.attr('id').startsWith("chat")) {
         chatId = selectedChat.attr('id').substring(4);
         loadChatMessages(chatId);
@@ -29,6 +29,7 @@ function loadChatMessages(chatId) {
         method: 'get',
         success: function (data) {
             messageUL = $('#chat' + chatId + ' ul.chat');
+            messageUL.empty();
             for (i = 0; i < data.length; ++i) {
                 message = data[i];
                 addMessageLItoUL(
@@ -38,7 +39,6 @@ function loadChatMessages(chatId) {
                     message.createdDateTime,
                     messageUL);
             }
-            console.log(JSON.stringify(data));
         },
         error: function (e) {
             console.log(e);
