@@ -1,7 +1,6 @@
 package ru.sberbank.socialnetwork.webui.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +10,6 @@ import ru.sberbank.socialnetwork.webui.models.Credentials;
 import ru.sberbank.socialnetwork.webui.models.UserInfo;
 import ru.sberbank.socialnetwork.webui.services.UserInfoService;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
@@ -23,8 +19,12 @@ public class IndexController {
     public static final String ERROR_EMAIL_EXIST = "Данный email уже зарегистрирован";
     public static final String ERROR_WRONG_CREDENTIALS = "Введен неправильный email или пароль";
 
+    private final UserInfoService userService;
+
     @Autowired
-    UserInfoService userService;
+    public IndexController(UserInfoService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping(value = {"/", "/index"})
     public String index(HttpSession httpSession) {

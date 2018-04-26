@@ -17,15 +17,15 @@ public class AddUserInfoToModelInterceptor implements HandlerInterceptor {
     private UserInfoService userInfoService;
 
     @Override
-    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
                              Object o) throws Exception {
         return true;
     }
 
     @Override
-    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+    public void postHandle(HttpServletRequest request, HttpServletResponse response,
                            Object o, ModelAndView modelAndView) throws Exception {
-        Object userIdAttribute = httpServletRequest.getSession().getAttribute("userId");
+        Object userIdAttribute = request.getSession().getAttribute("userId");
         if (modelAndView == null || userIdAttribute == null) {
             return;
         }
@@ -35,7 +35,7 @@ public class AddUserInfoToModelInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
                                 Object o, Exception e) throws Exception {
 
     }

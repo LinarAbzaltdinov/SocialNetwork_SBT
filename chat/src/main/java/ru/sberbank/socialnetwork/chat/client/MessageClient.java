@@ -16,12 +16,10 @@ public interface MessageClient {
 
 
     @GetMapping("/{id}")
-    public MessageDto showMessage(@PathVariable("id") String id);
+    MessageDto showMessage(@PathVariable("id") String id);
 
     @PostMapping("/new")
-    public String createMessage(@RequestParam String messageContent,
-                                @RequestParam String userId,
-                                @RequestParam Long chatId);
+    String createMessage(@RequestBody MessageDto messageDto);
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -35,7 +33,7 @@ public interface MessageClient {
     void removeMessagesOfChat(@PathVariable("chatId") String chatId);
 
     @GetMapping("/of/user/{userId}")
-    public List<MessageDto> showMessageOfUser(@PathVariable("userId") String userId);
+    List<MessageDto> showMessageOfUser(@PathVariable("userId") String userId);
 
     @DeleteMapping("/of/user/{userId}")
     @ResponseStatus(HttpStatus.OK)

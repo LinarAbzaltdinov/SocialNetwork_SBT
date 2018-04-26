@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sberbank.socialnetwork.message.dao.MessageRepository;
 import ru.sberbank.socialnetwork.message.dto.MessageDTO;
-import ru.sberbank.socialnetwork.message.entities.Message;
+import ru.sberbank.socialnetwork.message.domains.Message;
 import org.modelmapper.ModelMapper;
 
 import java.util.List;
@@ -20,10 +20,9 @@ public class MessageServiceImpl implements MessageService {
     private ModelMapper modelMapper;
 
     @Override
-    public MessageDTO createMessage(String userId, String chatId, String messageContent) {
-        Message newMessage = new Message(messageContent, userId, chatId);
+    public void createMessage(MessageDTO messageDTO) {
+        Message newMessage = new Message(messageDTO);
         Message persistedMessage = messageRepository.save(newMessage);
-        return modelMapper.map(persistedMessage, MessageDTO.class);
     }
 
     @Override
@@ -55,7 +54,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public List<MessageDTO> getMessagesOfChat(String chatId) {
         List<Message> chatMessages =
-                messageRepository.findByChatIdOrderByCreatedDateDesc(chatId);
+                messageRepository.findByChatIdOrderByCreatedDateAsc(chatId);
         return chatMessages.stream()
                 .map(messageEntity -> modelMapper.map(messageEntity, MessageDTO.class))
                 .collect(Collectors.toList());

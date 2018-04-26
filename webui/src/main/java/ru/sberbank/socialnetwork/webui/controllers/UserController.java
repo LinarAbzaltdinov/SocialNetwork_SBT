@@ -10,8 +10,13 @@ import ru.sberbank.socialnetwork.webui.services.UserInfoService;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
+    private final UserInfoService userInfoService;
+
     @Autowired
-    UserInfoService userInfoService;
+    public UserController(UserInfoService userInfoService) {
+        this.userInfoService = userInfoService;
+    }
 
     @GetMapping("")
     public String showUserProfile(Model model) {

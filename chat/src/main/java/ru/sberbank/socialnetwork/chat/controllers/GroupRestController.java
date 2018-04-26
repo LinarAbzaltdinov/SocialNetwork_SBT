@@ -102,9 +102,17 @@ public class GroupRestController {
         return new GroupDto(groupService.changeGroupParameters(groupId, groupName, description, isOpened));
     }
 
+
+    @GetMapping("/group/opened")
+    public List<GroupDto> getAllOpenedGroups() {
+        return groupService.getAllOpenedGroups()
+                .stream()
+                .map(GroupDto::new)
+                .collect(Collectors.toList());
+    }
+  
     @PostMapping("/group/{groupId}/remove")
     public void removeGroup(@PathVariable Long groupId) {
         groupService.removeGroup(groupId);
     }
-
 }
