@@ -100,12 +100,18 @@ public class GroupService {
         GroupUser user = new GroupUser(uuid, mode, group);
         groupUserRepository.save(user);
         group.getUsers().add(user);
+        chatRepository.save(mainChat);
+        groupUserRepository.save(user);
         return groupRepository.save(group);
     }
 
     public Group removeUser(Long groupId, String uuid) {
         Group group = groupRepository.findFirstById(groupId);
-        group.getUsers().removeIf(user -> user.getUuid().equals(uuid));
+        group.getUsers().removeIf(u -> u.getUuid().equals(uuid));
+
+        GroupUser user = groupUserRepository.findByGroupAndUuid(group, uuid);
+        groupUserRepository.delete(user);
+
         return groupRepository.save(group);
     }
 
@@ -117,8 +123,24 @@ public class GroupService {
         return groupRepository.save(group);
     }
 
+
     public List<Group> getAllOpenedGroups() {
         return groupRepository.findAllByIsOpenedTrue();
+    }
+
+    public void removeGroup(Long groupId) {
+        Group group = groupRepository.findFirstById(groupId);
+
+        Collection<Chat> chats = group.getChats();
+        for (Chat chat : chats) {
+            chatRepository.delete(chat);
+        }
+
+        Collection<GroupUser> users = group.getUsers();
+        for (GroupUser user : users) {
+            groupUserRepository.delete(user);
+        }
+        groupRepository.delete(group);
     }
 }
 

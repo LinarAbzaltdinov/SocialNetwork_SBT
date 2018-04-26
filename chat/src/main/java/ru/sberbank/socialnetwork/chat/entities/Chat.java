@@ -30,6 +30,9 @@ public class Chat {
     private Group group;
 
 
+    @Column(name = "IS_MAIN", nullable = false)
+    private boolean isMain;
+
     @ElementCollection
     @CollectionTable(name = "CHAT_USERS", joinColumns = @JoinColumn(name = "CHAT_ID"))
     @Column(name = "USER_ID")

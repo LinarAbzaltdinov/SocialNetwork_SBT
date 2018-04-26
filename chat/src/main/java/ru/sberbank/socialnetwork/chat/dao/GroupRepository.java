@@ -22,4 +22,6 @@ public interface GroupRepository extends Repository<Group, Long> {
     List<Group> findByInvitedUserUuids(String uuid);
 
     List<Group> findAllByIsOpenedTrue();
+
+    void delete(Group entity);
 }

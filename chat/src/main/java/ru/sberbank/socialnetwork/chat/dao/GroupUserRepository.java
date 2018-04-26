@@ -15,4 +15,6 @@ public interface GroupUserRepository extends Repository<GroupUser, Long> {
     void save(GroupUser entity);
 
     GroupUser findByGroupAndUuid(Group group, String uuid);
+
+    void delete(GroupUser entity);
 }
