@@ -2,11 +2,9 @@ package ru.sberbank.socialnetwork.message.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.sberbank.socialnetwork.message.dto.MessageDTO;
 import ru.sberbank.socialnetwork.message.services.MessageService;
-import ru.sberbank.socialnetwork.message.entities.Message;
 
 import java.util.List;
 
@@ -23,11 +21,9 @@ public class MessageRestController {
     }
 
     @PostMapping("/new")
-    public String createMessage(@RequestParam String messageContent,
-                                @RequestParam String userId,
-                                @RequestParam String chatId) {
-        MessageDTO createdMessage = messageService.createMessage(userId, chatId, messageContent);
-        return createdMessage.getId();
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createMessage(@RequestBody MessageDTO messageDTO) {
+        messageService.createMessage(messageDTO);
     }
 
     @DeleteMapping("/{id}")

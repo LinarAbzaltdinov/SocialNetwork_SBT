@@ -15,4 +15,9 @@ public class MessageDto {
     private Long chatId;
     private Date createdDate;
 
+    public MessageDto(String content, String userId, Long chatId) {
+        this.content = content;
+        this.userId = userId;
+        this.chatId = chatId;
+    }
 }

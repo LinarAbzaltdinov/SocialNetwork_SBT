@@ -11,6 +11,7 @@ import ru.sberbank.socialnetwork.chat.entities.GroupUser;
 import ru.sberbank.socialnetwork.chat.entities.UserAccessMode;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class GroupService {
@@ -46,7 +47,7 @@ public class GroupService {
         return persistedGroup;
     }
 
-    public Collection<Group> getUserGroups(String uuid) {
+    public List<Group> getUserGroups(String uuid) {
         return groupRepository.findByUsersUuid(uuid);
     }
 
@@ -131,6 +132,11 @@ public class GroupService {
         return groupRepository.save(group);
     }
 
+
+    public List<Group> getAllOpenedGroups() {
+        return groupRepository.findAllByIsOpenedTrue();
+    }
+  
     public void removeGroup(Long groupId) {
         Group group = groupRepository.findFirstById(groupId);
 
