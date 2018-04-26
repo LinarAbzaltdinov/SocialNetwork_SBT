@@ -11,11 +11,12 @@ public class ChatDto {
     private String chatName;
     private String creatorId;
     private Long groupId;
-    private boolean isMain;
+    private boolean isOpened;
     public ChatDto(Chat chat) {
         this.id = chat.getId();
         this.chatName = chat.getChatName();
         this.creatorId = chat.getCreatorId();
         this.groupId = chat.getGroup().getId();
+        this.isOpened = chat.isOpened();
     }
 }

@@ -21,9 +21,9 @@ public class ChatService {
         this.groupRepository = groupRepository;
     }
 
-    public Chat createChat(String creatorId, String chatName, Long groupId) {
+    public Chat createChat(String creatorId, String chatName, boolean isOpened, Long groupId) {
         Group group = groupRepository.findFirstById(groupId);
-        Chat chat = new Chat(creatorId, chatName, group);
+        Chat chat = new Chat(creatorId, chatName, isOpened, group);
         return chatRepository.save(chat);
     }
 

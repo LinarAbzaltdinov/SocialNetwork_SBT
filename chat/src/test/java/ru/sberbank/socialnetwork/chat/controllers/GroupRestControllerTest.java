@@ -9,6 +9,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.BootstrapWith;
+import org.springframework.test.context.TestContextBootstrapper;
 import org.springframework.test.context.junit4.SpringRunner;
 
 
@@ -33,9 +35,9 @@ import static org.hamcrest.Matchers.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@BootstrapWith(value = TestContextBootstrapper.class)
 public class GroupRestControllerTest {
     MockMvc mockMvc;
-
     @Mock
     private GroupService groupService;
 
