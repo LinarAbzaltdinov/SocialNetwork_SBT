@@ -18,15 +18,15 @@ public class AddGroupToModelInterceptor implements HandlerInterceptor {
     private ChatServiceClient chatServiceClient;
 
     @Override
-    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
                              Object o) throws Exception {
         return true;
     }
 
     @Override
-    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+    public void postHandle(HttpServletRequest request, HttpServletResponse response,
                            Object o, ModelAndView modelAndView) throws Exception {
-        final Map<String, String> pathVariables = (Map<String, String>) httpServletRequest
+        final Map<String, String> pathVariables = (Map<String, String>) request
                 .getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
         String groupId = pathVariables.get("groupId");
         if (groupId == null || modelAndView == null) {
@@ -36,7 +36,7 @@ public class AddGroupToModelInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
                                 Object o, Exception e) throws Exception {
 
     }

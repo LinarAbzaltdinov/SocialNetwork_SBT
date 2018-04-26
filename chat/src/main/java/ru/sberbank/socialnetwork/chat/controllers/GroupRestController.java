@@ -4,15 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.sberbank.socialnetwork.chat.dto.GroupDto;
 import ru.sberbank.socialnetwork.chat.dto.UserDto;
-import ru.sberbank.socialnetwork.chat.entities.Group;
-import ru.sberbank.socialnetwork.chat.entities.GroupUser;
 import ru.sberbank.socialnetwork.chat.entities.UserAccessMode;
 import ru.sberbank.socialnetwork.chat.services.GroupService;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -104,5 +100,19 @@ public class GroupRestController {
                                        @RequestParam  String description,
                                        @RequestParam  boolean isOpened) {
         return new GroupDto(groupService.changeGroupParameters(groupId, groupName, description, isOpened));
+    }
+
+
+    @GetMapping("/group/opened")
+    public List<GroupDto> getAllOpenedGroups() {
+        return groupService.getAllOpenedGroups()
+                .stream()
+                .map(GroupDto::new)
+                .collect(Collectors.toList());
+    }
+  
+    @PostMapping("/group/{groupId}/remove")
+    public void removeGroup(@PathVariable Long groupId) {
+        groupService.removeGroup(groupId);
     }
 }

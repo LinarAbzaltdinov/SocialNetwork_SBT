@@ -1,8 +1,9 @@
 package ru.sberbank.socialnetwork.chat.dto;
 
-import lombok.AllArgsConstructor;
+
 import lombok.Data;
 import ru.sberbank.socialnetwork.chat.entities.Chat;
+
 
 @Data
 public class ChatDto {
@@ -10,6 +11,7 @@ public class ChatDto {
     private String chatName;
     private String creatorId;
     private Long groupId;
+    private boolean isMain;
     public ChatDto(Chat chat) {
         this.id = chat.getId();
         this.chatName = chat.getChatName();

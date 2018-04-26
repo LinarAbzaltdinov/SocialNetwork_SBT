@@ -17,7 +17,11 @@ public interface GroupRepository extends Repository<Group, Long> {
     @Query("select g from Group g left join g.users u where u.uuid = :uuid")
     List<Group> findByUsersUuid(@Param("uuid") String uuid);
 
-    Collection<Group> findByGroupNameStartingWith(String prefix);
+    List<Group> findByGroupNameStartingWith(String prefix);
 
-    Collection<Group> findByInvitedUserUuids(String uuid);
+    List<Group> findByInvitedUserUuids(String uuid);
+
+    List<Group> findAllByIsOpenedTrue();
+
+    void delete(Group entity);
 }

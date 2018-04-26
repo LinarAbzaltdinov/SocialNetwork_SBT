@@ -11,6 +11,7 @@ import ru.sberbank.socialnetwork.chat.entities.GroupUser;
 import ru.sberbank.socialnetwork.chat.entities.UserAccessMode;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class GroupService {
@@ -46,7 +47,7 @@ public class GroupService {
         return persistedGroup;
     }
 
-    public Collection<Group> getUserGroups(String uuid) {
+    public List<Group> getUserGroups(String uuid) {
         return groupRepository.findByUsersUuid(uuid);
     }
 
@@ -98,12 +99,17 @@ public class GroupService {
         Group group = groupRepository.findFirstById(groupId);
         GroupUser user = new GroupUser(uuid, mode, group);
         group.getUsers().add(user);
+        groupUserRepository.save(user);
         return groupRepository.save(group);
     }
 
     public Group removeUser(Long groupId, String uuid) {
         Group group = groupRepository.findFirstById(groupId);
-        group.getUsers().removeIf(user -> user.getUuid().equals(uuid));
+        group.getUsers().removeIf(u -> u.getUuid().equals(uuid));
+
+        GroupUser user = groupUserRepository.findByGroupAndUuid(group, uuid);
+        groupUserRepository.delete(user);
+
         return groupRepository.save(group);
     }
 
@@ -113,6 +119,26 @@ public class GroupService {
         group.setDescription(description);
         group.setOpened(isOpened);
         return groupRepository.save(group);
+    }
+
+
+    public List<Group> getAllOpenedGroups() {
+        return groupRepository.findAllByIsOpenedTrue();
+    }
+
+    public void removeGroup(Long groupId) {
+        Group group = groupRepository.findFirstById(groupId);
+
+        Collection<Chat> chats = group.getChats();
+        for (Chat chat : chats) {
+            chatRepository.delete(chat);
+        }
+
+        Collection<GroupUser> users = group.getUsers();
+        for (GroupUser user : users) {
+            groupUserRepository.delete(user);
+        }
+        groupRepository.delete(group);
     }
 }
 
