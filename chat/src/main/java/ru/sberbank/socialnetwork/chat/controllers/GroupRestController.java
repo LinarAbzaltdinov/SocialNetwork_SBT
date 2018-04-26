@@ -105,4 +105,12 @@ public class GroupRestController {
                                        @RequestParam  boolean isOpened) {
         return new GroupDto(groupService.changeGroupParameters(groupId, groupName, description, isOpened));
     }
+
+    @GetMapping("/group/opened")
+    public List<GroupDto> getAllOpenedGroups() {
+        return groupService.getAllOpenedGroups()
+                .stream()
+                .map(GroupDto::new)
+                .collect(Collectors.toList());
+    }
 }

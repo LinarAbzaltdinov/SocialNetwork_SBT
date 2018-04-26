@@ -5,13 +5,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.sberbank.socialnetwork.chat.client.MessageClient;
 import ru.sberbank.socialnetwork.chat.dto.ChatDto;
 import ru.sberbank.socialnetwork.chat.dto.MessageDto;
-import ru.sberbank.socialnetwork.chat.entities.Chat;
 import ru.sberbank.socialnetwork.chat.services.ChatService;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -59,7 +55,6 @@ public class ChatRestController {
         return chat;
     }
 
-
     @PostMapping("/chat/{chatId}/rename")
     public ChatDto setChatName(@PathVariable Long chatId,
                                @RequestParam String chatName) {
@@ -87,6 +82,7 @@ public class ChatRestController {
     public String sendMessage(@PathVariable Long chatId,
                                   @RequestParam String uuid,
                                   @RequestParam String messageContent) {
-        return messageClient.createMessage(messageContent, uuid, chatId);
+        MessageDto messageDto = new MessageDto(messageContent, uuid, chatId);
+        return messageClient.createMessage(messageDto);
     }
 }
