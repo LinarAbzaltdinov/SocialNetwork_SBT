@@ -19,14 +19,14 @@ public class UserRestController {
     }
 
     @PostMapping("/create")
-    public String addUser(@RequestParam String email,
-                          @RequestParam String password) {
+    public String addUser(@RequestParam("email") String email,
+                          @RequestParam("password") String password) {
         User createdUser = userService.addUser(email, password);
         return createdUser.getUuid();
     }
 
     @DeleteMapping("/{uuid}")
-    public boolean deleteUser(@PathVariable String uuid) {
+    public boolean deleteUser(@PathVariable("uuid") String uuid) {
         return userService.deleteUser(uuid);
     }
 
@@ -36,7 +36,7 @@ public class UserRestController {
     }
 
     @GetMapping(value = "/{uuid}", produces = "application/json")
-    public User getUser(@PathVariable String uuid) {
+    public User getUser(@PathVariable("uuid") String uuid) {
         return userService.findUserByUuid(uuid);
     }
 
@@ -52,8 +52,8 @@ public class UserRestController {
     }
 
     @PostMapping("/login")
-    public boolean login(@RequestParam String email,
-                         @RequestParam String password) {
+    public boolean login(@RequestParam("email") String email,
+                         @RequestParam("password") String password) {
         return userService.login(email, password);
     }
 }
