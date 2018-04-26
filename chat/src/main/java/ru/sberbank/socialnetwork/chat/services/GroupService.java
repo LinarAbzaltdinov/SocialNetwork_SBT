@@ -30,12 +30,12 @@ public class GroupService {
         this.chatRepository = chatRepository;
     }
 
-    public Group createGroup(String groupName, String description, boolean isOpened, String creatorId) {
+    public Group createGroup(String groupName, String description, boolean groupIsOpened, String creatorId) {
 
-        Group group = new Group(groupName, description, isOpened, creatorId);
+        Group group = new Group(groupName, description, groupIsOpened, creatorId);
         Group persistedGroup = groupRepository.save(group);
 
-        Chat chat = new Chat(creatorId, MAIN_CHAT_NAME, group);
+        Chat chat = new Chat(creatorId, MAIN_CHAT_NAME, true, group);
         chatRepository.save(chat);
 
         GroupUser user = new GroupUser(creatorId, UserAccessMode.ADMINISTRATOR, group);
@@ -98,17 +98,14 @@ public class GroupService {
         Group group = groupRepository.findFirstById(groupId);
         GroupUser user = new GroupUser(uuid, mode, group);
 
-        Collection<Chat> chats = group.getChats();
-        Chat mainChat = null;
-        for (Chat chat : chats) {
-            if (chat.isMain()) {
-                mainChat = chat;
+        for (Chat chat : group.getChats()) {
+            if (chat.isOpened()) {
+                chat.getUserUuids().add(uuid);
+                chatRepository.save(chat);
             }
         }
-        mainChat.getUserUuids().add(uuid);
 
         group.getUsers().add(user);
-        chatRepository.save(mainChat);
         groupUserRepository.save(user);
         return groupRepository.save(group);
     }

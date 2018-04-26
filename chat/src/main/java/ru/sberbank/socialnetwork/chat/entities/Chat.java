@@ -29,9 +29,8 @@ public class Chat {
     @JoinColumn(name="GROUP_ID", nullable=false)
     private Group group;
 
-
-    @Column(name = "IS_MAIN", nullable = false)
-    private boolean isMain;
+    @Column(name = "IS_OPENED", nullable = false)
+    private boolean isOpened;
 
     @ElementCollection
     @CollectionTable(name = "CHAT_USERS", joinColumns = @JoinColumn(name = "CHAT_ID"))
@@ -39,10 +38,11 @@ public class Chat {
     private Set<String> userUuids;
 
 
-    public Chat(String creatorId, String chatName, Group group) {
+    public Chat(String creatorId, String chatName, boolean isOpened, Group group) {
         this.creatorId = creatorId;
         this.chatName = chatName;
-        userUuids = new HashSet<String>();
+        this.isOpened = isOpened;
+        userUuids = new HashSet<>();
         userUuids.add(creatorId);
         this.group = group;
     }
