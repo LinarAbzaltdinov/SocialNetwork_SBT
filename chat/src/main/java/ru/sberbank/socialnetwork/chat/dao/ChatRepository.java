@@ -16,4 +16,6 @@ public interface ChatRepository extends Repository<Chat, Long> {
     Collection<Chat> findByUserUuidsAndGroup(String uuid, Group group);
 
     Collection<Chat> findByGroup(Group group);
+
+    void delete(Chat entity);
 }

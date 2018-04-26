@@ -37,7 +37,6 @@ public class ChatService {
         return chatRepository.save(chat);
     }
 
-
     public Collection<Chat> getGroupChats(Long groupId) {
         Group group = groupRepository.findFirstById(groupId);
         return chatRepository.findByGroup(group);
@@ -47,7 +46,6 @@ public class ChatService {
         Group group = groupRepository.findFirstById(groupId);
         return chatRepository.findByUserUuidsAndGroup(uuid, group);
     }
-
 
     public Chat addUser(Long chatId, String uuid) {
         Chat chat = chatRepository.findById(chatId);
@@ -64,6 +62,11 @@ public class ChatService {
     public Collection<String> getChatUserUuids(Long chatId) {
         Chat chat = chatRepository.findById(chatId);
         return chat.getUserUuids();
+    }
+
+    public void removeChat(Long chatId) {
+        Chat chat = chatRepository.findById(chatId);
+        chatRepository.delete(chat);
     }
 }
 
