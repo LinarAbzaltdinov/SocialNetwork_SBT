@@ -15,7 +15,4 @@ public interface GroupUserRepository extends Repository<GroupUser, Long> {
     void save(GroupUser entity);
 
     GroupUser findByGroupAndUuid(Group group, String uuid);
-
-    @Query("select gu.group from GroupUser gu where gu.uuid = :uuid")
-    List<Group> findUserGroups(@Param("uuid") String uuid);
 }

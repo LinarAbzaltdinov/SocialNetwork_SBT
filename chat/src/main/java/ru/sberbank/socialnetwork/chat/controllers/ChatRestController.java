@@ -35,13 +35,16 @@ public class ChatRestController {
     }
 
     @GetMapping("/group/{groupId}/chat")
-    public Collection<Chat> getGroupChats(@PathVariable Long groupId) {
-        return chatService.getGroupChats(groupId);
+    public Collection<ChatDto> getGroupChats(@PathVariable Long groupId) {
+        return chatService.getGroupChats(groupId)
+                .stream()
+                .map(ChatDto::new)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/group/{groupId}/chat/user/{uuid}")
     public Collection<ChatDto> getUserChats(@PathVariable Long groupId,
-                                         @PathVariable String uuid) {
+                                            @PathVariable String uuid) {
         return chatService.getUserChats(groupId, uuid)
                 .stream()
                 .map(ChatDto::new)
@@ -59,19 +62,19 @@ public class ChatRestController {
 
     @PostMapping("/chat/{chatId}/rename")
     public ChatDto setChatName(@PathVariable Long chatId,
-                            @RequestParam String chatName) {
+                               @RequestParam String chatName) {
         return new ChatDto(chatService.setChatName(chatId, chatName));
     }
 
     @PostMapping("/chat/{chatId}/user/{uuid}/add")
     public ChatDto addUser(@PathVariable Long chatId,
-                        @PathVariable String uuid) {
+                           @PathVariable String uuid) {
         return new ChatDto(chatService.addUser(chatId, uuid));
     }
 
     @PostMapping("/chat/{chatId}/user/{uuid}/remove")
     public ChatDto removeUser(@PathVariable Long chatId,
-                           @PathVariable String uuid) {
+                              @PathVariable String uuid) {
         return new ChatDto(chatService.removeUser(chatId, uuid));
     }
 

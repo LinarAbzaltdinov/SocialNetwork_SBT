@@ -79,6 +79,7 @@ public class IndexController {
     }
 
     private void addUserIdToSession(Credentials credentials, HttpSession httpSession) {
-        httpSession.setAttribute("email", credentials.getEmail());
+        UserInfo user = userService.getUserByEmail(credentials.getEmail());
+        httpSession.setAttribute("userId", user.getUuid());
     }
 }

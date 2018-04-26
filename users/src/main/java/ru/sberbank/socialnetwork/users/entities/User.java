@@ -60,4 +60,22 @@ public class User implements Serializable {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role roleId;
+
+    public void update(User updatedUser) {
+        if (updatedUser.firstName != null) {
+            this.firstName = updatedUser.firstName;
+        }
+        if (updatedUser.lastName != null) {
+            this.lastName = updatedUser.lastName;
+        }
+        if (updatedUser.password != null) {
+            this.password = updatedUser.password;
+        }
+        if (updatedUser.birthday != null) {
+            this.birthday = updatedUser.birthday;
+        }
+        if (updatedUser.photoId != null) {
+            this.photoId = updatedUser.photoId;
+        }
+    }
 }

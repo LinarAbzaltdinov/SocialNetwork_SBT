@@ -1,9 +1,13 @@
 package ru.sberbank.socialnetwork.chat.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import ru.sberbank.socialnetwork.chat.entities.Chat;
 import ru.sberbank.socialnetwork.chat.entities.Group;
 
+@Data
 @AllArgsConstructor
 public class GroupDto {
     private Long id;

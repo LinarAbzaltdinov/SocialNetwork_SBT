@@ -1,21 +1,33 @@
-var messageElem = $('#message-input');
 
-$("#btn-chat").on('click', sendMessage);
 
-messageElem.keypress(function (e) {
+
+
+
+
+
+$('nav.nav-sidebar li a').click(function (e) {
+
+    $(this).addClass("in active")
+})
+
+$('[id^=btn-chat]').on('click', function (e) {
+    var chatId = e.target.id.split('-').pop();
+    sendMessage(chatId);
+});
+
+$('[id^=message-input]').keypress(function (e) {
     var key = e.which;
     if (key == 13) {
-        sendMessage();
+        var chatId = e.target.id.split('-').pop();
+        sendMessage(chatId);
     }
 });
 
-function sendMessage() {
-
-    messageText = messageElem.val();
+function sendMessage(chatId) {
+    messageText = $('#message-input-'+chatId).val();
     if (!messageText) {
         return false;
     }
-    chatId = 1; //>>>>>>>БРАТЬ ЧАТ АЙДИ ОТКУДА-ТО<<<<<<<<<<<<
     $.ajax({
         url: '/chat/' + chatId + '/sendMessage',
         method: 'post',

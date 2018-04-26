@@ -1,13 +1,11 @@
 package ru.sberbank.socialnetwork.chat.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+
+import lombok.Data;
 import ru.sberbank.socialnetwork.chat.entities.Chat;
 
-import java.util.Collection;
-
-@AllArgsConstructor
+@Data
 public class ChatDto {
     private Long id;
     private String chatName;

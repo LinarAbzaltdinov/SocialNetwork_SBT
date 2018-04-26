@@ -28,7 +28,7 @@ public class GroupUser {
     private UserAccessMode accessMode;
 
     @NonNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="GROUP_ID", nullable=false)
     private Group group;
 }

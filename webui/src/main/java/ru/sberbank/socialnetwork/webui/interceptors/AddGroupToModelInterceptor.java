@@ -2,19 +2,20 @@ package ru.sberbank.socialnetwork.webui.interceptors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.ModelAndView;
+import ru.sberbank.socialnetwork.webui.client.ChatServiceClient;
 import ru.sberbank.socialnetwork.webui.models.UserInfo;
 import ru.sberbank.socialnetwork.webui.services.UserInfoService;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
+import java.util.Map;
 
-public class AddUserInfoToModelInterceptor implements HandlerInterceptor {
+public class AddGroupToModelInterceptor implements HandlerInterceptor {
 
     @Autowired
-    private UserInfoService userInfoService;
+    private ChatServiceClient chatServiceClient;
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
@@ -25,13 +26,13 @@ public class AddUserInfoToModelInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                            Object o, ModelAndView modelAndView) throws Exception {
-        Object userIdAttribute = httpServletRequest.getSession().getAttribute("userId");
-        if (modelAndView == null || userIdAttribute == null) {
+        final Map<String, String> pathVariables = (Map<String, String>) httpServletRequest
+                .getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+        String groupId = pathVariables.get("groupId");
+        if (groupId == null || modelAndView == null) {
             return;
         }
-        String userId = userIdAttribute.toString();
-        UserInfo user = userInfoService.getUser(userId);
-        modelAndView.addObject("user", user);
+        modelAndView.addObject("group", chatServiceClient.getGroupById(groupId));
     }
 
     @Override

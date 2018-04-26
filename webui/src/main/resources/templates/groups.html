@@ -41,7 +41,7 @@
                         <tbody>
                         <tr th:id="'group'+${grp.id}" th:each="grp : ${myGroups}">
                             <td><a th:href="@{/groups/{id}(id=${grp.id})}" th:text="${grp.groupName}">Name</a></td>
-                            <td th:text="${grp.amount}">Amount</td>
+                            <td th:text="${grp.numberOfUsers}">Amount</td>
                             <td><a th:href="'javascript:removeUserFromGroup(' + ${grp.id} + ');'"><i
                                     class="fa fa-times"></i></a></td>
                         </tr>
@@ -61,7 +61,7 @@
                         <tr th:id="'allgroup'+${group.id}" th:each="group : ${allGroups}">
                             <td><a th:href="@{/groups/{id}(id=${group.id})}" onclick="return false;" th:text="${group.groupName}">Name</a>
                             </td>
-                            <td th:text="${group.amount}">Amount</td>
+                            <td th:text="${group.numberOfUsers}">Amount</td>
                             <td><a th:href="'javascript:addUserToGroup(' + ${group.id} + ');'"><i
                                     class="fa fa-plus"></i></a></td>
                         </tr>

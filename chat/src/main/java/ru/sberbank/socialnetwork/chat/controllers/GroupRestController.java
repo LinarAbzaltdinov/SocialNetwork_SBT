@@ -11,6 +11,7 @@ import ru.sberbank.socialnetwork.chat.services.GroupService;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -25,7 +26,7 @@ public class GroupRestController {
     }
 
     @PostMapping("/group/create")
-    public GroupDto createChat(@RequestParam String groupName,
+    public GroupDto createGroup(@RequestParam String groupName,
                                @RequestParam String description,
                                @RequestParam boolean isOpened,
                                @RequestParam String creatorId) {
@@ -33,7 +34,7 @@ public class GroupRestController {
     }
 
     @GetMapping("/group/user/{uuid}")
-    public Collection<GroupDto> getUserGroups(@PathVariable String uuid) {
+    public List<GroupDto> getUserGroups(@PathVariable String uuid) {
         return groupService.getUserGroups(uuid)
                 .stream()
                 .map(GroupDto::new)

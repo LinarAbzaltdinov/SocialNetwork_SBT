@@ -8,11 +8,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "GROUP")
+@Table(name = "GROUPS")
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 public class Group {
 
     @Id
@@ -29,10 +28,10 @@ public class Group {
     @Column(name = "ACCESS_MODE", nullable = false)
     private boolean isOpened;
 
-    @OneToMany(mappedBy="group")
+    @OneToMany(mappedBy="group", fetch = FetchType.LAZY)
     private Set<Chat> chats;
 
-    @OneToMany(mappedBy="group")
+    @OneToMany(mappedBy="group", fetch = FetchType.LAZY)
     private Set<GroupUser> users;
 
     @ElementCollection
