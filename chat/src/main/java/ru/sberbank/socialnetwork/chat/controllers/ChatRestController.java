@@ -26,7 +26,6 @@ public class ChatRestController {
         this.messageClient = messageClient;
     }
 
-
     @PostMapping("/group/{groupId}/chat/create")
     public Long createChat(@RequestParam String creatorId,
                            @RequestParam String chatName,
@@ -53,12 +52,8 @@ public class ChatRestController {
 
     @GetMapping("/chat/{chatId}")
     public ChatDto getChat(@PathVariable Long chatId) {
-        ChatDto chat = new ChatDto(chatService.getChat(chatId));
-        Collection<MessageDto> messages = messageClient.showMessagesOfChat(chatId);
-        chat.setMessages(messages);
-        return chat;
+        return new ChatDto(chatService.getChat(chatId));
     }
-
 
     @PostMapping("/chat/{chatId}/rename")
     public ChatDto setChatName(@PathVariable Long chatId,
@@ -83,10 +78,8 @@ public class ChatRestController {
         return chatService.getChatUserUuids(chatId);
     }
 
-    @PostMapping("/chat/{chatId}/message/send")
-    public String sendMessage(@PathVariable Long chatId,
-                                  @RequestParam String uuid,
-                                  @RequestParam String messageContent) {
-        return messageClient.createMessage(messageContent, uuid, chatId);
+    @PostMapping("/chat/{chatId}/remove")
+    public void removeChat(@PathVariable Long chatId) {
+        chatService.removeChat(chatId);
     }
 }

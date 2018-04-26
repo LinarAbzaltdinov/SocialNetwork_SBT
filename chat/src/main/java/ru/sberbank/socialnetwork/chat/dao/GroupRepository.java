@@ -20,4 +20,6 @@ public interface GroupRepository extends Repository<Group, Long> {
     Collection<Group> findByGroupNameStartingWith(String prefix);
 
     Collection<Group> findByInvitedUserUuids(String uuid);
+
+    void delete(Group entity);
 }
