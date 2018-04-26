@@ -98,6 +98,7 @@ public class GroupService {
     public Group addUser(Long groupId, String uuid, UserAccessMode mode) {
         Group group = groupRepository.findFirstById(groupId);
         GroupUser user = new GroupUser(uuid, mode, group);
+        groupUserRepository.save(user);
         group.getUsers().add(user);
         return groupRepository.save(group);
     }
