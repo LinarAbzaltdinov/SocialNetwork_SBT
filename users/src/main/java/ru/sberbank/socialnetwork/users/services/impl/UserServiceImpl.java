@@ -9,9 +9,9 @@ import ru.sberbank.socialnetwork.users.entities.User;
 import ru.sberbank.socialnetwork.users.services.UserService;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -24,7 +24,6 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Transactional
     @Override
     public User addUser(String email, String password) {
         String encodedPassword = passwordEncoder.encode(password);
@@ -32,13 +31,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.saveAndFlush(newUser);
     }
 
-    @Transactional(readOnly = true)
     @Override
     public User findUserByUuid(String uuid) {
         return userRepository.findByUuid(uuid);
     }
 
-    @Transactional
     @Override
     public boolean deleteUser(String uuid) {
         if (userRepository.exists(uuid)) {
@@ -48,7 +45,6 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
-    @Transactional
     @Override
     public User editUser(User updatedUser) {
         User foundUser = findUserByEmail(updatedUser.getEmail());
@@ -59,27 +55,25 @@ public class UserServiceImpl implements UserService {
         return userRepository.saveAndFlush(foundUser);
     }
 
-    @Transactional(readOnly = true)
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
     @Override
     public User findUserByEmail(String email) {
-        User foundUser = userRepository.findByEmail(email);
-        return foundUser;
+        return userRepository.findByEmail(email);
     }
 
     @Override
     public boolean login(String email, String password) {
+        boolean result;
         User user = userRepository.findByEmail(email);
         if (user == null) {
             return false;
         }
         String foundUserPassword = user.getPassword();
-        boolean result = passwordEncoder.matches(password, foundUserPassword);
+        result = passwordEncoder.matches(password, foundUserPassword);
         return result;
     }
 }
