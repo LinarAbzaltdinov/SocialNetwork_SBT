@@ -35,7 +35,7 @@ public class LoggingAspect {
         logger.debug(sb.append("Method ")
                 .append(joinPoint.getSignature().toShortString())
                 .append(" returned values: ")
-                .append(result.toString())
+                .append(result == null ? "null" : result.toString())
                 .toString()
         );
     }

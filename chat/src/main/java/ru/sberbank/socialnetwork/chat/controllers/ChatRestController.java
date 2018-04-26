@@ -2,6 +2,7 @@ package ru.sberbank.socialnetwork.chat.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.sberbank.socialnetwork.chat.client.MessageClient;
 import ru.sberbank.socialnetwork.chat.dto.ChatDto;
 import ru.sberbank.socialnetwork.chat.dto.MessageDto;
 import ru.sberbank.socialnetwork.chat.entities.Chat;
@@ -17,10 +18,12 @@ import java.util.stream.Collectors;
 public class ChatRestController {
 
     private final ChatService chatService;
+    private final MessageClient messageClient;
 
     @Autowired
-    public ChatRestController(ChatService chatService) {
+    public ChatRestController(ChatService chatService, MessageClient messageClient) {
         this.chatService = chatService;
+        this.messageClient = messageClient;
     }
 
 
@@ -50,7 +53,10 @@ public class ChatRestController {
 
     @GetMapping("/chat/{chatId}")
     public ChatDto getChat(@PathVariable Long chatId) {
-        return new ChatDto(chatService.getChat(chatId));
+        ChatDto chat = new ChatDto(chatService.getChat(chatId));
+        Collection<MessageDto> messages = messageClient.showMessagesOfChat(chatId);
+        chat.setMessages(messages);
+        return chat;
     }
 
 
@@ -78,17 +84,9 @@ public class ChatRestController {
     }
 
     @PostMapping("/chat/{chatId}/message/send")
-    public MessageDto sendMessage(@PathVariable Long chatId,
+    public String sendMessage(@PathVariable Long chatId,
                                   @RequestParam String uuid,
-                                  @RequestParam String messageContent,
-                                  @RequestParam Date date) {
-        // send message
-        return null;// new MessageDto();
-    }
-
-    @GetMapping("/chat/{chatId}/message/get")
-    public List<MessageDto> getMessages(@PathVariable Long chatId) {
-        // get message;
-        return new ArrayList<>();
+                                  @RequestParam String messageContent) {
+        return messageClient.createMessage(messageContent, uuid, chatId);
     }
 }

@@ -17,20 +17,24 @@ public class AuthInterceptor  implements HandlerInterceptor {
     private UserInfoService userInfoService;
 
     @Override
-    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
                              Object o) throws Exception {
-        HttpSession session = httpServletRequest.getSession();
+        HttpSession session = request.getSession();
         Object userId = session.getAttribute("userId");
-        return userId != null;
+        if (userId == null) {
+            response.sendRedirect("/login");
+            return false;
+        }
+        return true;
     }
 
     @Override
-    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+    public void postHandle(HttpServletRequest request, HttpServletResponse response,
                            Object o, ModelAndView modelAndView) throws Exception {
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
                                 Object o, Exception e) throws Exception {
 
     }

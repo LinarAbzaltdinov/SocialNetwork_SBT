@@ -1,16 +1,14 @@
 package ru.sberbank.socialnetwork.message.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
+@EqualsAndHashCode
 public class MessageDTO {
-    String id;
     String content;
     String userId;
     String chatId;
