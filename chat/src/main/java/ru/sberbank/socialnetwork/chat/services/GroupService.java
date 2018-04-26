@@ -98,18 +98,7 @@ public class GroupService {
     public Group addUser(Long groupId, String uuid, UserAccessMode mode) {
         Group group = groupRepository.findFirstById(groupId);
         GroupUser user = new GroupUser(uuid, mode, group);
-
-        Collection<Chat> chats = group.getChats();
-        Chat mainChat = null;
-        for (Chat chat : chats) {
-            if (chat.isMain()) {
-                mainChat = chat;
-            }
-        }
-        mainChat.getUserUuids().add(uuid);
-
         group.getUsers().add(user);
-        chatRepository.save(mainChat);
         groupUserRepository.save(user);
         return groupRepository.save(group);
     }
@@ -136,7 +125,7 @@ public class GroupService {
     public List<Group> getAllOpenedGroups() {
         return groupRepository.findAllByIsOpenedTrue();
     }
-  
+
     public void removeGroup(Long groupId) {
         Group group = groupRepository.findFirstById(groupId);
 

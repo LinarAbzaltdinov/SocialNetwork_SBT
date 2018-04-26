@@ -28,8 +28,7 @@ public class Chat {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="GROUP_ID", nullable=false)
     private Group group;
-
-
+    x
     @Column(name = "IS_MAIN", nullable = false)
     private boolean isMain;
 
