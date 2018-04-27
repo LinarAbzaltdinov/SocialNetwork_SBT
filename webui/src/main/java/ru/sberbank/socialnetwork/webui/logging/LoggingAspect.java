@@ -16,7 +16,8 @@ public class LoggingAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
 
-    @Before("execution(* ru.sberbank.socialnetwork.webui.controllers.*.*(..))")
+    @Before("execution(* (ru.sberbank.socialnetwork.webui.controllers.* " +
+            "|| ru.sberbank.socialnetwork.webui.client.*) .*(..))")
     public void logBefore(JoinPoint joinPoint) {
         StringBuilder stringBuilder = new StringBuilder();
         logger.debug(stringBuilder.append("Call method ")
@@ -29,7 +30,8 @@ public class LoggingAspect {
     }
 
     @AfterReturning(
-            pointcut = "execution(* ru.sberbank.socialnetwork.webui.controllers.*.*(..))",
+            pointcut = "execution(* (ru.sberbank.socialnetwork.webui.controllers.* " +
+                    "|| ru.sberbank.socialnetwork.webui.client.*) .*(..))",
             returning = "result")
     public void logAfter(JoinPoint joinPoint, Object result) {
         StringBuilder stringBuilder = new StringBuilder();
