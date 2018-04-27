@@ -10,6 +10,7 @@ import ru.sberbank.socialnetwork.webui.models.UserInfo;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @FeignClient("gateway")
 public interface ChatServiceClient {
@@ -22,7 +23,7 @@ public interface ChatServiceClient {
 
     @GetMapping(value = "/group/user/{uuid}", consumes = "application/json")
     @ResponseBody
-    List<Group> getUserGroups(@PathVariable("uuid") String uuid);
+    Set<Group> getUserGroups(@PathVariable("uuid") String uuid);
 
     @GetMapping(value = "/group/opened", consumes = "application/json")
     @ResponseBody
