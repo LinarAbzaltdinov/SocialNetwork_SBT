@@ -71,7 +71,7 @@ public class GroupController {
     @DeleteMapping("/{groupId}/removeUser")
     @ResponseStatus(HttpStatus.OK)
     public void removeUserFromGroup(@PathVariable("groupId") String groupId,
-                               @SessionAttribute(SESSION_ATTR_USER) String userId) {
+                                    @SessionAttribute(SESSION_ATTR_USER) String userId) {
         groupService.removeUserFromGroup(userId, groupId);
     }
 

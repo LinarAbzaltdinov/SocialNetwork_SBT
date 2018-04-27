@@ -10,5 +10,6 @@ import ru.sberbank.socialnetwork.message.exceptions.ResourceNotFoundException;
 public class ResourceNotFoundExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public void handleResourceNotFound() {}
+    public void handleResourceNotFound() {
+    }
 }

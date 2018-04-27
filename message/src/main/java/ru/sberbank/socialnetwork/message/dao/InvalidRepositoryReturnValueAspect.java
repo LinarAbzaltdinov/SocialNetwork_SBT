@@ -10,10 +10,8 @@ import ru.sberbank.socialnetwork.message.exceptions.ResourceNotFoundException;
 @Component
 public class InvalidRepositoryReturnValueAspect {
     @AfterReturning(pointcut = "execution(* ru.sberbank.socialnetwork.message.dao.*Repository+.findOne(..))", returning = "result")
-    public void intercept(final Object result)
-    {
-        if (result == null)
-        {
+    public void intercept(final Object result) {
+        if (result == null) {
             throw new ResourceNotFoundException();
         }
     }

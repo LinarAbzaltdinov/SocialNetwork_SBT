@@ -30,7 +30,7 @@ public class GroupService {
 
     public Group createGroup(String userId, Group newGroup) {
         return chatServiceClient.createGroup(newGroup.getGroupName(),
-                newGroup.getDescription(),true, userId);
+                newGroup.getDescription(), true, userId);
     }
 
     public List<Group> getAllOpenedGroups(String id) {

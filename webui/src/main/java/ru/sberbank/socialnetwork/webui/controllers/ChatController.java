@@ -38,8 +38,8 @@ public class ChatController {
     @PostMapping("/chat/{chatId}/sendMessage")
     @ResponseBody
     public ResponseEntity sendMessage(@RequestParam String messageText,
-                               @PathVariable("chatId") String chatId,
-                               @SessionAttribute(SESSION_ATTR_USER) String userId) {
+                                      @PathVariable("chatId") String chatId,
+                                      @SessionAttribute(SESSION_ATTR_USER) String userId) {
         ResponseEntity result = chatService.createMessage(userId, chatId, messageText);
         return result;
     }
