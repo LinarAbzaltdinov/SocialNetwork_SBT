@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
-@FeignClient("chat-service")
+@FeignClient("gateway")
 public interface ChatServiceClient {
     @PostMapping(value = "/group/create")
     @ResponseBody

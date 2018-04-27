@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: gateway
+server:
+  port: 8010
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+zuul:
+  ignoredServices: '*'
+  routes:
+    chat-service_chat:
+      path: /chat/**
+      serviceId: chat-service
+      stripPrefix: false
+    chat-service_group:
+      path: /group/**
+      serviceId: chat-service
+      stripPrefix: false
+    message-service:
+      path: /messages/**
+      serviceId: message-service
+      stripPrefix: false
+    users-service:
+      path: /users/**
+      serviceId: users-service
+      stripPrefix: false

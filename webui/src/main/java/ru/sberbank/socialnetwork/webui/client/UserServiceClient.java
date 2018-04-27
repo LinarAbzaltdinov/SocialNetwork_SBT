@@ -8,7 +8,7 @@ import ru.sberbank.socialnetwork.webui.models.UserInfo;
 
 import java.util.List;
 
-@FeignClient("users-service")
+@FeignClient("gateway")
 @RequestMapping("/users")
 public interface UserServiceClient {
     @GetMapping(value = "/all", consumes = "application/json")
