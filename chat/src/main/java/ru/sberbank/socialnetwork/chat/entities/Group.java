@@ -43,7 +43,8 @@ public class Group {
         this.groupName = groupName;
         this.description = description;
         this.isOpened = isOpened;
-        chats = new HashSet<>();
-        users = new HashSet<>();
+        this.chats = new HashSet<>();
+        this.users = new HashSet<>();
+        this.invitedUserUuids = new HashSet<>();
     }
 }
