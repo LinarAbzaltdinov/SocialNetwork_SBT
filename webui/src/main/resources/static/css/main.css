@@ -43,3 +43,11 @@ body {
 .fa.fa-times {
     color: #DD0000;
 }
+
+.fa.fa-check {
+    color: green;
+}
+
+.full-width {
+    width: 100%;
+}

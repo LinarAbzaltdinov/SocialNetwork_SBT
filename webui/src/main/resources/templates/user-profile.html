@@ -19,7 +19,7 @@
         <div class="tab-pane fade in active" id="profile">
             <div class="row">
                 <div class="col-md-10 ">
-                    <form th:action="@{/user/updateInfo}" method="post" class="form-horizontal">
+                    <form th:action="@{/user/updateInfo}" method="post" th:object="${user}" class="form-horizontal">
                         <fieldset>
                             <div class="form-group"></div>
 
@@ -32,8 +32,7 @@
                                             <i class="fa fa-envelope-o"></i>
                                         </div>
                                         <input id="Email" name="Email" type="text" placeholder="Email"
-                                               class="form-control input-md" readonly="readonly"/><!-- th:value="${user?.email}" -->
-
+                                               class="form-control input-md" readonly="readonly" th:value="*{email}"/>
                                     </div>
                                 </div>
                             </div>
@@ -48,7 +47,7 @@
                                             </i>
                                         </div>
                                         <input id="FirstName" name="FirstName" type="text" placeholder="Имя"
-                                               class="form-control input-md" th:value="${user?.firstName}"/>
+                                               class="form-control input-md" th:value="*{firstName}"/>
                                     </div>
                                 </div>
                             </div>
@@ -63,7 +62,7 @@
                                             </i>
                                         </div>
                                         <input id="LastName" name="LastName" type="text" placeholder="Фамилия"
-                                               class="form-control input-md" th:value="${user?.email}"/>
+                                               class="form-control input-md" th:value="*{lastName}"/>
                                     </div>
                                 </div>
                             </div>
@@ -85,7 +84,7 @@
                                             <i class="fa fa-birthday-cake"></i>
                                         </div>
                                         <input id="BirthDate" name="BirthDate" type="date" placeholder="Дата рождения"
-                                               class="form-control input-md"/>
+                                               class="form-control input-md" th:value="*{birthday}"/>
                                     </div>
                                 </div>
                             </div>
@@ -115,7 +114,7 @@
                     </form>
                 </div>
                 <div class="col-md-2 hidden-xs">
-                    <img src="/images/avatar.jpg" class="img-responsive img-thumbnail "/>
+                    <img th:src="@{/images/avatar.jpg}" class="img-responsive img-thumbnail "/>
                 </div>
             </div>
         </div>

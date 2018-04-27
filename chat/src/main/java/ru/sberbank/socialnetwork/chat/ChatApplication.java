@@ -1,3 +1,4 @@
+
 package ru.sberbank.socialnetwork.chat;
 
 import org.springframework.boot.SpringApplication;

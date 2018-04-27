@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:with="lang=${#locale.language}" th:lang="${lang}">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Создать группу</title>
+    <div th:replace="fragments :: css"></div>
+</head>
+<body>
+<div th:replace="fragments :: navbar"></div>
+<div class="container">
+    <div class="row">
+        <form method="post" th:object="${chat}" class="form-horizontal">
+            <fieldset>
+                <div class="form-group"></div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Название чата</label>
+                    <div class="col-md-4">
+                        <input id="groupName" name="groupName" type="text"
+                               placeholder="Название группы"
+                               class="form-control input-md" th:field="*{chatName}"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Чат открыт для всех</label>
+                    <div class="col-md-4">
+                        <input type="checkbox" class="btn btn-success" id="openedChatCB" th:field="*{opened}"/>
+                    </div>
+                </div>
+
+                <div class="form-group" hidden="hidden" id="userlist">
+                    <label class="col-md-4 control-label">Выберите пользователей</label>
+                    <div class="col-md-4">
+                        <select id="selectedUsers" th:field="*{userList}" size="10" class="full-width" multiple="multiple">
+                            <option th:each="userOfGroup : ${userList}"
+                                    th:value="${userOfGroup.uuid}"
+                                    th:text="${userOfGroup.fullName}">
+                                Users
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label"></label>
+                        <div class="col-md-4">
+                            <input type="submit" class="btn btn-success" value="Создать"/>
+                        </div>
+                    </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<div th:replace="fragments :: js"></div>
+<script th:src="@{/js/newchat.js}"></script>
+</body>
+</html>

@@ -1,11 +1,23 @@
 package ru.sberbank.socialnetwork.message.services;
 
-import org.springframework.stereotype.Service;
-import ru.sberbank.socialnetwork.message.entities.Message;
+import ru.sberbank.socialnetwork.message.dto.MessageDTO;
+
+import java.util.List;
 
 public interface MessageService {
 
-    Message createMessage(String userId, String messageContent);
-    Message getMessage(String id);
+    void createMessage(MessageDTO message);
+
+    MessageDTO getMessage(String id);
+
+    void removeMessage(String id);
+
+    List<MessageDTO> getMessagesOfUser(String userId);
+
+    void removeMessagesOfUser(String userId);
+
+    List<MessageDTO> getMessagesOfChat(String chatId);
+
+    void removeMessagesOfChat(String chatId);
 
 }

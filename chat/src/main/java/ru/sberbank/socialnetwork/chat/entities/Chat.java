@@ -5,45 +5,54 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.SortedSet;
+
 
 @Entity
 @Table(name = "CHAT")
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 public class Chat {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "CHAT_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NonNull
-    @Column(name = "CHAT_NAME")
+    @Column(name = "CHAT_NAME", nullable = false)
     private String chatName;
 
-    @NonNull
-    @Column(name = "CREATOR_ID")
+    @Column(name = "CREATOR_ID", nullable = false)
     private String creatorId;
 
-    @ElementCollection
-    @CollectionTable(name = "CHAT_MESSAGES", joinColumns = @JoinColumn(name = "CHAT_ID"))
-    @Column(name = "MESSAGE_ID")
-    @OrderBy("message_id")
-    private SortedSet<String> messages;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="GROUP_ID", nullable=false)
+    private Group group;
+
+    @Column(name = "IS_OPENED", nullable = false)
+    private boolean isOpened;
 
     @ElementCollection
     @CollectionTable(name = "CHAT_USERS", joinColumns = @JoinColumn(name = "CHAT_ID"))
     @Column(name = "USER_ID")
-    private Set<String> users;
+    private Set<String> userUuids;
 
-    public Chat(String creatorId, String chatName) {
+
+    public Chat(String creatorId, String chatName, boolean isOpened, Group group) {
         this.creatorId = creatorId;
         this.chatName = chatName;
-        users = new HashSet<String>();
-        users.add(creatorId);
+        this.isOpened = isOpened;
+        userUuids = new HashSet<>();
+        userUuids.add(creatorId);
+        this.group = group;
+    }
+
+    @Override
+    public String toString() {
+        return "Chat{" +
+                "id=" + id +
+                ", chatName='" + chatName + '\'' +
+                ", creatorId='" + creatorId + '\'' +
+                '}';
     }
 }
-

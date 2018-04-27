@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha256-3dkvEK0WLHRJ7/Csr0BZjAWxERc5WH7bdeUya2aXxdU= sha512-+L4yy6FRcDGbXJ9mPG8MT/3UCDzwR9gPeyFNMCtInsol++5m3bk2bXWKdZjvybmohrAsn3Ua5x8gfLnbE1YkOg==" crossorigin="anonymous"/>
         <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"/>
-        <link th:href="@{css/main.css}" rel="stylesheet"/>
+        <link th:href="@{/css/main.css}" rel="stylesheet"/>
     </div>
 </head>
 <body>
@@ -24,7 +24,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <span class="glyphicon glyphicon-user"></span> 
-                        <strong>Username</strong>
+                        <strong th:text="${user.firstName}"></strong>
                         <span class="glyphicon glyphicon-chevron-down"></span>
                     </a>
                     <ul class="dropdown-menu">
@@ -37,8 +37,8 @@
                                         </p>
                                     </div>
                                     <div class="col-lg-8">
-                                        <p class="text-left"><strong>Линар Абзалтдинов</strong></p>
-                                        <p class="text-left small">abzaltdinov@gmail.com</p>
+                                        <p class="text-left"><strong id="userFullName" th:text="${user.fullName}">FullName</strong></p>
+                                        <p class="text-left small" th:text="${user.email}">Email</p>
                                         <p class="text-left">
                                             <a th:href="@{/user}" class="btn btn-primary btn-block btn-sm">Посмотреть профиль</a>
                                         </p>
@@ -52,7 +52,7 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <p>
-                                            <a th:href="@{/login(logout)}" class="btn btn-danger btn-block">Выйти</a>
+                                            <a th:href="@{/logout}" class="btn btn-danger btn-block">Выйти</a>
                                         </p>
                                     </div>
                                 </div>

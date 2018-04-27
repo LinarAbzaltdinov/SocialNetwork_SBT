@@ -1,15 +1,18 @@
-package ru.sberbank.socialnetwork.message.entities;
+package ru.sberbank.socialnetwork.message.domains;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import ru.sberbank.socialnetwork.message.dto.MessageDTO;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Document(collection = "message")
 @RequiredArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
+@EqualsAndHashCode
 public class Message {
     @Id
     private String id;
@@ -20,5 +23,9 @@ public class Message {
     @NonNull
     private String userId;
 
-    private Date created = new Date();
+    @NonNull
+    private String chatId;
+
+    private LocalDateTime createdDate = LocalDateTime.now();
+
 }

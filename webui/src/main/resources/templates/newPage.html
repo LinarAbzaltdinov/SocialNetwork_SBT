@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:with="lang=${#locale.language}" th:lang="${lang}">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Создать группу</title>
+    <div th:replace="fragments :: css"></div>
+</head>
+<body>
+<div th:replace="fragments :: navbar"></div>
+<div class="container">
+    <div class="row">
+        <form method="post" th:object="${group}" class="form-horizontal">
+            <fieldset>
+                <div class="form-group"></div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Название группы</label>
+                    <div class="col-md-4">
+                        <input id="groupName" name="groupName" type="text"
+                               required="required"
+                               placeholder="Название группы"
+                               class="form-control input-md"
+                               th:value="*{groupName}"/>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Описание</label>
+                    <div class="col-md-4">
+                        <input id="description" name="description" type="text"
+                               placeholder="Описание"
+                               class="form-control input-md"
+                               th:value="*{description}"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label"></label>
+                    <div class="col-md-4">
+                        <input type="submit" class="btn btn-success" value="Создать"/>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<div th:replace="fragments :: js"></div>
+</body>
+</html>
