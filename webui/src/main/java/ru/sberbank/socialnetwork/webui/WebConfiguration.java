@@ -36,7 +36,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
                 .excludePathPatterns("/", "/index", "/login", "/signup", "/error");
         registry.addInterceptor(addGroupToModelInterceptor())
                 .addPathPatterns("/groups/**")
-                .excludePathPatterns("/groups/new");
+                .excludePathPatterns("/groups/new", "/groups/*/newChat");
     }
 
 }

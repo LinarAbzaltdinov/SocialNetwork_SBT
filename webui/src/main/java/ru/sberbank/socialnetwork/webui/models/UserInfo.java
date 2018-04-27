@@ -8,7 +8,7 @@ public class UserInfo {
     private String email;
     private String firstName = "";
     private String lastName = "";
-    private String birthDate = "";
+    private String birthday;
 
     public String getFullName() {
         return firstName + " " + lastName;

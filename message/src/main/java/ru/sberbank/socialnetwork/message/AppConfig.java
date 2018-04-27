@@ -1,6 +1,7 @@
 package ru.sberbank.socialnetwork.message;
 
 import org.modelmapper.*;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
@@ -22,11 +23,12 @@ public class AppConfig {
 
     @Bean
     public ModelMapper modelMapper() {
-        ModelMapper modelmapper = new ModelMapper();
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         Converter<LocalDateTime, String> localDateTimeStringConverter
                 = new LocalDateTimeToStringDateConverter(DATE_TIME_FORMAT);
-        modelmapper.createTypeMap(LocalDateTime.class, String.class);
-        modelmapper.addConverter(localDateTimeStringConverter);
-        return modelmapper;
+        modelMapper.createTypeMap(LocalDateTime.class, String.class);
+        modelMapper.addConverter(localDateTimeStringConverter);
+        return modelMapper;
     }
 }

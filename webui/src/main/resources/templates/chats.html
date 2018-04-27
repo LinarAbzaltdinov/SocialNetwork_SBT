@@ -14,14 +14,12 @@
     <legend th:text="${group.groupName}">Group Name</legend>
     <div class="row">
         <div class="col-md-2">
-            <nav class="nav-sidebar">
+            <nav class="nav-sidebar" id="left-nav">
                 <ul class="nav">
                     <li class="active"><a href="#description">Информация о группе</a></li>
                     <li class="nav-divider"></li>
                     <li th:each="chat : ${chats}" th:value="${chat.id}"><a th:href="'#chat' + ${chat.id}"
                                                                            th:text="${chat.chatName}">Name</a></li>
-                    <li class="nav-divider"></li>
-                    <li><a th:href="${#httpServletRequest.requestURI + '/new'}">Создать чат</a></li>
                 </ul>
             </nav>
         </div>
@@ -29,6 +27,12 @@
             <div class="tab-pane" id="description">
                 <h2 th:text="${group.groupName}"></h2>
                 <h4 th:text="${group.description}"></h4>
+                <br/>
+                <button th:if="not ${isUserCreatorOfGroup}" type="button"
+                        class="btn btn-danger"
+                        id="deleteUserFromGroupButton">
+                    Покинуть группу
+                </button>
             </div>
             <div th:each="chat : ${chats}" class="tab-pane" th:id="'chat' + ${chat.id}" hidden="hidden">
                 <div class="panel-body">
@@ -47,15 +51,45 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-2">
+            <nav class="nav-sidebar" id="right-nav">
+                <ul th:if="${isUserCreatorOfGroup}" class="nav">
+                    <li>
+                        <button type="button"
+                                class="btn btn-default full-width"
+                                th:onclick="'location.href=\'' + ${#httpServletRequest.requestURI} + '/newChat\';'">
+                            Создать чат
+                        </button>
+                    </li>
+                    <li class="nav-divider" style="display: none"></li>
+                    <li style="display: none">
+                        <button type="button"
+                                class="btn btn-default full-width"
+                                id="deleteChatButton">
+                            Удалить текущий чат
+                        </button>
+                    </li>
+                    <li class="nav-divider"></li>
+                    <li>
+                        <button type="button"
+                                class="btn btn-danger full-width"
+                                id="deleteGroupButton">
+                            Удалить группу
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>
 <script th:inline="javascript">
     /*<![CDATA[*/
     var currentUserId = /*[[${session.userId}]]*/ null;
+    var currentGroupId = /*[[${group.id}]]*/ null;
     /*]]>*/
 </script>
 <div th:replace="fragments :: js"></div>
 <script src="http://www.mattkruse.com/javascript/date/date.js"></script>
-<script th:src="@{/js/chat.js}"></script>
+<script th:src="@{/js/chat-group.js}"></script>
 </body>
 </html>

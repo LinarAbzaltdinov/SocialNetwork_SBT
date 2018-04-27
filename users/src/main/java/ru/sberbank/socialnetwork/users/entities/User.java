@@ -77,5 +77,8 @@ public class User implements Serializable {
         if (updatedUser.photoId != null) {
             this.photoId = updatedUser.photoId;
         }
+        if (updatedUser.sex != 0) {
+            this.sex = updatedUser.sex;
+        }
     }
 }

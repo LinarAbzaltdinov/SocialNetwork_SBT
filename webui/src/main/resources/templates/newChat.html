@@ -17,11 +17,18 @@
 
                 <!-- Text input-->
                 <div class="form-group">
-                    <label class="col-md-4 control-label">Название группы</label>
+                    <label class="col-md-4 control-label">Название чата</label>
                     <div class="col-md-4">
                         <input id="groupName" name="groupName" type="text"
                                placeholder="Название группы"
-                               class="form-control input-md" th:value="*{chatName}"/>
+                               class="form-control input-md" th:field="*{chatName}"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Чат открыт для всех</label>
+                    <div class="col-md-4">
+                        <input type="checkbox" class="btn btn-success" th:field="*{opened}"/>
                     </div>
                 </div>
 

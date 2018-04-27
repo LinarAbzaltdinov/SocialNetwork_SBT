@@ -115,4 +115,12 @@ public class GroupRestController {
     public void removeGroup(@PathVariable Long groupId) {
         groupService.removeGroup(groupId);
     }
+
+    @PostMapping("/group/byAdminId")
+    public List<GroupDto> getGroupByAdminId(String uuid) {
+        return groupService.getGroupByAdminId(uuid)
+                .stream()
+                .map(GroupDto::new)
+                .collect(Collectors.toList());
+    }
 }

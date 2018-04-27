@@ -28,9 +28,4 @@ public class Message {
 
     private LocalDateTime createdDate = LocalDateTime.now();
 
-    public Message(MessageDTO messageDTO) {
-        this.chatId = messageDTO.getChatId();
-        this.content = messageDTO.getContent();
-        this.userId = messageDTO.getUserId();
-    }
 }

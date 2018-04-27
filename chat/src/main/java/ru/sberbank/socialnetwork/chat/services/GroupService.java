@@ -12,6 +12,7 @@ import ru.sberbank.socialnetwork.chat.entities.UserAccessMode;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class GroupService {
@@ -129,7 +130,6 @@ public class GroupService {
         return groupRepository.save(group);
     }
 
-
     public List<Group> getAllOpenedGroups() {
         return groupRepository.findAllByIsOpenedTrue();
     }
@@ -147,6 +147,14 @@ public class GroupService {
             groupUserRepository.delete(user);
         }
         groupRepository.delete(group);
+    }
+
+
+    public List<Group> getGroupByAdminId(String uuid) {
+        return groupUserRepository.findByAccessModeAndUuid(UserAccessMode.ADMINISTRATOR, uuid)
+                .stream()
+                .map(GroupUser::getGroup)
+                .collect(Collectors.toList());
     }
 }
 

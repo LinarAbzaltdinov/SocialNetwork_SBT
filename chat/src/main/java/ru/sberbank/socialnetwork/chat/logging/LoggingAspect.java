@@ -36,7 +36,7 @@ public class LoggingAspect {
         logger.debug(stringBuilder.append("Method ")
                 .append(joinPoint.getSignature().getName())
                 .append(" returned value: ")
-                .append(result.toString())
+                .append(result == null ? "null/void" : result.toString())
                 .toString()
         );
     }
@@ -61,7 +61,7 @@ public class LoggingAspect {
         logger.debug(stringBuilder.append("Method ")
                 .append(joinPoint.getSignature().getName())
                 .append(" returned value: ")
-                .append(result.toString())
+                .append(result == null ? "null/void" : result.toString())
                 .toString()
         );
     }

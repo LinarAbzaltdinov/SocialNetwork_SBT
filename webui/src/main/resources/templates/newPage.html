@@ -20,8 +20,10 @@
                     <label class="col-md-4 control-label">Название группы</label>
                     <div class="col-md-4">
                         <input id="groupName" name="groupName" type="text"
+                               required="required"
                                placeholder="Название группы"
-                               class="form-control input-md" th:value="*{groupName}"/>
+                               class="form-control input-md"
+                               th:value="*{groupName}"/>
                     </div>
                 </div>
 
@@ -31,7 +33,8 @@
                     <div class="col-md-4">
                         <input id="description" name="description" type="text"
                                placeholder="Описание"
-                               class="form-control input-md" th:value="*{description}"/>
+                               class="form-control input-md"
+                               th:value="*{description}"/>
                     </div>
                 </div>
 

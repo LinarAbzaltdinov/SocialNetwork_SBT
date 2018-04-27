@@ -5,10 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.sberbank.socialnetwork.webui.client.ChatServiceClient;
 import ru.sberbank.socialnetwork.webui.models.Chat;
 import ru.sberbank.socialnetwork.webui.models.Group;
-import ru.sberbank.socialnetwork.webui.models.UserInfo;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -33,20 +30,32 @@ public class GroupService {
                 newGroup.getDescription(),true, userId);
     }
 
-    public List<Group> getAllGroups(String id) {
-        return new ArrayList<>();
+    public List<Group> getAllOpenedGroups(String id) {
+        return chatServiceClient.getAllOpenedGroups();
     }
 
     public List<Chat> chatOfGroups(String groupId) {
         return chatServiceClient.getGroupChats(groupId);
     }
 
+    public void addUserToGroup(String userId, String groupId) {
+        chatServiceClient.addUserToGroup(groupId, userId, 1);
+    }
+
+    public void removeUserFromGroup(String userId, String groupId) {
+        chatServiceClient.removeUserFromGroup(groupId, userId);
+    }
+
+    public List<Group> getGroupsCreatedByMe(String userId) {
+        return chatServiceClient.getGroupByAdminId(userId);
+    }
+
+    public void removeGroup(String groupId) {
+        chatServiceClient.deleteGroupById(groupId);
+    }
+
     public boolean isUserCreatorOfGroup(String userId, String groupId) {
-//        Group group = chatServiceClient.
-//        if (group == null) {
-//            return false;
-//        }
-//        group.
-        return true;
+        return getGroupsCreatedByMe(userId).stream()
+                .anyMatch(g -> groupId.equals(g.getId()));
     }
 }

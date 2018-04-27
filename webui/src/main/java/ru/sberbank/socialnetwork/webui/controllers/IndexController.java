@@ -28,7 +28,7 @@ public class IndexController {
 
     @GetMapping(value = {"/", "/index"})
     public String index(HttpSession httpSession) {
-        Object sessionUserId = httpSession.getAttribute("email");
+        Object sessionUserId = httpSession.getAttribute("userId");
         if (sessionUserId == null) {
             return "redirect:/login";
         } else {

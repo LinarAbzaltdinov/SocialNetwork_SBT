@@ -24,8 +24,15 @@ public interface ChatServiceClient {
     @ResponseBody
     List<Group> getUserGroups(@PathVariable("uuid") String uuid);
 
+    @GetMapping(value = "/group/opened", consumes = "application/json")
+    @ResponseBody
+    List<Group> getAllOpenedGroups();
+
     @GetMapping(value = "/group/{groupId}")
     Group getGroupById(@PathVariable("groupId") String groupId);
+
+    @PostMapping("/group/{groupId}/remove")
+    void deleteGroupById(@PathVariable("groupId") String groupId);
 //
 //    @GetMapping("/group/prefix/{prefix}")
 //    Collection<Group> getGroupsByPrefix(@PathVariable String prefix);
@@ -46,12 +53,12 @@ public interface ChatServiceClient {
 //    Group denyInvite(@PathVariable Long groupId, @PathVariable String uuid);
 
     @PostMapping(value = "/group/{groupId}/user/{uuid}/add")
-    Group addUser(@PathVariable("groupId") Long groupId,
-                  @PathVariable("uuid") String uuid,
-                  @RequestParam("mode") Integer mode);
+    Group addUserToGroup(@PathVariable("groupId") String groupId,
+                         @PathVariable("uuid") String uuid,
+                         @RequestParam("mode") Integer mode);
 
     @PostMapping(value = "/group/{groupId}/user/{uuid}/remove")
-    Group removeUserFromGroup(@PathVariable("groupId") Long groupId,
+    Group removeUserFromGroup(@PathVariable("groupId") String groupId,
                               @PathVariable("uuid") String uuid);
 
 //    @PostMapping("/group/{groupId}/change")
@@ -61,9 +68,7 @@ public interface ChatServiceClient {
 //                                @RequestParam boolean isOpened);
 
     @PostMapping(value = "/group/{groupId}/chat/create")
-    Long createChat(@RequestParam("creatorId") String creatorId,
-                    @RequestParam("chatName") String chatName,
-                    @PathVariable("groupId") Long groupId);
+    Long createChat(@PathVariable("groupId") String groupId, @RequestBody Chat chat);
 
     @GetMapping(value = "/group/{groupId}/chat")
     List<Chat> getGroupChats(@PathVariable("groupId") String groupId);
@@ -78,7 +83,7 @@ public interface ChatServiceClient {
 //    Chat setChatName(@PathVariable Long chatId, @RequestParam String chatName);
 //
 //    @PostMapping("/chat/{chatId}/user/{uuid}/add")
-//    Chat addUser(@PathVariable Long chatId, @PathVariable String uuid);
+//    Chat addUserToGroup(@PathVariable Long chatId, @PathVariable String uuid);
 //
 //    @PostMapping("/chat/{chatId}/user/{uuid}/remove")
 //    Chat removeUserFromChat(@PathVariable Long chatId, @PathVariable String uuid);
@@ -94,4 +99,10 @@ public interface ChatServiceClient {
 
     @GetMapping(value = "/chat/{chatId}/message/get")
     List<Message> getMessagesOfChat(@PathVariable("chatId") Long chatId);
+
+    @PostMapping("/group/byAdminId")
+    List<Group> getGroupByAdminId(@RequestParam("uuid") String userId);
+
+    @PostMapping("/chat/{chatId}/remove")
+    void removeChat(@PathVariable("chatId") String chatId);
 }

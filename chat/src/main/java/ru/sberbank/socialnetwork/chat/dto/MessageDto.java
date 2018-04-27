@@ -1,12 +1,15 @@
 package ru.sberbank.socialnetwork.chat.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 import java.util.Date;
 
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
+@NoArgsConstructor
 @AllArgsConstructor
-@Data
 public class MessageDto {
 
     private String id;

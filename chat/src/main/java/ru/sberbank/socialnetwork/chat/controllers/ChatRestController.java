@@ -23,11 +23,10 @@ public class ChatRestController {
     }
 
     @PostMapping("/group/{groupId}/chat/create")
-    public Long createChat(@RequestParam String creatorId,
-                           @RequestParam String chatName,
-                           @RequestParam boolean isOpened,
+    public Long createChat(@RequestBody ChatDto chatDto,
                            @PathVariable Long groupId) {
-        return chatService.createChat(creatorId, chatName, isOpened, groupId).getId();
+        return chatService.createChat(chatDto.getCreatorId(), chatDto.getChatName(), chatDto.isOpened(), groupId)
+                .getId();
     }
 
     @GetMapping("/group/{groupId}/chat")

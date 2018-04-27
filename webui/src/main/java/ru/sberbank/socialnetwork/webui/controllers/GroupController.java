@@ -1,13 +1,12 @@
 package ru.sberbank.socialnetwork.webui.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.sberbank.socialnetwork.webui.models.Chat;
 import ru.sberbank.socialnetwork.webui.models.Group;
-import ru.sberbank.socialnetwork.webui.models.UserInfo;
 import ru.sberbank.socialnetwork.webui.services.GroupService;
 import ru.sberbank.socialnetwork.webui.services.UserInfoService;
 
@@ -31,8 +30,10 @@ public class GroupController {
     public String showAllGroups(Model model, @SessionAttribute(SESSION_ATTR_USER) String userId) {
         List<Group> userGroups = groupService.getGroups(userId);
         model.addAttribute("myGroups", userGroups);
-        List<Group> allGroups = groupService.getAllGroups(userId);
+        List<Group> allGroups = groupService.getAllOpenedGroups(userId);
         model.addAttribute("allGroups", allGroups);
+        List<Group> createdByMeGroups = groupService.getGroupsCreatedByMe(userId);
+        model.addAttribute("createdByMeGroups", createdByMeGroups);
         return "groups";
     }
 
@@ -55,6 +56,28 @@ public class GroupController {
                             @SessionAttribute(SESSION_ATTR_USER) String userId) {
         List<Chat> chats = groupService.chatOfGroups(groupId);
         model.addAttribute("chats", chats);
+        boolean isUserCreatorOfGroup = groupService.isUserCreatorOfGroup(userId, groupId);
+        model.addAttribute("isUserCreatorOfGroup", isUserCreatorOfGroup);
         return "chats";
+    }
+
+    @PostMapping("/{groupId}/addUser")
+    @ResponseStatus(HttpStatus.OK)
+    public void addUserToGroup(@PathVariable("groupId") String groupId,
+                               @SessionAttribute(SESSION_ATTR_USER) String userId) {
+        groupService.addUserToGroup(userId, groupId);
+    }
+
+    @DeleteMapping("/{groupId}/removeUser")
+    @ResponseStatus(HttpStatus.OK)
+    public void removeUserFromGroup(@PathVariable("groupId") String groupId,
+                               @SessionAttribute(SESSION_ATTR_USER) String userId) {
+        groupService.removeUserFromGroup(userId, groupId);
+    }
+
+    @DeleteMapping("/{groupId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void removeGroup(@PathVariable("groupId") String groupId) {
+        groupService.removeGroup(groupId);
     }
 }
