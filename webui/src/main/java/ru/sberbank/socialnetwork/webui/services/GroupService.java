@@ -5,8 +5,11 @@ import org.springframework.stereotype.Service;
 import ru.sberbank.socialnetwork.webui.client.ChatServiceClient;
 import ru.sberbank.socialnetwork.webui.models.Chat;
 import ru.sberbank.socialnetwork.webui.models.Group;
+import ru.sberbank.socialnetwork.webui.models.UserInfo;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class GroupService {
@@ -34,8 +37,8 @@ public class GroupService {
         return chatServiceClient.getAllOpenedGroups();
     }
 
-    public List<Chat> chatOfGroups(String groupId) {
-        return chatServiceClient.getGroupChats(groupId);
+    public List<Chat> chatOfGroupAndUser(String groupId, String userId) {
+        return chatServiceClient.getUserChats(groupId, userId);
     }
 
     public void addUserToGroup(String userId, String groupId) {
@@ -57,5 +60,13 @@ public class GroupService {
     public boolean isUserCreatorOfGroup(String userId, String groupId) {
         return getGroupsCreatedByMe(userId).stream()
                 .anyMatch(g -> groupId.equals(g.getId()));
+    }
+
+    public List<UserInfo> getUsersOfGroup(String groupId) {
+        return chatServiceClient.getGroupUsers(groupId)
+                .stream()
+                .map(u -> userInfoService.getUser(u.getUuid()))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
     }
 }

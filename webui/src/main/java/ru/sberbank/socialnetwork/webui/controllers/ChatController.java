@@ -7,10 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.sberbank.socialnetwork.webui.models.Chat;
-import ru.sberbank.socialnetwork.webui.models.Group;
 import ru.sberbank.socialnetwork.webui.models.MessageForView;
+import ru.sberbank.socialnetwork.webui.models.UserInfo;
 import ru.sberbank.socialnetwork.webui.services.ChatService;
+import ru.sberbank.socialnetwork.webui.services.GroupService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -18,10 +20,12 @@ public class ChatController {
 
     private static final String SESSION_ATTR_USER = "userId";
     private final ChatService chatService;
+    private final GroupService groupService;
 
     @Autowired
-    public ChatController(ChatService chatService) {
+    public ChatController(ChatService chatService, GroupService groupService) {
         this.chatService = chatService;
+        this.groupService = groupService;
     }
 
     @GetMapping("/chat/{chatId}/loadMessages")
@@ -41,9 +45,13 @@ public class ChatController {
     }
 
     @GetMapping("/groups/{groupId}/newChat")
-    public String newChat(Model model, @PathVariable("groupId") String groupId) {
+    public String newChat(Model model, @PathVariable("groupId") String groupId,
+                          @SessionAttribute(SESSION_ATTR_USER) String userId) {
         Chat chat = new Chat();
         model.addAttribute("chat", chat);
+        List<UserInfo> userList = groupService.getUsersOfGroup(groupId);
+        userList.removeIf(u -> u.getUuid().equals(userId));
+        model.addAttribute("userList", userList);
         return "newChat";
     }
 

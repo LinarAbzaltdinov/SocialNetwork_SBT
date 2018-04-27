@@ -54,7 +54,7 @@ public class GroupController {
     @GetMapping("/{groupId}")
     public String showGroup(Model model, @PathVariable("groupId") String groupId,
                             @SessionAttribute(SESSION_ATTR_USER) String userId) {
-        List<Chat> chats = groupService.chatOfGroups(groupId);
+        List<Chat> chats = groupService.chatOfGroupAndUser(groupId, userId);
         model.addAttribute("chats", chats);
         boolean isUserCreatorOfGroup = groupService.isUserCreatorOfGroup(userId, groupId);
         model.addAttribute("isUserCreatorOfGroup", isUserCreatorOfGroup);

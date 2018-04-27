@@ -49,6 +49,11 @@ public class ChatService {
         chat.setCreatorId(userId);
         chat.setGroupId(groupId);
         chatServiceClient.createChat(groupId, chat);
+        if (!chat.isOpened()) {
+            for (String userIdFromChat : chat.getUserList()) {
+                chatServiceClient.addUserToGroup(groupId, userIdFromChat, 1);
+            }
+        }
     }
 
     public void deleteChat(String chatId) {

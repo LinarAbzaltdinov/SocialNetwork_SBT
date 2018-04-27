@@ -49,6 +49,9 @@ public class UserInfoService {
     }
 
     public UserInfo getUser(String userId) {
+        if (userId == null) {
+            return null;
+        }
         ResponseEntity<UserInfo> foundUser = userServiceClient.getUser(userId);
         return foundUser.getStatusCode().is2xxSuccessful()
                ? foundUser.getBody()
