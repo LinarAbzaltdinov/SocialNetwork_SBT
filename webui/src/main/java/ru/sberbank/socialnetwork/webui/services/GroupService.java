@@ -9,6 +9,7 @@ import ru.sberbank.socialnetwork.webui.models.UserInfo;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,14 +24,14 @@ public class GroupService {
         this.userInfoService = userInfoService;
     }
 
-    public List<Group> getGroups(String userId) {
-        List<Group> userGroups = chatServiceClient.getUserGroups(userId);
+    public Set<Group> getGroups(String userId) {
+        Set<Group> userGroups = chatServiceClient.getUserGroups(userId);
         return userGroups;
     }
 
     public Group createGroup(String userId, Group newGroup) {
         return chatServiceClient.createGroup(newGroup.getGroupName(),
-                newGroup.getDescription(),true, userId);
+                newGroup.getDescription(), true, userId);
     }
 
     public List<Group> getAllOpenedGroups(String id) {
@@ -62,11 +63,11 @@ public class GroupService {
                 .anyMatch(g -> groupId.equals(g.getId()));
     }
 
-    public List<UserInfo> getUsersOfGroup(String groupId) {
+    public Set<UserInfo> getUsersOfGroup(String groupId) {
         return chatServiceClient.getGroupUsers(groupId)
                 .stream()
                 .map(u -> userInfoService.getUser(u.getUuid()))
                 .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 }

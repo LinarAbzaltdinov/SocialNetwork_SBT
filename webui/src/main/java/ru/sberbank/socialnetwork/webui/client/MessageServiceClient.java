@@ -11,7 +11,7 @@ import ru.sberbank.socialnetwork.webui.models.Message;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@FeignClient("message-service")
+@FeignClient("gateway")
 @RequestMapping("/messages")
 public interface MessageServiceClient {
     @GetMapping("/{id}")

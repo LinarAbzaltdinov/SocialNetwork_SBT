@@ -10,6 +10,7 @@ import ru.sberbank.socialnetwork.webui.models.Group;
 import ru.sberbank.socialnetwork.webui.services.GroupService;
 import ru.sberbank.socialnetwork.webui.services.UserInfoService;
 
+import java.util.Collection;
 import java.util.List;
 
 @Controller
@@ -28,11 +29,11 @@ public class GroupController {
 
     @GetMapping("")
     public String showAllGroups(Model model, @SessionAttribute(SESSION_ATTR_USER) String userId) {
-        List<Group> userGroups = groupService.getGroups(userId);
+        Collection<Group> userGroups = groupService.getGroups(userId);
         model.addAttribute("myGroups", userGroups);
-        List<Group> allGroups = groupService.getAllOpenedGroups(userId);
+        Collection<Group> allGroups = groupService.getAllOpenedGroups(userId);
         model.addAttribute("allGroups", allGroups);
-        List<Group> createdByMeGroups = groupService.getGroupsCreatedByMe(userId);
+        Collection<Group> createdByMeGroups = groupService.getGroupsCreatedByMe(userId);
         model.addAttribute("createdByMeGroups", createdByMeGroups);
         return "groups";
     }
@@ -71,7 +72,7 @@ public class GroupController {
     @DeleteMapping("/{groupId}/removeUser")
     @ResponseStatus(HttpStatus.OK)
     public void removeUserFromGroup(@PathVariable("groupId") String groupId,
-                               @SessionAttribute(SESSION_ATTR_USER) String userId) {
+                                    @SessionAttribute(SESSION_ATTR_USER) String userId) {
         groupService.removeUserFromGroup(userId, groupId);
     }
 

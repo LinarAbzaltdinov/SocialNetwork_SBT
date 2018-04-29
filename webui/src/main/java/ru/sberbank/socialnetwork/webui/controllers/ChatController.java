@@ -14,6 +14,7 @@ import ru.sberbank.socialnetwork.webui.services.GroupService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class ChatController {
@@ -38,8 +39,8 @@ public class ChatController {
     @PostMapping("/chat/{chatId}/sendMessage")
     @ResponseBody
     public ResponseEntity sendMessage(@RequestParam String messageText,
-                               @PathVariable("chatId") String chatId,
-                               @SessionAttribute(SESSION_ATTR_USER) String userId) {
+                                      @PathVariable("chatId") String chatId,
+                                      @SessionAttribute(SESSION_ATTR_USER) String userId) {
         ResponseEntity result = chatService.createMessage(userId, chatId, messageText);
         return result;
     }
@@ -49,7 +50,7 @@ public class ChatController {
                           @SessionAttribute(SESSION_ATTR_USER) String userId) {
         Chat chat = new Chat();
         model.addAttribute("chat", chat);
-        List<UserInfo> userList = groupService.getUsersOfGroup(groupId);
+        Set<UserInfo> userList = groupService.getUsersOfGroup(groupId);
         userList.removeIf(u -> u.getUuid().equals(userId));
         model.addAttribute("userList", userList);
         return "newChat";
