@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.sberbank.socialnetwork.chat.dto.GroupDto;
 import ru.sberbank.socialnetwork.chat.dto.UserDto;
+import ru.sberbank.socialnetwork.chat.entities.Group;
 import ru.sberbank.socialnetwork.chat.entities.UserAccessMode;
 import ru.sberbank.socialnetwork.chat.services.GroupService;
 
@@ -39,7 +40,8 @@ public class GroupRestController {
 
     @GetMapping("/group/{groupId}")
     public GroupDto getGroupById(@PathVariable Long groupId) {
-        return new GroupDto(groupService.getGroupById(groupId));
+        Group groupById = groupService.getGroupById(groupId);
+        return new GroupDto(groupById);
     }
 
     @GetMapping("/group/prefix/{prefix}")

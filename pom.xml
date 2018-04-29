@@ -15,6 +15,7 @@
         <module>chat</module>
         <module>message</module>
         <module>eureka-server</module>
+        <module>gateway</module>
     </modules>
 
 </project>
